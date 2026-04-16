@@ -1,0 +1,4 @@
+# CODEOWNERS
+# Every PR to main requires approval from a repo admin listed here.
+
+*       @rossja @rocklambros @virtualsteve-star
