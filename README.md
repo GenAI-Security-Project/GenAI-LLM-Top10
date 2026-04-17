@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/owasp_top10_wasp.jpeg" alt="OWASP Top 10 for LLM Applications & Generative AI" width="100%">
+</p>
+
 # GenAI-LLM-Top10
 
 Companion repository to the OWASP Top 10 for Large Language Model Applications, maintained under the [GenAI Security Project](https://github.com/GenAI-Security-Project) org.
