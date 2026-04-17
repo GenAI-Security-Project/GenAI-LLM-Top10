@@ -7,6 +7,9 @@ Thank you for helping build the **OWASP Top 10 for Large Language Model Applicat
 
 Both tracks share the same pull-request workflow, style guide, and review rules. Those shared rules live in [Shared workflow](#shared-workflow) — read that section once; you will use it for every PR.
 
+> [!IMPORTANT]
+> **All changes to this repository must be made through a pull request.** There are no exceptions for contributors — direct pushes to `main` are blocked by branch protection. This applies to every change: new entries, entry upgrades, typo fixes, link repairs, artifact additions, style-guide edits, and README tweaks. If you are unsure whether your change qualifies, open a PR.
+
 For the broader project-level contributor overview, see the repository-root [`README.md`](../README.md). The style guide lives in [`documentation/style/`](../documentation/style/README.md) and is required reading before submitting any prose.
 
 ---
@@ -26,7 +29,7 @@ For the broader project-level contributor overview, see the repository-root [`RE
 
 Complete these once, before your first PR:
 
-1. **GitHub account.** You will submit all work via pull request. No direct commits to `main` — branch protection blocks it (see [Branch protection and what reviewers will check](#branch-protection-and-what-reviewers-will-check)).
+1. **GitHub account.** **Every change lands on `main` through a pull request — no exceptions.** Direct pushes to `main` are blocked by branch protection and will be rejected by the server. You work on a feature branch (in your fork or the upstream repo), open a PR, and merge only after it satisfies every rule in [Branch protection and what reviewers will check](#branch-protection-and-what-reviewers-will-check).
 2. **Read the style guide.** Every entry must follow:
    - [`documentation/style/README.md`](../documentation/style/README.md) — overview
    - [`documentation/style/general.md`](../documentation/style/general.md) — Markdown, headings, tone, US English
@@ -235,16 +238,17 @@ Everything below applies to both tracks.
 
 ### Branch protection and what reviewers will check
 
-The `main` branch is protected. Your PR cannot merge until all of the following are true:
+**All changes to `main` must go through a pull request.** Direct pushes, force-pushes, and branch deletions from contributor accounts are rejected at the server. Every PR must satisfy **all** of the following before it can merge:
 
-1. **Two approving reviews.** Dismissed on new pushes. One must come from a [`CODEOWNERS`](../.github/CODEOWNERS) entry (enforced for every path).
-2. **Approval of the last push.** Any new commits after approval require re-approval.
-3. **All review conversations resolved.**
-4. **All commits signed.** Unsigned commits are rejected.
-5. **Linear history.** No merge commits into your branch — rebase, don't merge. See [Keeping your branch current](#keeping-your-branch-current).
-6. **No force-pushes or deletions** on `main` (admins may bypass in emergencies; contributors cannot).
+1. **Opened as a pull request.** The only path to `main` is a PR from a feature branch. There is no "direct commit" escape hatch for contributors.
+2. **Two approving reviews.** Dismissed on new pushes. One must come from a [`CODEOWNERS`](../.github/CODEOWNERS) entry (enforced for every path).
+3. **Approval of the last push.** Any new commits after approval require re-approval.
+4. **All review conversations resolved.**
+5. **All commits signed.** Unsigned commits are rejected.
+6. **Linear history.** No merge commits into your branch — rebase, don't merge. See [Keeping your branch current](#keeping-your-branch-current).
+7. **No force-pushes or deletions** on `main` (admins may bypass in emergencies; contributors cannot).
 
-Repository admins can bypass these rules in emergencies; contributors should assume full enforcement.
+Repository admins can bypass these rules only in emergencies. Contributors should assume full enforcement at all times — if in doubt, open a PR.
 
 ### Signing your commits
 
