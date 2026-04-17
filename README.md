@@ -37,9 +37,16 @@ Our mission is to make application security visible, so that people and organiza
 
 Our goal is to bridge the divide between general application security principles and the specific challenges posed by LLMs. The group's goals include exploring how conventional vulnerabilities may pose different risks or be exploited in novel ways within LLMs and how developers must adapt traditional remediation strategies for applications utilizing LLMs.
 
+## Project Documents 📄
+
+- [**OWASP Top 10 for LLM Applications Charter**](./OWASP%20Top%2010%20for%20LLM%20Applications%20Charter.md) — mission, scope, governance, and operating principles for the project.
+- [**Sprint Plan and Project Timeline — 2026**](./Sprint%20Plan%20and%20Project%20Timeline%20OWASP%20Top%2010%20for%20LLM%20%282026%29.md) — sprint structure and milestone timeline for the 2026 release cycle.
+
 ## Contribution 👋
 
 The first version of this list was contributed by Steve Wilson of Contrast Security. We encourage the community to contribute and help improve the project. If you have any suggestions, feedback or want to help improve the list, feel free to open an issue or send a pull request.
+
+For contributors working on the **2026 cycle**, see the track-specific guide in [`2026/CONTRIBUTING.md`](./2026/CONTRIBUTING.md).
 
 We have a working group channel on the [OWASP Slack](https://owasp.org/slack/invite), so please sign up and then join us on the #project-top10-llm channel.
 
