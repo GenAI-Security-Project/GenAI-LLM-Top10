@@ -46,6 +46,9 @@ Our goal is to bridge the divide between general application security principles
 
 The first version of this list was contributed by Steve Wilson of Contrast Security. We encourage the community to contribute and help improve the project. If you have any suggestions, feedback or want to help improve the list, feel free to open an issue or send a pull request.
 
+> [!IMPORTANT]
+> **All changes to this repository must be made through a pull request.** There are no exceptions for contributors — direct pushes to `main` are blocked by branch protection. This applies to every change: new entries, entry upgrades, typo fixes, link repairs, artifact additions, style-guide edits, and README tweaks. If you are unsure whether your change qualifies, open a PR.
+
 For contributors working on the **2026 cycle**, see the track-specific guide in [`2026/CONTRIBUTING.md`](./2026/CONTRIBUTING.md).
 
 We have a working group channel on the [OWASP Slack](https://owasp.org/slack/invite), so please sign up and then join us on the #project-top10-llm channel.
