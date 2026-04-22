@@ -51,7 +51,7 @@ The first version of this list was contributed by Steve Wilson of Contrast Secur
 
 For contributors working on the **2026 cycle**, see the track-specific guide in [`2026/CONTRIBUTING.md`](./2026/CONTRIBUTING.md).
 
-We have a working group channel on the [OWASP Slack](https://owasp.org/slack/invite), so please sign up and then join us on the #project-top10-llm channel.
+We have a working group channel on the [OWASP Slack](https://owasp.org/slack/invite), so please sign up and then join us on the #team-genai-top-10-llm channel.
 
 **Learn how to contribute:** [https://genai.owasp.org/contribute/](https://genai.owasp.org/contribute/)
 
