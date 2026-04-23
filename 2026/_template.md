@@ -31,3 +31,9 @@ Scenario #2: A malicious adapter is inserted into a model update workflow throug
 1. [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS**
 2. [Attesting LLM Pipelines: Enforcing Verifiable Training and Release ...](https://arxiv.org/abs/2603.28988): **arXiv**
 3. [Measuring Malicious Intermediary Attacks on the LLM Supply Chain](https://arxiv.org/html/2604.08407v1): **arXiv**
+4. [Abusing supply chains: How poisoned models, data, and third-party artifacts spread risk](https://www.datadoghq.com/blog/detect-abuse-ai-supply-chains/): **Datadog**
+5. [Malicious AI Models: Security Risks Across the AI Supply Chain](https://www.wiz.io/academy/ai-security/malicious-ai-models): **Wiz**
+6. [Provenance and Traceability in AI: Ensuring Accountability and Trust](https://techstrong.ai/articles/provenance-and-traceability-in-ai-ensuring-accountability-and-trust/): **TechStrong**
+7.  [LLM Risks: Enterprise Threats and How to Secure Them](https://www.lasso.security/blog/llm-risks-enterprise-threats): **Lasso Security**
+8.  [Bileve: Securing Text Provenance in Large Language Models Against Spoofing with Bi-level Signature](https://openreview.net/forum?id=vjCFnYTg67): **OpenReview / NeurIPS 2024**
+9.  [Malicious AI Models Emerge as Critical Supply Chain Security Threat](https://www.linkedin.com/pulse/malicious-ai-models-emerge-critical-supply-chain-security-threat-qs8ke): **LinkedIn**
