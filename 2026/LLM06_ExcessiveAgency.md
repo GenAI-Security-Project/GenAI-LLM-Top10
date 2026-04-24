@@ -6,7 +6,7 @@ An LLM-based system is often granted a degree of agency by its developer - the a
 
 Excessive Agency is the vulnerability that enables damaging actions to be performed in response to unexpected, ambiguous or manipulated outputs from an LLM, regardless of what is causing the LLM to malfunction. Common triggers include:
 
-* hallucination/confabulation caused by poorly-engineered benign prompts, or just a poorly-performing model;
+* hallucination/confabulation caused by poorly-engineered benign prompts, or just a poorly-performing/misaligned model;
 * direct/indirect prompt injection from a malicious user, an earlier invocation of a malicious/compromised extension, or (in multi-agent/collaborative systems) a malicious/compromised peer agent.
 
 The root cause of Excessive Agency is typically one or more of:
