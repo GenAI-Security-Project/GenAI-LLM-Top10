@@ -15,7 +15,7 @@ The root cause of Excessive Agency is typically one or more of:
 * excessive permissions;
 * excessive autonomy.
 
-Excessive Agency can lead to a broad range of impacts across the confidentiality, integrity and availability spectrum, and is dependent on which systems an LLM-based app is able to interact with.
+Excessive Agency can lead to a broad range of impacts across the confidentiality, integrity and availability spectrum, and is dependent on which systems an LLM-based app is able to interact with. Within the context of agentic systems, Excessive Agency can manifest as ASI02: Tool Misuse and Exploitation, ASI03: Identity and Privilege Abuse and ASI08: Cascading Failures.
 
 Note: Excessive Agency differs from Insecure Output Handling which is concerned with insufficient scrutiny of LLM outputs.
 
@@ -104,3 +104,9 @@ Alternatively, the damage caused could be reduced by implementing rate limiting 
 4. [NeMo-Guardrails: Interface guidelines](https://github.com/NVIDIA/NeMo-Guardrails/blob/main/docs/security/guidelines.md): **NVIDIA Github**
 5. [Simon Willison: Dual LLM Pattern](https://simonwillison.net/2023/Apr/25/dual-llm-pattern/): **Simon Willison**
 6. [Sandboxing Agentic AI Workflows with WebAssembly](https://developer.nvidia.com/blog/sandboxing-agentic-ai-workflows-with-webassembly/) **NVIDIA, Joe Lucas**
+
+### Related Frameworks and Taxonomies
+
+- [ASI02: Tool Misuse and Exploitation](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/) **OWASP Agentic Top-10**
+- [ASI03: Identity and Privilege Abuse](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/) **OWASP Agentic Top-10**
+- [ASI08: Cascading Failures](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/) **OWASP Agentic Top-10**
