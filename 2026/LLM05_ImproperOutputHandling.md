@@ -13,6 +13,7 @@ The following conditions can increase the impact of this vulnerability:
 - Lack of proper output encoding for different contexts (e.g., HTML, JavaScript, SQL)
 - Insufficient monitoring and logging of LLM outputs
 - Absence of rate limiting or anomaly detection for LLM usage
+- Terminal, log, or IDE sinks render model output without neutralizing control characters such as ANSI escape sequences.
 
 ### Common Examples of Vulnerability
 
@@ -21,6 +22,7 @@ The following conditions can increase the impact of this vulnerability:
 3. LLM-generated SQL queries are executed without proper parameterization, leading to SQL injection.
 4. LLM output is used to construct file paths without proper sanitization, potentially resulting in path traversal vulnerabilities.
 5. LLM-generated content is used in email templates without proper escaping, potentially leading to phishing attacks.
+6. LLM output containing ANSI escape sequences or other control characters is written to a terminal, log viewer, or IDE pane that interprets them, enabling visual spoofing, clipboard hijacking (e.g., OSC 52), or chained exploitation of terminal emulator vulnerabilities.
 
 ### Prevention and Mitigation Strategies
 
@@ -31,6 +33,7 @@ The following conditions can increase the impact of this vulnerability:
 5. Use parameterized queries or prepared statements for all database operations involving LLM output.
 6. Employ strict Content Security Policies (CSP) to mitigate the risk of XSS attacks from LLM-generated content.
 7. Implement robust logging and monitoring systems to detect unusual patterns in LLM outputs that might indicate exploitation attempts.
+8. Sanitize control characters (ANSI escape sequences, BEL, OSC, backspace, carriage return) and other non-printable bytes from model output before it is written to terminals, log files, or other interpreting sinks; encode them visibly when they must be preserved.
 
 ### Example Attack Scenarios
 
@@ -68,3 +71,4 @@ The following conditions can increase the impact of this vulnerability:
 6. [Threat Modeling LLM Applications](https://aivillage.org/large%20language%20models/threat-modeling-llm/): **AI Village**
 7. [OWASP ASVS - 5 Validation, Sanitization and Encoding](https://owasp-aasvs4.readthedocs.io/en/latest/V5.html#validation-sanitization-and-encoding): **OWASP AASVS**
 8. [AI hallucinates software packages and devs download them – even if potentially poisoned with malware](https://www.theregister.com/2024/03/28/ai_bots_hallucinate_software_packages/) **Theregiste**
+9. [Terminal DiLLMa: LLM-powered Apps Can Hijack Your Terminal Via Prompt Injection](https://embracethered.com/blog/posts/2024/terminal-dillmas-prompt-injection-ansi-sequences/): **Embrace The Red**
