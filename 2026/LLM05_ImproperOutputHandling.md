@@ -13,6 +13,7 @@ The following conditions can increase the impact of this vulnerability:
 - Lack of proper output encoding for different contexts (e.g., HTML, JavaScript, SQL)
 - Insufficient monitoring and logging of LLM outputs
 - Absence of rate limiting or anomaly detection for LLM usage
+- The client renderer (browser, chat UI, IDE, terminal) automatically fetches external resources referenced in model output (e.g., Markdown images, link previews, iframes), enabling exfiltration of context data through outbound requests.
 
 ### Common Examples of Vulnerability
 
@@ -21,6 +22,7 @@ The following conditions can increase the impact of this vulnerability:
 3. LLM-generated SQL queries are executed without proper parameterization, leading to SQL injection.
 4. LLM output is used to construct file paths without proper sanitization, potentially resulting in path traversal vulnerabilities.
 5. LLM-generated content is used in email templates without proper escaping, potentially leading to phishing attacks.
+6. The chat UI auto-renders Markdown images or link previews referenced in model output, allowing an attacker who controls part of the model context to exfiltrate conversation data via the image URL's hostname or query string.
 
 ### Prevention and Mitigation Strategies
 
@@ -31,6 +33,7 @@ The following conditions can increase the impact of this vulnerability:
 5. Use parameterized queries or prepared statements for all database operations involving LLM output.
 6. Employ strict Content Security Policies (CSP) to mitigate the risk of XSS attacks from LLM-generated content.
 7. Implement robust logging and monitoring systems to detect unusual patterns in LLM outputs that might indicate exploitation attempts.
+8. In client renderers (chat UIs, IDEs, email clients, mobile apps), prevent model output from triggering automatic outbound requests to attacker-controlled endpoints. Disable auto-rendering of Markdown images, link previews, iframes, and similar elements by default; where rendering is required, restrict fetches to an explicit allowlist of origins or proxy them through a server-side fetcher that strips data-bearing query parameters.
 
 ### Example Attack Scenarios
 
@@ -68,3 +71,5 @@ The following conditions can increase the impact of this vulnerability:
 6. [Threat Modeling LLM Applications](https://aivillage.org/large%20language%20models/threat-modeling-llm/): **AI Village**
 7. [OWASP ASVS - 5 Validation, Sanitization and Encoding](https://owasp-aasvs4.readthedocs.io/en/latest/V5.html#validation-sanitization-and-encoding): **OWASP AASVS**
 8. [AI hallucinates software packages and devs download them – even if potentially poisoned with malware](https://www.theregister.com/2024/03/28/ai_bots_hallucinate_software_packages/) **Theregiste**
+9. [GitHub Copilot Chat: From Prompt Injection to Data Exfiltration](https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/): **Embrace The Red**
+10. [Markdown exfiltration tracker](https://simonwillison.net/tags/markdown-exfiltration/): **Simon Willison**
