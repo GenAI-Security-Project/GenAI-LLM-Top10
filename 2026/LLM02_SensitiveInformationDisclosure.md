@@ -204,7 +204,7 @@ Mitigations are organized into the **OWASP DSGAI tiered structure** (Tier 1 foun
 
 #### Tier 3 — Advanced (regulated, classified, and high-target deployments)
 
-19. **Confidential computing for regulated inference.** Trusted execution environments (Intel TDX, AMD SEV-SNP, AWS Nitro Enclaves) or privacy-preserving inference architectures for workloads processing PHI, regulated financial data, or data with statutory confidentiality. Validate attestation end-to-end.
+19. **Confidential computing and privacy-preserving inference for regulated workloads.** Trusted execution environments (Intel TDX, AMD SEV-SNP, AWS Nitro Enclaves) for PHI, regulated financial data, and data with statutory confidentiality; validate attestation end-to-end. Where TEEs are not available or sufficient, evaluate emerging privacy-preserving inference techniques such as covariant obfuscation (the AloePri 2026 framework, jointly transforming data and model parameters to achieve privacy guarantees with manageable utility loss) or partial homomorphic encryption schemes optimized for transformer inference. Treat all such techniques as Tier 3 controls with utility, latency, and threat-model trade-offs that must be evaluated per workload.
 20. **Verifiable erasure / cryptographic erasure / machine unlearning.** Design and test model-aware deletion protocols for high-risk cohorts so that data-subject erasure requests can be verifiably satisfied across raw data, embeddings, fine-tuning checkpoints, and model artifacts. Validate effectiveness through post-unlearning extraction and membership-inference testing. *Cross-reference: DSGAI01 Tier 3.*
 21. **Disclosure-specific red-teaming as a release gate.** Extraction, membership inference, embedding inversion, internal-state inversion, side-channel evaluation, and LoRA-adapter extractability audits gate production releases of models fine-tuned on sensitive data. Measure membership advantage and extraction rate quantitatively. Integrate with CI/CD; align with the MITRE ATLAS technique catalog. *Cross-reference: DSGAI18 Tier 3.*
 22. **Synthetic-data memorization audit.** Validate generated synthetic corpora against training-set extractors before downstream use. Do not assume synthetic data is automatically de-identified.
@@ -354,6 +354,7 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 49. [Claude's Code: Anthropic Leaks Source Code for AI Software](https://www.theguardian.com/technology/2026/apr/01/anthropic-claudes-code-leaks-ai): **The Guardian** (Apr 2026)
 50. [Anthropic Mistakenly Leaks Its Own AI Coding Tool's Source](https://fortune.com/2026/03/31/anthropic-source-code-claude-code-data-leak-second-security-lapse-days-after-accidentally-revealing-mythos): **Fortune** (Mar 2026)
 51. [Critical Vulnerability in Claude Code Emerges Days After Source Leak](https://www.securityweek.com/critical-vulnerability-in-claude-code-emerges-days-after-source-leak): **SecurityWeek** (Apr 2026)
+52. [Towards Privacy-Preserving LLM Inference via Covariant Obfuscation (AloePri)](https://arxiv.org/abs/2603.01499): **arXiv:2603.01499 (Mar 2026)**
 
 ### Revision Notes
 
