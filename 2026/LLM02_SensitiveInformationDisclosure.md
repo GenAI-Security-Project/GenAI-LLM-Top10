@@ -359,6 +359,9 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 52. [Towards Privacy-Preserving LLM Inference via Covariant Obfuscation (AloePri)](https://arxiv.org/abs/2603.01499): **arXiv:2603.01499 (Mar 2026)**
 53. [Differential Privacy Reversal via LLM Feedback: The Silent Threat](https://medium.com/@instatunnel/it-162aee1dbfe5): **Medium / Instatunnel (2026)**
 54. [Data-Free Privacy-Preserving for LLMs via Model Inversion](https://arxiv.org/abs/2601.15595): **arXiv:2601.15595 (Jan 2026)**
+55. [Security and Privacy in LLMs: A Comprehensive Survey of Threats](https://www.sciencedirect.com/science/article/pii/S156625352600120X): **ScienceDirect (2026)**
+56. [Setting Epsilon is Not the Issue in Differential Privacy](https://neurips.cc/virtual/2025/poster/121922): **NeurIPS 2025** — position paper on DP parameter selection and limitations
+57. [Accepted Papers on Privacy-Preserving Computation and LLM Security](https://sp2026.ieee-security.org/accepted-papers.html): **IEEE S&P 2026**
 
 ### Revision Notes
 
