@@ -115,7 +115,7 @@ Representative sub-classes:
 3. **Fine-tuning data extraction and weaponization.** Fine-tuned models are disproportionately vulnerable to extraction; the same pipeline can be used deliberately to amplify memorization (Panda et al., 2024) or to remove refusal behaviors that would otherwise suppress disclosure (Qi et al., 2024).
 4. **Synthetic-data carryover.** Models that generate synthetic training or evaluation data for downstream fine-tuning carry teacher memorization into the synthetic corpus, which is then re-memorized by the student. A novel disclosure pathway distinct from classical distillation, increasingly common as synthetic-data pipelines expand. See **DSGAI10 — Synthetic Data, Anonymization & Transformation Pitfalls** for the broader anonymization-failure framing.
 5. **Pipeline poisoning producing targeted disclosure.** Poisoning RAG sources or fine-tuning data to cause disclosure on specific queries is addressed in **LLM04:2025 Data and Model Poisoning**; the downstream disclosure is in scope here.
-6. **Differential-privacy circumvention via adaptive querying.** Fixed differential-privacy budgets degrade under adaptive query patterns. Naive DP guarantees give a false sense of protection when adversaries iterate against the deployed model and incorporate response variation into subsequent queries. Privacy-budget exhaustion and adaptive-budget management are emerging mitigation requirements.
+6. **Differential-privacy circumvention via adaptive querying.** Fixed differential-privacy budgets degrade under adaptive query patterns. Naive DP guarantees give a false sense of protection when adversaries iterate against the deployed model and incorporate response variation into subsequent queries. Privacy-budget exhaustion and adaptive-budget management are emerging mitigation requirements. A specific 2026 attack class — *Differential Privacy Reversal via LLM Feedback* — exploits the generative capability of an attacker-controlled LLM to provide structured feedback that progressively narrows the noise distribution of a differentially private target model, reconstructing individual training data points across iterated queries. Related work demonstrates *data-free* privacy-preserving and inversion patterns that further pressure naive DP deployments. The implication for LLM02 mitigations is that DP must be paired with rate-limiting, query-pattern detection, and per-session/per-user budget tracking; a fixed epsilon at training time is necessary but not sufficient.
 
 #### 7. Platform and Ecosystem Disclosure
 
@@ -355,6 +355,8 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 50. [Anthropic Mistakenly Leaks Its Own AI Coding Tool's Source](https://fortune.com/2026/03/31/anthropic-source-code-claude-code-data-leak-second-security-lapse-days-after-accidentally-revealing-mythos): **Fortune** (Mar 2026)
 51. [Critical Vulnerability in Claude Code Emerges Days After Source Leak](https://www.securityweek.com/critical-vulnerability-in-claude-code-emerges-days-after-source-leak): **SecurityWeek** (Apr 2026)
 52. [Towards Privacy-Preserving LLM Inference via Covariant Obfuscation (AloePri)](https://arxiv.org/abs/2603.01499): **arXiv:2603.01499 (Mar 2026)**
+53. [Differential Privacy Reversal via LLM Feedback: The Silent Threat](https://medium.com/@instatunnel/it-162aee1dbfe5): **Medium / Instatunnel (2026)**
+54. [Data-Free Privacy-Preserving for LLMs via Model Inversion](https://arxiv.org/abs/2601.15595): **arXiv:2601.15595 (Jan 2026)**
 
 ### Revision Notes
 
