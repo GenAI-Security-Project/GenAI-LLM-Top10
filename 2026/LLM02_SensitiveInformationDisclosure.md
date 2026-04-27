@@ -174,6 +174,9 @@ An employee uploads a PDF containing visually-redacted PII (black-rectangle over
 **Scenario 10 — LoRA adapter extraction of fine-tuning data.**
 A vendor publishes a downloadable LoRA adapter fine-tuned on internal customer-support transcripts to enable on-device customer assistance. An adversary with adapter access runs targeted extraction queries, recovering verbatim transcript fragments containing customer names, account numbers, and complaint text. The base model is well-aligned; the adapter is the disclosure surface. Aligns with DSGAI18 LoRA extractability findings (StolenLoRA, USENIX Security 2025).
 
+**Scenario 11 — Tool-runtime covert exfiltration channel.**
+A user uploads a financial spreadsheet to ChatGPT and asks the model to compute summary statistics. An external attacker has previously seeded a public webpage that the user's recent browsing accessed; that page contains an indirect prompt-injection payload telling the model that a specific "diagnostic check" is required before code execution. When the model issues a Python tool call to compute statistics, the runtime resolves an attacker-controlled hostname encoding the user's prompt content into the DNS query. The visible model output remains a clean statistical summary; the inference process has externally disclosed the spreadsheet content via DNS. The disclosure is invisible at the API and application layers but observable at any DNS resolver in the path. Mitigated by strict runtime egress filtering, DNS allowlists, and proxy-only outbound. Mirrors Check Point Research's February 2026 finding.
+
 ### Prevention and Mitigation Strategies
 
 Mitigations are organized into the **OWASP DSGAI tiered structure** (Tier 1 foundational, Tier 2 hardening, Tier 3 advanced) for compatibility with DSGAI01 and to provide a graduated implementation path.
