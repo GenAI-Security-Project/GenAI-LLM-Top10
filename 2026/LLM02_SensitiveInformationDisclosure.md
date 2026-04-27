@@ -128,6 +128,7 @@ Representative sub-classes:
 3. **Aggregate-analytics disclosure.** Provider-side population analytics over conversations (e.g., topic-clustering and trend extraction across all user prompts) can surface rare or identifying queries even when individual conversations are not exposed. Aggregate analytics is a distinct platform-layer disclosure channel that requires its own privacy-budget treatment.
 4. **AI-vendor operational disclosure.** Misconfigured AI-vendor infrastructure — exposed databases, source-control leaks, build-pipeline failures — directly exposes user conversations, embeddings, or model artifacts. Historical reference: the DeepSeek ClickHouse database publicly accessible in January 2025 with more than one million rows of conversation logs and API keys. Vendor operational security is primarily **LLM03:2025 Supply Chain**; the disclosure consequence is in scope here.
 5. **Endpoint and browser-assistant overreach.** Endpoint-deployed assistants and browser AI extensions read, summarize, and transmit content beyond the user's task scope (notifications, adjacent tabs, browser-saved form data). When the assistant operates as an autonomous actor, this becomes ASI territory; the *passive over-collection* aspect is documented in **DSGAI16 — Endpoint & Browser Assistant Overreach**.
+6. **Tool-runtime covert exfiltration channels.** Sandboxed code-execution runtimes (Python interpreters, web-fetch tools, function-calling environments) attached to LLM products can act as covert outbound channels when egress filtering is incomplete. Even when the visible model output is sanitized, the runtime itself can emit DNS queries, image fetches, or other network operations carrying conversation content to attacker-controlled endpoints. Historical reference: Check Point Research's February 2026 disclosure of ChatGPT data leakage via a hidden outbound channel in the code-execution runtime — patched February 2026 — demonstrated that a single crafted prompt could turn the runtime into a silent exfiltration channel for sensitive conversation content. The lesson is that runtime egress controls are a first-class LLM02 concern: the inference process can produce externally observable disclosure even when the model output channel does not.
 
 ### Example Attack Scenarios
 
@@ -265,6 +266,7 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 | 2025-11 | OpenAI / Mixpanel third-party breach | Vendor operational disclosure | LLM03 |
 | 2025 | ChatGPT shared-conversation indexing (4,500+ public conversations indexed by Google) | Platform-level disclosure (§2.2) | DSGAI14 |
 | 2025 | Anthropic distillation-attack detection / disruption announcements | Distillation defense (§6.2) | DSGAI20 |
+| 2026-02 | Check Point Research — ChatGPT data leakage via hidden outbound channel in the code-execution runtime; patched Feb 2026 | Tool-runtime covert exfiltration (§7.6) | LLM02 / LLM06 |
 
 ### Related Frameworks and Taxonomies
 
@@ -340,6 +342,8 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 42. [EU AI Act (Regulation (EU) 2024/1689)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj): **European Union**
 43. [NIST AI 600-1 — Generative AI Profile](https://www.nist.gov/itl/ai-risk-management-framework): **NIST**
 44. [OWASP AI Security and Privacy Guide](https://owasp.org/www-project-ai-security-and-privacy-guide/): **OWASP**
+45. [ChatGPT Data Leakage via a Hidden Outbound Channel in the Code Execution Runtime](https://research.checkpoint.com/2026/chatgpt-data-leakage-via-a-hidden-outbound-channel-in-the-code-execution-runtime): **Check Point Research** (Feb 2026)
+46. [When AI Trust Breaks: The ChatGPT Data Leakage Flaw That Redefined AI Vendor Security Trust](https://blog.checkpoint.com/research/when-ai-trust-breaks-the-chatgpt-data-leakage-flaw-that-redefined-ai-vendor-security-trust): **Check Point Blog** (Mar 2026)
 
 ### Revision Notes
 
