@@ -110,7 +110,7 @@ Pipeline components introduced to train, fine-tune, distill, or generate synthet
 
 Representative sub-classes:
 
-1. **Federated-learning gradient leakage.** Shared gradient updates can be inverted to reconstruct training data at token- or pixel-level fidelity. Malicious aggregation servers actively modify model parameters to amplify leakage, defeating federated learning's core privacy premise (Boenisch et al., 2023).
+1. **Federated-learning gradient leakage.** Shared gradient updates can be inverted to reconstruct training data at token- or pixel-level fidelity. Malicious aggregation servers actively modify model parameters to amplify leakage, defeating federated learning's core privacy premise (Boenisch et al., 2023). 2026 industry framing increasingly treats federated learning as a *complement to* secure aggregation, differential privacy, and confidential computing — not a substitute for them — and emphasizes that gradient leakage attacks must be modeled in any FL deployment processing sensitive cohorts.
 2. **Distillation as a transfer channel.** Training a student model on teacher outputs transfers capabilities and memorized knowledge. Major providers' terms of service prohibit using outputs to train competing models; vendors run detection campaigns to identify large-scale extraction consistent with distillation. See **DSGAI20 — Model Exfiltration & IP Replication** for the extraction-campaign perspective.
 3. **Fine-tuning data extraction and weaponization.** Fine-tuned models are disproportionately vulnerable to extraction; the same pipeline can be used deliberately to amplify memorization (Panda et al., 2024) or to remove refusal behaviors that would otherwise suppress disclosure (Qi et al., 2024).
 4. **Synthetic-data carryover.** Models that generate synthetic training or evaluation data for downstream fine-tuning carry teacher memorization into the synthetic corpus, which is then re-memorized by the student. A novel disclosure pathway distinct from classical distillation, increasingly common as synthetic-data pipelines expand. See **DSGAI10 — Synthetic Data, Anonymization & Transformation Pitfalls** for the broader anonymization-failure framing.
@@ -362,6 +362,8 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 55. [Security and Privacy in LLMs: A Comprehensive Survey of Threats](https://www.sciencedirect.com/science/article/pii/S156625352600120X): **ScienceDirect (2026)**
 56. [Setting Epsilon is Not the Issue in Differential Privacy](https://neurips.cc/virtual/2025/poster/121922): **NeurIPS 2025** — position paper on DP parameter selection and limitations
 57. [Accepted Papers on Privacy-Preserving Computation and LLM Security](https://sp2026.ieee-security.org/accepted-papers.html): **IEEE S&P 2026**
+58. [How Federated Learning Is Revolutionizing Data Security](https://www.forbes.com/councils/forbestechcouncil/2026/03/24/the-future-of-ai-privacy-how-federated-learning-is-revolutionizing-data-security): **Forbes** (Mar 2026)
+59. [Differential Privacy for AI: Protecting Training Data (2026)](https://aisecurityandsafety.org/es/guides/differential-privacy-ai): **AI Security and Safety** (2026)
 
 ### Revision Notes
 
