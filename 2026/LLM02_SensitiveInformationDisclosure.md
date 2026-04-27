@@ -364,6 +364,7 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 57. [Accepted Papers on Privacy-Preserving Computation and LLM Security](https://sp2026.ieee-security.org/accepted-papers.html): **IEEE S&P 2026**
 58. [How Federated Learning Is Revolutionizing Data Security](https://www.forbes.com/councils/forbestechcouncil/2026/03/24/the-future-of-ai-privacy-how-federated-learning-is-revolutionizing-data-security): **Forbes** (Mar 2026)
 59. [Differential Privacy for AI: Protecting Training Data (2026)](https://aisecurityandsafety.org/es/guides/differential-privacy-ai): **AI Security and Safety** (2026)
+60. [Exposed DeepSeek Database Revealed Chat Prompts and Internal Data](https://www.wired.com/story/exposed-deepseek-database-revealed-chat-prompts-and-internal-data): **Wired** (Jan 2025)
 
 ### Revision Notes
 
