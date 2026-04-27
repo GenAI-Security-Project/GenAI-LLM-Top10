@@ -40,6 +40,15 @@ Sensitive information disclosure intersects most other Top 10 entries because di
 
 ### Threat Taxonomy
 
+The seven sub-classes below map back to the four-phase model in the Description:
+
+* **Training-time** disclosure is concentrated in §1 (memorization and extraction) and §6 (training-pipeline disclosure).
+* **Inference-time** disclosure is concentrated in §2 (context and output) with cross-cutting contributions from §3 (embedding) and §4 (multimodal).
+* **Pipeline-time** disclosure is concentrated in §6 (training-pipeline) and §7 (platform and ecosystem).
+* **Observation-time** disclosure is concentrated in §5 (side channels).
+
+Each sub-class names the relevant DSGAI cross-references and the sibling Top 10 entry that owns the underlying mechanism, so readers can navigate from a disclosure outcome to the responsible mechanism, control, or peer-document treatment without ambiguity.
+
 #### 1. Training-Data Memorization and Extraction
 
 LLMs reproduce verbatim spans of their training data. Risk scales with duplication, model size, and training duration, and is meaningfully *amplified* in fine-tuned models and LoRA adapters because narrow corpora memorize rare examples with disproportionate fidelity (DSGAI01). Memorization affects text, code, images including watermarks and identifiable faces, audio, and video. Extraction does not require model-weights access; untargeted divergence prompting and prefix-seeded extraction are effective against production APIs.
