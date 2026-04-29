@@ -1,4 +1,4 @@
-## LLM06:2025 Excessive Agency
+## LLM06:2026 Excessive Agency
 
 ### Description
 
