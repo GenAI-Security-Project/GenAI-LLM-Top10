@@ -18,8 +18,14 @@ Retrieval Augmented Generation (RAG) is a model adaptation technique that enhanc
 
 #### 3. Embedding Inversion Attacks
 
-  Attackers can exploit vulnerabilities to invert embeddings and recover significant amounts of source information, compromising data confidentiality.(Ref #3, #4)
-
+Attackers can exploit vulnerabilities to invert embeddings and recover significant amounts of source information, compromising data confidentiality.(Ref #3, #4)
+Recent research has significantly lowered the barrier for these attacks. The ALGEN framework (ACL 2025) demonstrated that inversion attacks now work across black-box encoders 
+with as few as 1,000 training samples, eliminating the previous assumption that attackers need extensive model access. ZSInvert (arXiv:2504.00147, March 2025) introduced the first universal inversion method that works on any embedding without training a model-specific inverter — meaning an attacker no longer needs to know which embedding 
+model their target uses.
+Current research shows 50-92% word recovery depending on text length and attack method. Short texts under 32 tokens are recoverable at 92% accuracy. This is sufficient to 
+reconstruct medical records, legal documents, HR data, and source code with high fidelity.
+Compliance note: storing embeddings of sensitive documents in third-party vector database services may constitute a data breach under GDPR Article 5 and HIPAA minimum 
+necessary standards. Vector database storage should be treated as equivalent to plaintext document storage from a regulatory perspective. (Ref #9, #10)
 #### 4. Data Poisoning Attacks
 
   Data poisoning can occur intentionally by malicious actors (Ref #5, #6, #7) or unintentionally. Poisoned data can originate from insiders, prompts, data seeding, or unverified data providers, leading to manipulated model outputs.
@@ -45,6 +51,10 @@ Retrieval Augmented Generation (RAG) is a model adaptation technique that enhanc
 #### 4. Monitoring and Logging
 
   Maintain detailed immutable logs of retrieval activities to detect and respond promptly to suspicious behavior.
+
+#### 5. Encrypt embeddings at rest and treat vector databases 
+   as sensitive data stores Encrypt stored embeddings with AES-256 and manage keys separately from the application layer. A vector database breach without the encryption key cannot be exploited for inversion. 
+   Apply differential privacy noise during embedding generation to degrade inversion accuracy. Rate limit embedding API endpoints — inversion attacks require many encoder queries, and rate limiting at 100 requests per minute per key significantly raises attack cost. (Ref #9, #10)
 
 ### Example Attack Scenarios
 
@@ -88,3 +98,5 @@ Retrieval Augmented Generation (RAG) is a model adaptation technique that enhanc
 6. [Confused Deputy Risks in RAG-based LLMs](https://confusedpilot.info/)
 7. [How RAG Poisoning Made Llama3 Racist!](https://blog.repello.ai/how-rag-poisoning-made-llama3-racist-1c5e390dd564)
 8. [What is the RAG Triad?](https://truera.com/ai-quality-education/generative-ai-rags/what-is-the-rag-triad/)
+9. [ALGEN: Few-shot Inversion Attacks on Textual Embeddings via Cross-Model Alignment and Generation](https://arxiv.org/abs/2502.11308)
+10. [Universal Zero-shot Embedding Inversion (ZSInvert)](https://arxiv.org/abs/2504.00147)
