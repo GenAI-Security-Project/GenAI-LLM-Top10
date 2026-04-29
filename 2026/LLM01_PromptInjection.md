@@ -6,7 +6,7 @@ A Prompt Injection Vulnerability occurs when user prompts alter the LLM’s beha
 
 Prompt Injection vulnerabilities exist in how models process prompts, and how input may force the model to incorrectly pass prompt data to other parts of the model, potentially causing them to violate guidelines, generate harmful content, enable unauthorized access, or influence critical decisions. While techniques like Retrieval Augmented Generation (RAG) and fine-tuning aim to make LLM outputs more relevant and accurate, research shows that they do not fully mitigate prompt injection vulnerabilities.
 
-While prompt injection and jailbreaking are related concepts in LLM security, they are often used interchangeably. Prompt injection involves manipulating model responses through specific inputs to alter its behavior, which can include bypassing safety measures. Jailbreaking is a form of prompt injection where the attacker provides inputs that cause the model to disregard its safety protocols entirely. Developers can build safeguards into system prompts and input handling to help mitigate prompt injection attacks, but effective prevention of jailbreaking requires ongoing updates to the model's training and safety mechanisms.
+While prompt injection and jailbreaking are related concepts in LLM security, they are often used interchangeably in industry discussions, which can create defensive gaps. **Prompt injection** targets **application-level** instruction flow and trust boundaries (for example, how untrusted content is concatenated with system or developer instructions, and how that influences tool use or downstream actions). **Jailbreaking** targets **model-level** safety and policy controls baked into alignment training and guardrails. The two can appear together in a chain, but they are not interchangeable: mitigations aimed only at jailbreak resistance may not address instruction hijacking in an application context, and application-layer controls may not stop a pure policy-bypass jailbreak. Effective programs address both where their threat models apply.
 
 ### Types of Prompt Injection Vulnerabilities
 
@@ -16,7 +16,11 @@ While prompt injection and jailbreaking are related concepts in LLM security, th
 
 #### Indirect Prompt Injections
 
-  Indirect prompt injections occur when an LLM accepts input from external sources, such as websites or files. The external source may have content data that when interpreted by the model, alters the behavior of the model in unintended or unexpected ways. Like direct injections, indirect injections can be either intentional or unintentional.
+  Indirect prompt injections occur when an LLM accepts input that was not authored as a direct end-user prompt to the model, but is still ingested into the model context (for example, websites, files, retrieved documents, tool outputs, emails, or other machine-readable content). Here, **external** should be read as **outside the application's trusted instruction boundary**, not strictly as "outside the organization": internally hosted wikis, tickets, code hosts, and databases can carry the same class of risk if their content is merged into the model context without treating it as untrusted data with respect to instruction following.
+
+#### Trusted-source (stored-context) prompt injection
+
+  A related pattern occurs when malicious instructions are placed in **trusted or authenticated stores** that the application treats as **data**, while a **more privileged consumer** (for example, an IDE agent, an MCP-enabled assistant, or an automated review agent) later reads that content with weaker filtering because it is "internal," version-controlled, or database-backed. Guardrails are often relaxed in these paths to preserve fidelity for legitimate business needs (accurate ticket text, faithful repo metadata, unchanged database fields), which can leave instruction-bearing channels under-addressed compared to obviously untrusted web input. Documented incidents in this pattern include retrieval of attacker-controlled database rows through MCP integrations, hidden or innocuous-looking content in pull-request metadata consumed by coding agents, and inbound email rendered inside an agent's mailbox context. The underlying mechanism is the same as other prompt injections (untrusted natural language influences model behavior); the **input vector** differs in that it exploits high-trust retrieval and orchestration assumptions rather than a user typing into a chat box.
 
 The severity and nature of the impact of a successful prompt injection attack can vary greatly and are largely dependent on both the business context the model operates in, and the agency with which the model is architected. Generally, however, prompt injection can lead to unintended outcomes, including but not limited to:
 
@@ -55,7 +59,7 @@ Prompt injection vulnerabilities are possible due to the nature of generative AI
 
 #### 6. Segregate and identify external content
 
-  Separate and clearly denote untrusted content to limit its influence on user prompts.
+  Separate and clearly denote untrusted content to limit its influence on user prompts. Extend the same discipline to **authenticated internal content** that is not authored by the model operator (for example, issue titles, pull-request descriptions, knowledge-base pages, CRM fields, and MCP tool or resource descriptions registered from third parties). Prefer **provenance metadata** (who wrote it, when, from which system), treat trust as a property of the **author and policy** rather than the network boundary alone, and scope **capabilities** so that a single hijacked task session cannot exceed the minimum privileges required for that task.
 
 #### 7. Conduct adversarial testing and attack simulations
 
@@ -99,6 +103,10 @@ Prompt injection vulnerabilities are possible due to the nature of generative AI
 
   An attacker uses multiple languages or encodes malicious instructions (e.g., using Base64 or emojis) to evade filters and manipulate the LLM's behavior.
 
+#### Scenario #10: Trusted-source metadata and internal stores
+
+  An attacker contributes or edits content in a channel the organization considers legitimate and low-risk (for example, a database row visible to an internal tool, a GitHub issue title, or a pull-request field). A developer or automated agent later pulls that content into the model context without aggressive sanitization because it is not user-typed chat input. The embedded instructions steer the model or connected tools toward sensitive actions (such as exfiltration or unsafe code changes) using the **higher trust** placed on that retrieval path.
+
 ### Reference Links
 
 1. [ChatGPT Plugin Vulnerabilities - Chat with Code](https://embracethered.com/blog/posts/2023/chatgpt-plugin-vulns-chat-with-code/) **Embrace the Red**
@@ -115,6 +123,15 @@ Prompt injection vulnerabilities are possible due to the nature of generative AI
 12. [Exploiting Programmatic Behavior of LLMs: Dual-Use Through Standard Security Attacks](https://ieeexplore.ieee.org/document/10579515)
 13. [Universal and Transferable Adversarial Attacks on Aligned Language Models (arxiv.org)](https://arxiv.org/abs/2307.15043)
 14. [From ChatGPT to ThreatGPT: Impact of Generative AI in Cybersecurity and Privacy (arxiv.org)](https://arxiv.org/abs/2307.00691)
+15. [Supabase MCP can leak your entire SQL database](https://generalanalysis.com/blog/supabase-mcp-blog): **General Analysis**
+16. [Anthropic, Google, Microsoft paid AI bug bounties – quietly](https://www.theregister.com/2026/04/15/claude_gemini_copilot_agents_hijacked/): **The Register**
+17. [CamoLeak: Critical GitHub Copilot vulnerability leaks private source code](https://www.legitsecurity.com/blog/camoleak-critical-github-copilot-vulnerability-leaks-private-source-code): **Legit Security**
+18. [How Microsoft defends against indirect prompt injection attacks](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks): **Microsoft MSRC**
+19. [Attacking and Defending Generative AI](https://github.com/NetsecExplained/Attacking-and-Defending-Generative-AI): **NetsecExplained**
+20. [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy): **Arcanum Sec**
+21. [Pangea Prompt Injection Taxonomy](https://pangea.cloud/taxonomy/): **Pangea (CrowdStrike)**
+22. [The Terminology Problem Causing Security Teams Real Risks](https://www.pillar.security/blog/the-terminology-problem-causing-security-teams-real-risks): **Pillar Security**
+23. [Prompt Injection Isn't a Vulnerability](https://josephthacker.com/ai/2025/11/24/prompt-injection-isnt-a-vulnerability.html): **Joseph Thacker**
 
 ### Related Frameworks and Taxonomies
 
