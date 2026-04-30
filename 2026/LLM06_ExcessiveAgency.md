@@ -59,7 +59,7 @@ The following actions can prevent Excessive Agency:
 
 #### 3. Avoid open-ended extensions
 
-  Avoid the use of open-ended extensions where possible (e.g., run a shell command, fetch a URL, etc.) and use extensions with more granular functionality. For example, an LLM-based app may need to write some output to a file. If this were implemented using an extension to run a shell function then the scope for undesirable actions is very large (any other shell command could be executed). A more secure alternative would be to build a specific file-writing extension that only implements that specific functionality.
+  Avoid the use of open-ended extensions where possible (e.g., run a shell command, fetch a URL, etc.) and use extensions with more granular functionality. For example, an LLM-based app may need to write some output to a file. If this were implemented using an extension to run a shell function then the scope for undesirable actions is very large (any other shell command could be executed). A more secure alternative would be to build a specific file-writing extension that only implements that specific functionality. Where parameters are unavoidable, constrain them with a strict schema (enums, length and value bounds, `additionalProperties: false`) validated in the extension wrapper rather than in model reasoning.
 
 #### 4. Minimize extension permissions
 
@@ -71,7 +71,7 @@ The following actions can prevent Excessive Agency:
 
 #### 6. Require user approval
 
-  Utilise human-in-the-loop control to require a human to approve high-impact actions before they are taken. This may be implemented in a downstream system (outside the scope of the LLM application) or within the LLM extension itself. For example, an LLM-based app that creates and posts social media content on behalf of a user should include a user approval routine within the extension that implements the 'post' operation.
+  Utilise human-in-the-loop control to require a human to approve high-impact actions before they are taken. This may be implemented in a downstream system (outside the scope of the LLM application) or within the LLM extension itself. For example, an LLM-based app that creates and posts social media content on behalf of a user should include a user approval routine within the extension that implements the 'post' operation. Classify actions by impact (e.g. read, write, delete, spend, production change) so that irreversible or high-impact operations always require approval, while low-impact reads can run automatically.
 
 #### 7. Complete mediation
 
@@ -85,6 +85,7 @@ The following options will not prevent Excessive Agency, but can limit the level
 
 * Log and monitor the activity of LLM extensions and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
 * Implement rate-limiting to reduce the number of undesirable actions that can take place within a given time period, increasing the opportunity to discover undesirable actions through monitoring before significant damage can occur.
+* Apply circuit breakers that halt or escalate when sensitive extensions fire repeatedly within a short window, to contain runaway loops and cascading tool chains.
 
 ### Example Attack Scenarios
 
