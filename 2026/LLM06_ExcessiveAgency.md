@@ -86,6 +86,42 @@ The following options will not prevent Excessive Agency, but can limit the level
 * Log and monitor the activity of LLM extensions and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
 * Implement rate-limiting to reduce the number of undesirable actions that can take place within a given time period, increasing the opportunity to discover undesirable actions through monitoring before significant damage can occur.
 
+### Technical Controls
+
+The following controls operationalise the prevention strategies above. They are specific to agentic / tool-using LLM systems and should be enforced **outside** the model, by the runtime that exposes tools to the agent.
+
+#### 1. Tool allowlist per agent
+
+  Maintain an explicit, default-deny registry of tools each agent is permitted to call. The registry is bound to an agent identity, tenant, and (where relevant) session. New tools are added only through a controlled release process, never via runtime instructions or untrusted content. Deprecated or "trial" tools must be removed from the registry, not just unreferenced in prompts.
+
+#### 2. Strict tool contracts and parameter validation
+
+  Every tool exposed to an LLM must declare a machine-checked schema (e.g. JSON Schema) with `additionalProperties: false`, enumerated values where possible, length and numeric bounds, and patterns for free-text fields. Validation runs in the tool wrapper, not inside model reasoning. Avoid open-ended parameters that carry shell strings, raw SQL, file paths, or arbitrary URLs; where unavoidable, parse and re-issue them against a backend allowlist before execution.
+
+#### 3. Authorization outside the model (PDP / PEP)
+
+  Treat the model as untrusted with respect to access decisions. Every side-effecting tool call must be evaluated by a policy decision point that considers subject (end user / agent identity), action, target resource, tenant, and context, and enforced by a policy enforcement point at the API or data layer. The model's claim that an action is permitted must never be the basis for execution.
+
+#### 4. Identity binding and per-user credentials
+
+  When an agent acts on behalf of an end user, use that user's identity (e.g. OAuth on-behalf-of, token exchange, scoped service tokens) for downstream calls, with minimum scopes. Avoid shared high-privilege service accounts for user-scoped features; combined with user-controlled resource identifiers in tool arguments, they create a confused-deputy condition that excessive agency turns into cross-user data exposure.
+
+#### 5. Impact-tiered autonomy
+
+  Classify tools by side-effect class (e.g. read, write, delete, network egress, spend, production change) and gate autonomy accordingly. Low-impact reads may run automatically; irreversible, financial, mass-export, or production-changing actions require step-up controls (re-authentication, second-person approval, change ticket) before execution, regardless of how confidently the model proposed them.
+
+#### 6. Execution bounds and circuit breakers
+
+  Bound agent runtime behaviour with maximum tool-call counts per task, per-tool and per-user rate limits, wall-clock timeouts, token and spend budgets, and circuit breakers that halt or escalate when sensitive tools fire repeatedly within a window. These limits cap blast radius from runaway loops, cascading tool chains, and abuse of legitimate capabilities.
+
+#### 7. Isolated execution environments
+
+  Run tools that touch the file system, execute code, or make outbound network calls inside a restricted sandbox (separate process, container, or WebAssembly runtime) with an explicit network egress allowlist, no host filesystem access by default, and read-only or path-normalised mounts where access is required. This contains the impact of a tool that is induced to act outside its intended scope.
+
+#### 8. Security-relevant telemetry
+
+  Emit structured logs for every tool invocation including agent identity, principal, tool name, hashed or redacted arguments, target resource identifiers, outcome, and any policy decision (allow/deny with reason). Track operational metrics such as sensitive-tool calls per session, policy denials, and cross-tenant resource access so that excessive agency can be detected from behaviour, not only from incident reports.
+
 ### Example Attack Scenarios
 
 An LLM-based personal assistant app is granted access to an individual’s mailbox via an extension in order to summarise the content of incoming emails. To achieve this functionality, the extension requires the ability to read messages, however the plugin that the system developer has chosen to use also contains functions for sending messages. Additionally, the app is vulnerable to an indirect prompt injection attack, whereby a maliciously-crafted incoming email tricks the LLM into commanding the agent to scan the user's inbox for sensitive information and forward it to the attacker's email address. This could be avoided by:
