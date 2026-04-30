@@ -83,8 +83,11 @@ The following actions can prevent Excessive Agency:
 
 The following options will not prevent Excessive Agency, but can limit the level of damage caused:
 
-* Log and monitor the activity of LLM extensions and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
-* Implement rate-limiting to reduce the number of undesirable actions that can take place within a given time period, increasing the opportunity to discover undesirable actions through monitoring before significant damage can occur.
+#### 9. Monitor extension use
+  Log and monitor the activity of LLM extensions and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
+
+#### 10. Rate limiting
+  Implement rate-limiting to reduce the number of undesirable actions that can take place within a given time period, increasing the opportunity to discover undesirable actions through monitoring before significant damage can occur.
 
 ### Example Attack Scenarios
 
