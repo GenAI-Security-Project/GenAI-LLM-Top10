@@ -115,6 +115,15 @@ Prompt injection vulnerabilities are possible due to the nature of generative AI
 12. [Exploiting Programmatic Behavior of LLMs: Dual-Use Through Standard Security Attacks](https://ieeexplore.ieee.org/document/10579515)
 13. [Universal and Transferable Adversarial Attacks on Aligned Language Models (arxiv.org)](https://arxiv.org/abs/2307.15043)
 14. [From ChatGPT to ThreatGPT: Impact of Generative AI in Cybersecurity and Privacy (arxiv.org)](https://arxiv.org/abs/2307.00691)
+15. [Supabase MCP can leak your entire SQL database](https://generalanalysis.com/blog/supabase-mcp-blog): **General Analysis**
+16. [Anthropic, Google, Microsoft paid AI bug bounties – quietly](https://www.theregister.com/2026/04/15/claude_gemini_copilot_agents_hijacked/): **The Register**
+17. [CamoLeak: Critical GitHub Copilot vulnerability leaks private source code](https://www.legitsecurity.com/blog/camoleak-critical-github-copilot-vulnerability-leaks-private-source-code): **Legit Security**
+18. [How Microsoft defends against indirect prompt injection attacks](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks): **Microsoft MSRC**
+19. [Attacking and Defending Generative AI](https://github.com/NetsecExplained/Attacking-and-Defending-Generative-AI): **NetsecExplained**
+20. [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy): **Arcanum Sec**
+21. [Pangea Prompt Injection Taxonomy](https://pangea.cloud/taxonomy/): **Pangea (CrowdStrike)**
+22. [The Terminology Problem Causing Security Teams Real Risks](https://www.pillar.security/blog/the-terminology-problem-causing-security-teams-real-risks): **Pillar Security**
+23. [Prompt Injection Isn't a Vulnerability](https://josephthacker.com/ai/2025/11/24/prompt-injection-isnt-a-vulnerability.html): **Joseph Thacker**
 
 ### Related Frameworks and Taxonomies
 
