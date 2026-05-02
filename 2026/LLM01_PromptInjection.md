@@ -1,6 +1,6 @@
 ## LLM01:2026 Prompt Injection
 
-## Definition
+### Description
 
 A **prompt-injection vulnerability** occurs when input to a large language model (LLM) — direct user input, retrieved documents, tool output, image/audio/video content, intermediate reasoning, or persistent memory — alters the model's behavior in ways the operator did not intend. Because LLMs make no architectural distinction between "instructions" and "data" — both are tokens on the same stream ([NCSC, Dec 2025](https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection)) — there is no clean equivalent to parameterized queries. Inputs need not be human-readable, need not arrive directly from a user, and need not be visible in the rendered interface to influence the model.
 
@@ -24,7 +24,7 @@ The severity and nature of a successful prompt injection vary with the business 
 
 ---
 
-## Types of Prompt Injection
+### Types of Prompt Injection
 
 ### Direct Prompt Injection
 
@@ -66,7 +66,7 @@ Indirect prompt injection is increasingly used to turn the user's own LLM instan
 
 ---
 
-## Strategies
+### Prevention and Mitigation Strategies
 
 Prompt injection vulnerabilities are possible due to the nature of generative AI. Given the stochastic influence at the heart of the way models work, it is unclear if there are fool-proof methods of prevention for prompt injection. Modern guidance and research indicates that there is likely no way to completely prevent prompt injection today, but that controls should focus on a defense-in-depth posture, with each control recommended below considered one layer and none sufficient on its own. 
 
@@ -256,44 +256,43 @@ Static test suites underestimate real-world ASR (Attack Success Rate) because th
 
 ### Reference Links
 
-1. [Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173): Greshake et al., arXiv 2023
-2. [Inject My PDF: Prompt Injection for your Resume](https://kai-greshake.de/posts/inject-my-pdf): Kai Greshake, 2023
-3. [Universal and Transferable Adversarial Attacks on Aligned Language Models](https://arxiv.org/abs/2307.15043): Zou et al., arXiv 2023
-4. [Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations (NIST AI 100-2 E2025)](https://csrc.nist.gov/pubs/ai/100/2/e2025/final): NIST, March 2025
-5. [Generative AI Profile (NIST AI 600-1)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf): NIST, July 2024
-6. [Prompt injection is not SQL injection](https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection): UK NCSC, December 2025
-7. [Principles for the Secure Integration of AI in Operational Technology](https://www.cisa.gov/sites/default/files/2025-12/joint-guidance-principles-for-the-secure-integration-of-artificial-intelligence-in-operational-technology-508c.pdf): CISA + FBI + NSA + ACSC + allied partners, December 2025
+1. [Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173): Greshake et al., **arXiv** 2023
+2. [Inject My PDF: Prompt Injection for your Resume](https://kai-greshake.de/posts/inject-my-pdf): **Kai Greshake**, 2023
+3. [Universal and Transferable Adversarial Attacks on Aligned Language Models](https://arxiv.org/abs/2307.15043): Zou et al., **arXiv** 2023
+4. [Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations (NIST AI 100-2 E2025)](https://csrc.nist.gov/pubs/ai/100/2/e2025/final): **NIST**, March 2025
+5. [Generative AI Profile (NIST AI 600-1)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf): **NIST**, July 2024
+6. [Prompt injection is not SQL injection](https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection): **UK NCSC**, December 2025
+7. [Principles for the Secure Integration of AI in Operational Technology](https://www.cisa.gov/sites/default/files/2025-12/joint-guidance-principles-for-the-secure-integration-of-artificial-intelligence-in-operational-technology-508c.pdf): **CISA + FBI + NSA + ACSC + allied partners**, December 2025
 8. [The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against LLM Jailbreaks and Prompt Injections](https://arxiv.org/abs/2510.09023): Nasr, Carlini et al., October 2025
-9. [Prompt injection attacks on vision language models in oncology](https://www.nature.com/articles/s41467-024-55631-x): Clusmann et al., *Nature Communications*, 2024
-10. [JPS: Jailbreak Multimodal LLMs with Collaborative Visual Perturbation and Textual Steering](https://dl.acm.org/doi/10.1145/3746027.3754561): Wang et al., ACM MM 2025
-11. [Bypassing Prompt Injection Guardrails via Code-Switching and Unicode Transcoding](https://arxiv.org/html/2504.11168v2): arXiv:2504.11168, 2025
-12. [PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation](https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf): Zou et al., USENIX Security 2025
-13. [StruQ: Defending Against Prompt Injection with Structured Queries](https://www.usenix.org/system/files/usenixsecurity25-chen-sizhe.pdf): Chen et al., USENIX Security 2025
-14. [Fun-tuning: Characterizing the Vulnerability of Proprietary LLMs to Optimization-based Prompt Injection Attacks via the Fine-Tuning Interface](https://arxiv.org/abs/2501.09798): Labunets et al., arXiv 2501.09798, January 2025
-15. [Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions](https://dl.acm.org/doi/10.1145/3796519): Hou et al., ACM TOSEM 2025
-16. [AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents](https://arxiv.org/abs/2406.13352): Debenedetti et al., NeurIPS 2024
-17. [JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models](https://arxiv.org/abs/2404.01318): Chao et al., NeurIPS 2024
-18. [M365 Copilot Prompt Injection, Tool Invocation and Data Exfil using ASCII Smuggling](https://embracethered.com/blog/posts/2024/m365-copilot-prompt-injection-tool-invocation-and-data-exfil-using-ascii-smuggling/): Johann Rehberger (Embrace The Red), August 2024
-19. [Sneaky Bits & ASCII Smuggler updates](https://embracethered.com/blog/posts/2025/sneaky-bits-and-ascii-smuggler/): Johann Rehberger (Embrace The Red), 2025
+9. [Prompt injection attacks on vision language models in oncology](https://www.nature.com/articles/s41467-024-55631-x): Clusmann et al., ***Nature Communications***, 2024
+10. [JPS: Jailbreak Multimodal LLMs with Collaborative Visual Perturbation and Textual Steering](https://dl.acm.org/doi/10.1145/3746027.3754561): Wang et al., **ACM MM 2025**
+11. [Bypassing Prompt Injection Guardrails via Code-Switching and Unicode Transcoding](https://arxiv.org/html/2504.11168v2): **arXiv**:2504.11168, 2025
+12. [PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation](https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf): Zou et al., **USENIX Security 2025**
+13. [StruQ: Defending Against Prompt Injection with Structured Queries](https://www.usenix.org/system/files/usenixsecurity25-chen-sizhe.pdf): Chen et al., **USENIX Security 2025**
+14. [Fun-tuning: Characterizing the Vulnerability of Proprietary LLMs to Optimization-based Prompt Injection Attacks via the Fine-Tuning Interface](https://arxiv.org/abs/2501.09798): Labunets et al., **arXiv** 2501.09798, January 2025
+15. [Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions](https://dl.acm.org/doi/10.1145/3796519): Hou et al., **ACM TOSEM 2025**
+16. [AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents](https://arxiv.org/abs/2406.13352): Debenedetti et al., **NeurIPS 2024**
+17. [JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models](https://arxiv.org/abs/2404.01318): Chao et al., **NeurIPS 2024**
+18. [M365 Copilot Prompt Injection, Tool Invocation and Data Exfil using ASCII Smuggling](https://embracethered.com/blog/posts/2024/m365-copilot-prompt-injection-tool-invocation-and-data-exfil-using-ascii-smuggling/): Johann Rehberger (**Embrace The Red**), August 2024
+19. [Sneaky Bits & ASCII Smuggler updates](https://embracethered.com/blog/posts/2025/sneaky-bits-and-ascii-smuggler/): Johann Rehberger (**Embrace The Red**), 2025
 20. [Hacking Gemini's Memory with Prompt Injection and Delayed Tool Invocation](https://embracethered.com/blog/posts/2025/google-gemini-memory-persistence-prompt-injection/): Johann Rehberger, February 2025
 21. [GitHub Copilot Remote Code Execution via Prompt Injection (CVE-2025-53773)](https://embracethered.com/blog/posts/2025/github-copilot-remote-code-execution-via-prompt-injection/): Johann Rehberger, 2025
-22. [Promptfoo ASCII-smuggling red-team plugin docs](https://www.promptfoo.dev/docs/red-team/plugins/ascii-smuggling/): Promptfoo
-23. [GitHub MCP Server Vulnerability](https://invariantlabs.ai/blog/mcp-github-vulnerability): Invariant Labs, May 2025
-24. [Supabase MCP can leak your entire SQL database](https://generalanalysis.com/blog/supabase-mcp-blog): General Analysis, July 2025
-25. [Postmark-MCP npm Malicious Backdoor — Email Theft](https://www.koi.ai/blog/postmark-mcp-npm-malicious-backdoor-email-theft): Koi Security, September 2025
-26. [Unofficial Postmark MCP npm package silently stole users' emails](https://www.bleepingcomputer.com/news/security/unofficial-postmark-mcp-npm-silently-stole-users-emails/): BleepingComputer, September 2025
-27. [Defending Against Indirect Prompt Injection Attacks With Spotlighting](https://www.microsoft.com/en-us/research/publication/defending-against-indirect-prompt-injection-attacks-with-spotlighting/): Microsoft Research, 2025
-28. [Announcing the Winners of the Adaptive Prompt Injection Challenge — LLMail-Inject](https://www.microsoft.com/en-us/msrc/blog/2025/03/announcing-the-winners-of-the-adaptive-prompt-injection-challenge-llmail-inject/): Microsoft MSRC, March 2025
-29. [Practical AI Agent Security: Agents Rule of Two](https://ai.meta.com/blog/practical-ai-agent-security/): Meta AI, October 2025
-30. [Why the Rule of Two Can't Protect Your Agents](https://noma.security/blog/mcp-servers-agentic-risk-and-the-framework-that-protects-it/): Noma Security, 2025
-31. [AWS-2025-015 (Amazon Q VS Code extension supply-chain incident)](https://aws.amazon.com/security/security-bulletins/AWS-2025-015/): AWS Security Bulletin, July 2025
-32. [AWS-2025-019 (Amazon Q runtime injection)](https://aws.amazon.com/security/security-bulletins/AWS-2025-019/): AWS Security Bulletin, July 2025
-33. [EchoLeak (CVE-2025-32711) — Microsoft 365 Copilot zero-click prompt injection](https://arxiv.org/abs/2509.10540): Reddy and Gujral, Aim Security, AAAI Fall Symposium 2025; paired with [NVD entry](https://nvd.nist.gov/vuln/detail/CVE-2025-32711)
-34. [CVE-2024-5184 (EmailGPT) advisory](https://www.incibe.es/en/incibe-cert/early-warning/vulnerabilities/cve-2024-5184): INCIBE-CERT, 2024
+22. [Promptfoo ASCII-smuggling red-team plugin docs](https://www.promptfoo.dev/docs/red-team/plugins/ascii-smuggling/): **Promptfoo**
+23. [GitHub MCP Server Vulnerability](https://invariantlabs.ai/blog/mcp-github-vulnerability): **Invariant Labs**, May 2025
+24. [Supabase MCP can leak your entire SQL database](https://generalanalysis.com/blog/supabase-mcp-blog): **General Analysis**, July 2025
+25. [Postmark-MCP npm Malicious Backdoor — Email Theft](https://www.koi.ai/blog/postmark-mcp-npm-malicious-backdoor-email-theft): **Koi Security**, September 2025
+26. [Unofficial Postmark MCP npm package silently stole users' emails](https://www.bleepingcomputer.com/news/security/unofficial-postmark-mcp-npm-silently-stole-users-emails/): **BleepingComputer**, September 2025
+27. [Defending Against Indirect Prompt Injection Attacks With Spotlighting](https://www.microsoft.com/en-us/research/publication/defending-against-indirect-prompt-injection-attacks-with-spotlighting/): **Microsoft Research**, 2025
+28. [Announcing the Winners of the Adaptive Prompt Injection Challenge — LLMail-Inject](https://www.microsoft.com/en-us/msrc/blog/2025/03/announcing-the-winners-of-the-adaptive-prompt-injection-challenge-llmail-inject/): **Microsoft MSRC**, March 2025
+29. [Practical AI Agent Security: Agents Rule of Two](https://ai.meta.com/blog/practical-ai-agent-security/): **Meta AI**, October 2025
+30. [Why the Rule of Two Can't Protect Your Agents](https://noma.security/blog/mcp-servers-agentic-risk-and-the-framework-that-protects-it/): **Noma Security**, 2025
+31. [AWS-2025-015 (Amazon Q VS Code extension supply-chain incident)](https://aws.amazon.com/security/security-bulletins/AWS-2025-015/): **AWS Security Bulletin**, July 2025
+32. [AWS-2025-019 (Amazon Q runtime injection)](https://aws.amazon.com/security/security-bulletins/AWS-2025-019/): **AWS Security Bulletin**, July 2025
+33. [EchoLeak (CVE-2025-32711) — Microsoft 365 Copilot zero-click prompt injection](https://arxiv.org/abs/2509.10540): Reddy and Gujral, **Aim Security, AAAI Fall Symposium 2025**; paired with [NVD entry](https://nvd.nist.gov/vuln/detail/CVE-2025-32711)
+34. [CVE-2024-5184 (EmailGPT) advisory](https://www.incibe.es/en/incibe-cert/early-warning/vulnerabilities/cve-2024-5184): **INCIBE-CERT**, 2024
 
 ---
-
-## Related Frameworks and Taxonomies
+### Related Frameworks and Taxonomies
 
 Refer to this section for comprehensive information, scenarios, strategies, and best practices that complement this entry.
 
