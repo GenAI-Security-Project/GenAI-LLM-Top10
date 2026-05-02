@@ -66,9 +66,9 @@ An attacker uses an LLM to simultaneously conduct social engineering conversatio
 ### Reference Links
 
 1. [Sysdig 2024 Global Threat Report - LLMjacking](https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/): **Sysdig**
-2. [LLM Agents Can Autonomously Hack Websites](https://arxiv.org/abs/2402.06664): Fang, R., Bindu, R., Gupta, A., & Kang, D. (2024). arXiv:2402.06664
-3. [From ChatGPT to ThreatGPT: Impact of Generative AI in Cybersecurity and Privacy](https://arxiv.org/abs/2307.00691): Gupta, M., Akiri, C., Arber, K., Arrieta, L., & Goel, R. (2023). arXiv:2307.00691
-4. [Not with a satisfying satisfying satisfying: Denial-of-Wallet Attacks on Multi-modal LLMs](https://arxiv.org/abs/2502.00182): Gao, J., Chiang, J., & Mittal, P. (2025). arXiv:2502.00182
-5. [Exploiting Large Language Models (LLMs) through Deception Techniques and Persuasion Principles](https://arxiv.org/abs/2311.14876): Motlagh, F. N., Hajizadeh, M., Majd, M., Najafi, P., Cheng, F., & Meinel, C. (2024). arXiv:2311.14876
+2. [LLM Agents Can Autonomously Hack Websites](https://arxiv.org/abs/2402.06664): Fang, R., Bindu, R., Gupta, A., & Kang, D. (2024). **arXiv:2402.06664**
+3. [From ChatGPT to ThreatGPT: Impact of Generative AI in Cybersecurity and Privacy](https://arxiv.org/abs/2307.00691): Gupta, M., Akiri, C., Arber, K., Arrieta, L., & Goel, R. (2023). **arXiv:2307.00691**
+4. [Not with a satisfying satisfying satisfying: Denial-of-Wallet Attacks on Multi-modal LLMs](https://arxiv.org/abs/2502.00182): Gao, J., Chiang, J., & Mittal, P. (2025). **arXiv:2502.00182**
+5. [Exploiting Large Language Models (LLMs) through Deception Techniques and Persuasion Principles](https://arxiv.org/abs/2311.14876): Motlagh, F. N., Hajizadeh, M., Majd, M., Najafi, P., Cheng, F., & Meinel, C. (2024). **arXiv:2311.14876**
 6. [LiteLLM SSRF Vulnerability CVE-2024-6587](https://nvd.nist.gov/vuln/detail/CVE-2024-6587): **NIST National Vulnerability Database**
 7. [OWASP Top 10 for LLM Applications - LLM10: Unbounded Consumption](https://genai.owasp.org): **OWASP**
