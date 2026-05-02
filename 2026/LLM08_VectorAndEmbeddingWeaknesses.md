@@ -18,7 +18,13 @@ Retrieval Augmented Generation (RAG) is a model adaptation technique that enhanc
 
 #### 3. Embedding Inversion Attacks
 
-  Attackers can exploit vulnerabilities to invert embeddings and recover significant amounts of source information, compromising data confidentiality.(Ref #3, #4)
+  Attackers can exploit vulnerabilities to invert embeddings and recover significant amounts of source information, compromising data confidentiality. (Ref #3, #4)
+
+  Recent research has expanded the known attack surface for embedding inversion. The ALGEN framework (ACL 2025) demonstrated effective inversion across black-box encoders with as few as 1,000 training samples, suggesting that prior assumptions about the resources required for such attacks may not hold in all cases. ZSInvert (arXiv:2504.00147, March 2025) introduced a zero-shot approach that does not require model-specific training data, demonstrating effectiveness across multiple embedding architectures in evaluated conditions.
+
+  Current research indicates word-level recovery rates ranging from approximately 50% to 92% depending on text length, embedding model, and attack conditions. These findings suggest that stored embeddings may carry meaningful reconstruction risk under certain threat models, particularly for short or in-domain text.
+
+  Organizations in regulated industries should assess whether embedding storage meets applicable data protection requirements, given the potential for partial or full text reconstruction. Frameworks such as GDPR and HIPAA may apply depending on the nature of the stored content and jurisdiction. Vector databases storing sensitive content should be treated as sensitive data stores and protected accordingly.
 
 #### 4. Data Poisoning Attacks
 
@@ -45,6 +51,10 @@ Retrieval Augmented Generation (RAG) is a model adaptation technique that enhanc
 #### 4. Monitoring and Logging
 
   Maintain detailed immutable logs of retrieval activities to detect and respond promptly to suspicious behavior.
+
+#### 5. Encrypt embeddings at rest and treat vector databases as sensitive data stores
+
+  Encrypt stored embeddings and manage keys separately from the application layer. Because embeddings may be vulnerable to inversion attacks under certain conditions, vector databases storing sensitive content should be treated with the same care as the source documents themselves. Where applicable, apply differential privacy noise during embedding generation as an additional layer of defense. Consider rate limiting on embedding API endpoints, as inversion attacks may require repeated queries to succeed.
 
 ### Example Attack Scenarios
 
@@ -76,7 +86,7 @@ Retrieval Augmented Generation (RAG) is a model adaptation technique that enhanc
 
 #### Mitigation
 
-  The impact of RAG on the foundational model's behavior should be monitored and evaluated, with adjustments to the augmentation process to maintain desired qualities like empathy(Ref #8).
+  The impact of RAG on the foundational model's behavior should be monitored and evaluated, with adjustments to the augmentation process to maintain desired qualities like empathy. (Ref #8)
 
 ### Reference Links
 
