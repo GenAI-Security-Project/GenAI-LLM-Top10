@@ -134,11 +134,11 @@ An LLM operator changes its T&Cs and privacy policy to require explicit opt-out 
 8. [HuggingFace SF_Convertbot Scanner](https://gist.github.com/rossja/d84a93e5c6b8dd2d4a538aa010b29163)
 9. [Thousands of servers hacked due to insecurely deployed Ray AI framework](https://www.csoonline.com/article/2075540/thousands-of-servers-hacked-due-to-insecurely-deployed-ray-ai-framework.html)
 10. [LeftoverLocals: Listening to LLM responses through leaked GPU local memory](https://blog.trailofbits.com/2024/01/16/leftoverlocals-listening-to-llm-responses-through-leaked-gpu-local-memory/)
-11.[ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010) - MITRE ATLAS
-12.[LLM Scalability Risk for Agentic-AI and Model Supply Chain Security]https://arxiv.org/abs/2602.19021
+11. [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS**
+12. [LLM Scalability Risk for Agentic-AI and Model Supply Chain Security](https://arxiv.org/abs/2602.19021): **arXiv**
 
 ### Related Frameworks and Taxonomies
 
 Refer to this section for comprehensive information, scenario strategies relating to infrastructure deployment, applied environment controls, and other best practices.
 
-- [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010) - MITRE ATLAS
+- [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS**
