@@ -75,7 +75,7 @@ The following actions can prevent Excessive Agency:
 
 #### 7. Complete mediation
 
-  Implement authorization in downstream systems rather than relying on an LLM to decide if an action is allowed or not. Enforce the complete mediation principle so that all requests made to downstream systems via extensions are validated against security policies.
+  Implement authorization in logic rather than relying on an LLM to decide if an action is allowed or not. Enforce the complete mediation principle so that all requests made to downstream systems are validated against security policies by the extension, by an independent pre-execution policy decision point between the extension and the downstream system, or by the downstream system itself. Such policies can help manage cases where an agent's nominally-permitted action is contextually unsafe. A graduated enforcement policy (audit, warn, block, escalate) permits low-consequence actions to auto-approve while high-consequence ones route to human review. For example, consider a customer service chatbot that has an extension to issue refunds; refunds below a given threshold are automatically processed, whereas those above are routed for human approval.
 
 #### 8. Sanitise LLM inputs and outputs
 
