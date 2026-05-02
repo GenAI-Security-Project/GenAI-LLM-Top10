@@ -51,7 +51,7 @@ Complete these once, before your first PR:
 ├── LLM01_PromptInjection.md    # existing numbered entries LLM01..LLM10
 ├── ...
 ├── LLM10_UnboundedConsumption.md
-├── new_entries/                # staging area for proposed (Track A) entries
+├── new_entry_candidates/       # staging area for proposed (Track A) entries
 └── artifacts/                  # diagrams, PDFs, supporting images
 ```
 
@@ -64,7 +64,7 @@ Other directories you may touch indirectly:
 
 ## Track A — Propose a new entry
 
-Use this track when you want to nominate a **new** risk/vulnerability for inclusion in the 2026 list. Your proposal lives in [`2026/new_entries/`](./new_entries/) until the core team evaluates it for inclusion; if accepted, it is later promoted to a numbered `LLMXX_*.md` slot.
+Use this track when you want to nominate a **new** risk/vulnerability for inclusion in the 2026 list. Your proposal lives in [`2026/new_entry_candidates/`](./new_entry_candidates/) until the core team evaluates it for inclusion; if accepted, it is later promoted to a numbered `LLMXX_*.md` slot.
 
 ### Step 1 — Open a discussion issue (recommended)
 
@@ -96,10 +96,10 @@ git checkout -b new-entry/model-inversion upstream/main
 
 ### Step 4 — Copy the template
 
-Copy [`2026/_template.md`](./_template.md) into [`2026/new_entries/`](./new_entries/) and rename it using a descriptive slug (lowercase, hyphenated, no `LLMXX` prefix — numbering is assigned by the core team during promotion):
+Copy [`2026/_template.md`](./_template.md) into [`2026/new_entry_candidates/`](./new_entry_candidates/) and rename it using a descriptive slug (lowercase, hyphenated, no `LLMXX` prefix — numbering is assigned by the core team during promotion):
 
 ```bash
-cp 2026/_template.md 2026/new_entries/model-inversion.md
+cp 2026/_template.md 2026/new_entry_candidates/model-inversion.md
 ```
 
 ### Step 5 — Fill in every template section
@@ -120,7 +120,7 @@ Follow the project-wide Markdown and tone rules in [`documentation/style/general
 See [Signing your commits](#signing-your-commits). Keep commits small and focused; one logical change per commit.
 
 ```bash
-git add 2026/new_entries/model-inversion.md
+git add 2026/new_entry_candidates/model-inversion.md
 git commit -S -m "Propose new entry: Model Inversion"
 ```
 
@@ -145,7 +145,7 @@ See [Review process](#review-process). New-entry PRs typically go through severa
 
 If the core team accepts the proposal, a CODEOWNER (not you) will:
 
-1. Rename your file from `2026/new_entries/<slug>.md` to the next available `2026/LLMXX_<PascalCaseName>.md`.
+1. Rename your file from `2026/new_entry_candidates/<slug>.md` to the next available `2026/LLMXX_<PascalCaseName>.md`.
 2. Add the `LLMXX:` prefix to the level-2 heading.
 3. Assign a sub-team owner in [`CODEOWNERS`](../.github/CODEOWNERS) for ongoing maintenance (which moves the entry into [Track B](#track-b--upgrade-an-existing-entry)).
 
@@ -184,7 +184,7 @@ git checkout -b upgrade/LLM01-prompt-injection-multimodal upstream/main
 
 ### Step 4 — Edit the entry in place
 
-Edit the existing file directly — do **not** copy it into `new_entries/`. Preserve the structure required by [`2026/_template.md`](./_template.md) and [`documentation/style/entries.md`](../documentation/style/entries.md): the same five sections, the same heading levels, the `LLMXX:` prefix on the level-2 heading.
+Edit the existing file directly — do **not** copy it into `new_entry_candidates/`. Preserve the structure required by [`2026/_template.md`](./_template.md) and [`documentation/style/entries.md`](../documentation/style/entries.md): the same five sections, the same heading levels, the `LLMXX:` prefix on the level-2 heading.
 
 Scope guidance for sub-teams:
 
