@@ -1,0 +1,128 @@
+name: entry-conformance
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "2026/LLM0[1-9]_*.md"
+      - "2026/LLM10_*.md"
+      - "2026/new_entry_candidates/**.md"
+      - "2026/_template.md"
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Determine changed entry files
+        id: changed
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          git fetch origin "$BASE_REF" --depth=1
+          mapfile -t files < <(git diff --name-only --diff-filter=AMR \
+            "origin/${BASE_REF}...HEAD" -- \
+            '2026/LLM0[1-9]_*.md' \
+            '2026/LLM10_*.md' \
+            '2026/new_entry_candidates/**.md' \
+            '2026/_template.md' || true)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "files=" >> "$GITHUB_OUTPUT"
+            echo "No entry files changed in this PR."
+          else
+            printf 'Changed entry files:\n'
+            printf '  %s\n' "${files[@]}"
+            # Pass as null-delimited list via a file to avoid shell-quoting issues
+            printf '%s\n' "${files[@]}" > /tmp/entry-conformance-files.txt
+            echo "files=present" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run conformance check
+        id: check
+        if: steps.changed.outputs.files == 'present'
+        shell: bash
+        run: |
+          set +e
+          # Read filenames from the file written by the previous step.
+          # Using xargs -d '\n' ensures we never pass file content through the shell.
+          xargs -d '\n' -a /tmp/entry-conformance-files.txt \
+            python .github/scripts/check-entry-conformance.py \
+            > conformance.out 2>&1
+          status=$?
+          cat conformance.out
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit "$status"
+        continue-on-error: true
+
+      - name: Apply needs-fix label on failure
+        if: steps.check.outputs.status != '0' && steps.check.outputs.status != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUM: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh pr edit "$PR_NUM" --add-label needs-fix --repo "$REPO" || true
+
+      - name: Remove needs-fix label on pass
+        if: steps.check.outputs.status == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUM: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh pr edit "$PR_NUM" --remove-label needs-fix --repo "$REPO" 2>/dev/null || true
+
+      - name: Comment with errors on failure
+        if: steps.check.outputs.status != '0' && steps.check.outputs.status != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUM: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          {
+            echo "## :no_entry: Entry conformance check failed"
+            echo ""
+            echo "One or more changed entry files do not match the structure required by"
+            echo "[\`documentation/style/entries.md\`](../blob/main/documentation/style/entries.md)"
+            echo "and [\`2026/_template.md\`](../blob/main/2026/_template.md)."
+            echo ""
+            echo "**Errors reported by the conformance script:**"
+            echo ""
+            echo '```'
+            cat conformance.out
+            echo '```'
+            echo ""
+            echo "Push a fix to this branch and the check will re-run automatically."
+            echo "To run the check yourself before pushing:"
+            echo ""
+            echo '```bash'
+            echo 'python .github/scripts/check-entry-conformance.py 2026/LLM01_PromptInjection.md'
+            echo '```'
+            echo ""
+            echo "_This comment was posted automatically by \`.github/workflows/entry-conformance.yml\`._"
+          } > comment.md
+          gh pr comment "$PR_NUM" --repo "$REPO" --body-file comment.md
+
+      - name: Fail the job on conformance error
+        if: steps.check.outputs.status != '0' && steps.check.outputs.status != ''
+        run: |
+          echo "Conformance errors above. Job failing so the status check blocks merge."
+          exit 1
