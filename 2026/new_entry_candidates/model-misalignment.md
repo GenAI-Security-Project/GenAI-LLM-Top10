@@ -1,4 +1,4 @@
-# LLM11: Model Misalignment — 2026 Proposal
+## Model Misalignment — 2026 Proposal
 
 *New entry candidate for the OWASP Top 10 for LLM Applications 2026 release.*
 *Proposal target path on PR: `2026/new_entries/model-misalignment.md`*
