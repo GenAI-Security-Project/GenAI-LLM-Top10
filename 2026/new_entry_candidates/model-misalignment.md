@@ -63,7 +63,7 @@ For each overlapping entry, the table below shows concrete scenarios that fit bo
 
 ---
 
-## LLM11: Model Misalignment
+## Model Misalignment
 
 ### Description
 
