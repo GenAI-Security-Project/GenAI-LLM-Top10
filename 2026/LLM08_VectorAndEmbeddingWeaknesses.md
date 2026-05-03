@@ -8,7 +8,7 @@ These weaknesses are distinct from prompt injection. They exploit the geometry o
 
 This entry covers the attacks that depend on the embedding layer to succeed. Indirect prompt injection through retrieved content is covered in LLM01:2026 Prompt Injection. Training-time poisoning of the embedding model itself is covered in LLM04:2026 Data and Model Poisoning. Serialization and deserialization flaws in vector-store libraries are covered in LLM03:2026 Supply Chain. Agent-memory attacks that do not rely on embedding geometry are covered in ASI06:2026 Memory and Context Poisoning in the OWASP Top 10 for Agentic Applications. Vectorless retrieval systems (BM25-only, LLM-native tree navigation) inherit the non-geometric risks above but do not have an LLM08 attack surface.
 
-### Common Examples of Risks
+### Common Examples of Risk
 
 #### 1. Cross-Tenant Leakage via Shared Similarity Search
 
