@@ -257,7 +257,7 @@ Right-to-explanation obligations (GDPR Art. 22) and equivalent ADMT provisions c
 | **CVE-2019-20634** | ML email-filter bypass (*Proof Pudding*) | 2019 | Canonical training-data extraction enabling model inversion. Listed by DSGAI01. |
 | **CVE-2024-5184** | EmailGPT prompt injection → system-prompt and data leakage | 2024 | Direct disclosure via prompt-injection self-disclosure pathway. Listed by DSGAI01. |
 | **CVE-2025-32711** | Microsoft 365 Copilot — *EchoLeak* | 2025 | Zero-click prompt-injection exfiltration; injection mechanism is LLM01, autonomous-action amplification is ASI, listed here for the disclosure outcome. Listed by DSGAI01. |
-| **CVE-2025-54794** | Claude AI prompt injection ("the jailbreak that talked back") | 2025 | Listed by DSGAI01. Verify scope before citing as primarily LLM02 vs LLM01. |
+| **CVE-2025-54794** | Claude AI prompt injection ("the jailbreak that talked back") | 2025 | Scope: primarily LLM01 (prompt-injection mechanism) with LLM02 disclosure outcome where injected prompts elicit confidential context or memory contents. Listed by DSGAI01. |
 | **CVE-2026-0612** | The Librarian — information leakage via `web_fetch` tool | 2026 | Information disclosure through tool-mediated fetch. Listed by DSGAI01. |
 | **CVE-2026-0628** | Chrome Gemini Live integration hijack | 2026 | Browser-extension hijack of an AI assistant; cross-references LLM01 (injection delivery), LLM03 (extension supply chain), and ASI (autonomous exfil). Disclosure outcome in scope here. |
 
