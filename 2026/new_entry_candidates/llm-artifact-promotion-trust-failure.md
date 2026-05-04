@@ -1,6 +1,6 @@
 for additional guidance, refer to [the style guide](../documentation/style/README.md) and to the [glossary](https://github.com/OWASP/www-project-top-10-for-large-language-model-applications/wiki/Definitions)
 
-## LLMXX: LLM artifact promotion trust failure
+## LLM artifact promotion trust failure
 
 ### Description
 
