@@ -1,0 +1,69 @@
+{
+  "_meta": {
+    "version": "1.1",
+    "owner": "rock@rockcyber.ai",
+    "repo": "GenAI-Security-Project/GenAI-LLM-Top10",
+    "voting_close": "May 18, 2026 at 23:59 UTC",
+    "form": {
+      "published_url": "https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform",
+      "short_url":     "https://forms.gle/jFmqZF1R6k9gCEfi6",
+      "form_id":       "1lNZHaqUQC_A9DJeSy9JJ1FQkzE1T-lA92vbJLoE6K_k",
+      "generated":     "May 4, 2026",
+      "covers_tracks": ["A", "B"]
+    },
+    "discussion": {
+      "url":      "https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/discussions/54",
+      "number":   54,
+      "category": "Announcements",
+      "pinned":   true,
+      "created":  "May 4, 2026"
+    },
+    "notes": "All 18 issues are pre-rendered. Run create_issues.py with --form-url pointing at the published_url above. The script posts to the GitHub API. One Form URL covers both tracks; voters land on the same URL from any issue and navigate to the relevant entry section. The form_id is the Drive ID — pass it to the aggregation pipeline to read the linked response Sheet."
+  },
+  "labels": [
+    {"name": "sprint-2",  "color": "0E8A16", "description": "Sprint 2 — Community Review and Voting (May 4–18, 2026)"},
+    {"name": "track-a",   "color": "1D76DB", "description": "Track A — feedback on existing Top 10 entries"},
+    {"name": "track-b",   "color": "5319E7", "description": "Track B — feedback on new candidate entries"},
+    {"name": "feedback",  "color": "FBCA04", "description": "Community feedback on a specific entry"},
+    {"name": "LLM01",     "color": "C5DEF5", "description": "LLM01 Prompt Injection"},
+    {"name": "LLM02",     "color": "C5DEF5", "description": "LLM02 Sensitive Information Disclosure"},
+    {"name": "LLM03",     "color": "C5DEF5", "description": "LLM03 Supply Chain"},
+    {"name": "LLM04",     "color": "C5DEF5", "description": "LLM04 Data and Model Poisoning"},
+    {"name": "LLM05",     "color": "C5DEF5", "description": "LLM05 Improper Output Handling"},
+    {"name": "LLM06",     "color": "C5DEF5", "description": "LLM06 Excessive Agency"},
+    {"name": "LLM07",     "color": "C5DEF5", "description": "LLM07 System Prompt Leakage"},
+    {"name": "LLM08",     "color": "C5DEF5", "description": "LLM08 Vector and Embedding Weaknesses"},
+    {"name": "LLM09",     "color": "C5DEF5", "description": "LLM09 Misinformation"},
+    {"name": "LLM10",     "color": "C5DEF5", "description": "LLM10 Unbounded Consumption"},
+    {"name": "TB-CFAS",   "color": "D4C5F9", "description": "Compositional Fine-Tuning Alignment Subversion"},
+    {"name": "TB-CMSB",   "color": "D4C5F9", "description": "Cross-Modal Safety Bypass"},
+    {"name": "TB-ITSC",   "color": "D4C5F9", "description": "Inference-Time Side-Channel Disclosure"},
+    {"name": "TB-MCPX",   "color": "D4C5F9", "description": "MCP Tool Interface Exploitation"},
+    {"name": "TB-MMIS",   "color": "D4C5F9", "description": "Model Misalignment"},
+    {"name": "TB-MSDA",   "color": "D4C5F9", "description": "Model Scheming and Deceptive Alignment"},
+    {"name": "TB-SICG",   "color": "D4C5F9", "description": "Systemic Insecure Code Generation"},
+    {"name": "TB-WLLA",   "color": "D4C5F9", "description": "Weaponized LLM Abuse"}
+  ],
+  "track_a": [
+    {"id": "LLM01", "title": "Prompt Injection",                       "file": "LLM01_PromptInjection.md"},
+    {"id": "LLM02", "title": "Sensitive Information Disclosure",       "file": "LLM02_SensitiveInformationDisclosure.md"},
+    {"id": "LLM03", "title": "Supply Chain",                           "file": "LLM03_SupplyChain.md"},
+    {"id": "LLM04", "title": "Data and Model Poisoning",               "file": "LLM04_DataModelPoisoning.md"},
+    {"id": "LLM05", "title": "Improper Output Handling",               "file": "LLM05_ImproperOutputHandling.md"},
+    {"id": "LLM06", "title": "Excessive Agency",                       "file": "LLM06_ExcessiveAgency.md"},
+    {"id": "LLM07", "title": "System Prompt Leakage",                  "file": "LLM07_SystemPromptLeakage.md"},
+    {"id": "LLM08", "title": "Vector and Embedding Weaknesses",        "file": "LLM08_VectorAndEmbeddingWeaknesses.md"},
+    {"id": "LLM09", "title": "Misinformation",                         "file": "LLM09_Misinformation.md"},
+    {"id": "LLM10", "title": "Unbounded Consumption",                  "file": "LLM10_UnboundedConsumption.md"}
+  ],
+  "track_b": [
+    {"id": "TB-CFAS", "title": "Compositional Fine-Tuning Alignment Subversion", "file": "compositional-finetuning-alignment-subversion.md"},
+    {"id": "TB-CMSB", "title": "Cross-Modal Safety Bypass",                       "file": "cross-modal-safety-bypass.md"},
+    {"id": "TB-ITSC", "title": "Inference-Time Side-Channel Disclosure",          "file": "inference-time-side-channel-disclosure.md"},
+    {"id": "TB-MCPX", "title": "MCP Tool Interface Exploitation",                 "file": "mcp-tool-interface-exploitation.md"},
+    {"id": "TB-MMIS", "title": "Model Misalignment",                              "file": "model-misalignment.md"},
+    {"id": "TB-MSDA", "title": "Model Scheming and Deceptive Alignment",          "file": "model-scheming-and-deceptive-alignment.md"},
+    {"id": "TB-SICG", "title": "Systemic Insecure Code Generation",               "file": "systemic-insecure-code-generation.md"},
+    {"id": "TB-WLLA", "title": "Weaponized LLM Abuse",                            "file": "weaponized-llm-abuse.md"}
+  ]
+}

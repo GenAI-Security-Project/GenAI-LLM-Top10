@@ -1,0 +1,91 @@
+name: Sprint 2 Feedback — Track A (Existing Entry)
+description: Comment on a refreshed existing Top 10 entry. Use the linked Google Form for Importance and Clarity scores.
+title: "[Track A] Feedback: <ENTRY_ID> — <ENTRY_TITLE>"
+labels:
+  - sprint-2
+  - track-a
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Sprint 2 Community Review — Track A
+
+        Use this issue to leave **qualitative feedback** on the refreshed entry. Use the **Google Form** to submit your **Importance** and **Clarity** scores. One ballot covers all 18 entries (both tracks). The form and these issues are linked but separate by design.
+
+        - Vote: https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform — page through to the relevant Track A entry
+        - Voting closes: **May 18, 2026 at 23:59 UTC**
+        - Code of Conduct: [OWASP Code of Conduct](https://owasp.org/www-policy/operational/code-of-conduct)
+
+        ### Scoring rubric
+
+        - **Importance** (1–5): How critical is this risk to LLM application security in 2026?
+        - **Clarity** (1–5): How clearly does the entry describe the risk and its mitigations?
+
+        ### What good feedback looks like
+
+        - Specific to this entry (not the Top 10 as a whole)
+        - References a definition, example, or mitigation that is missing, wrong, or outdated
+        - Includes a citation, CVE, incident, or research finding when possible
+        - Proposes language, not just objections
+
+  - type: input
+    id: entry_id
+    attributes:
+      label: Entry ID
+      description: Confirm the entry you are commenting on (e.g., LLM01).
+      placeholder: LLM01
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: Feedback category
+      description: Pick the closest match. Use one issue per category if you have multiple types of feedback.
+      options:
+        - Definition or scope
+        - Common examples
+        - Prevention or mitigation strategies
+        - Attack scenarios
+        - Reference or supporting research
+        - Editorial (clarity, formatting, terminology)
+        - Suggest merging with another entry
+        - Suggest splitting into multiple entries
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: feedback_body
+    attributes:
+      label: Your feedback
+      description: Be specific. Quote the section or phrase you are referring to. Propose alternative language where possible.
+      placeholder: |
+        Section: <which section of the entry>
+        Issue: <what is wrong, missing, or unclear>
+        Proposed change: <your suggested fix or addition>
+        Evidence: <CVE, paper, incident, or research note ID if applicable>
+    validations:
+      required: true
+
+  - type: input
+    id: github_handle
+    attributes:
+      label: GitHub username (optional)
+      description: For voters who also commented here. Helps cross-validate engagement against the ballot data.
+      placeholder: "@your-handle"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgments
+      options:
+        - label: I have read the entry I am commenting on.
+          required: true
+        - label: I agree to abide by the OWASP Code of Conduct.
+          required: true
+        - label: I understand my comment will be public and may be quoted in Sprint 3 working notes.
+          required: true
