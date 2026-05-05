@@ -14,6 +14,7 @@ The following conditions can increase the impact of this vulnerability:
 - Insufficient monitoring and logging of LLM outputs
 - Absence of rate limiting or anomaly detection for LLM usage
 - Terminal, log, or IDE sinks render model output without neutralizing control characters such as ANSI escape sequences.
+- The client renderer (browser, chat UI, IDE, terminal) automatically fetches external resources referenced in model output (e.g., Markdown images, link previews, iframes), enabling exfiltration of context data through outbound requests.
 
 ### Common Examples of Risk
 
@@ -23,6 +24,7 @@ The following conditions can increase the impact of this vulnerability:
 4. LLM output is used to construct file paths without proper sanitization, potentially resulting in path traversal vulnerabilities.
 5. LLM-generated content is used in email templates without proper escaping, potentially leading to phishing attacks.
 6. LLM output containing ANSI escape sequences or other control characters is written to a terminal, log viewer, or IDE pane that interprets them, enabling visual spoofing, clipboard hijacking (e.g., OSC 52), or chained exploitation of terminal emulator vulnerabilities.
+7. The chat UI auto-renders Markdown images or link previews referenced in model output, allowing an attacker who controls part of the model context to exfiltrate conversation data via the image URL's hostname or query string.
 
 ### Prevention and Mitigation Strategies
 
@@ -34,6 +36,7 @@ The following conditions can increase the impact of this vulnerability:
 6. Employ strict Content Security Policies (CSP) to mitigate the risk of XSS attacks from LLM-generated content.
 7. Implement robust logging and monitoring systems to detect unusual patterns in LLM outputs that might indicate exploitation attempts.
 8. Sanitize control characters (ANSI escape sequences, BEL, OSC, backspace, carriage return) and other non-printable bytes from model output before it is written to terminals, log files, or other interpreting sinks; encode them visibly when they must be preserved.
+9. In client renderers (chat UIs, IDEs, email clients, mobile apps), prevent model output from triggering automatic outbound requests to attacker-controlled endpoints. Disable auto-rendering of Markdown images, link previews, iframes, and similar elements by default; where rendering is required, restrict fetches to an explicit allowlist of origins or proxy them through a server-side fetcher that strips data-bearing query parameters.
 
 ### Example Attack Scenarios
 
@@ -72,3 +75,5 @@ The following conditions can increase the impact of this vulnerability:
 7. [OWASP AISVS - C7 Model Behavior, Output Control and Safety Assurance](https://github.com/OWASP/AISVS/blob/main/1.0/en/0x10-C07-Model-Behavior.md): **OWASP AISVS**
 8. [CWE-116: Improper Encoding or Escaping of Output](https://cwe.mitre.org/data/definitions/116.html): **MITRE**
 9. [Terminal DiLLMa: LLM-powered Apps Can Hijack Your Terminal Via Prompt Injection](https://embracethered.com/blog/posts/2024/terminal-dillmas-prompt-injection-ansi-sequences/): **Embrace The Red**
+10. [GitHub Copilot Chat: From Prompt Injection to Data Exfiltration](https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/): **Embrace The Red**
+11. [Markdown exfiltration tracker](https://simonwillison.net/tags/markdown-exfiltration/): **Simon Willison**
