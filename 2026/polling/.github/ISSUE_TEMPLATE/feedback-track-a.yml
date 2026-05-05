@@ -1,0 +1,118 @@
+name: Sprint 2 Feedback — Track A (New Candidate Entry)
+description: Comment on a new candidate entry. Use the linked Google Form for Importance, Clarity, and Distinctness scores.
+title: "[Track A] Feedback: <CANDIDATE_TITLE>"
+labels:
+  - sprint-2
+  - track-a
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Sprint 2 Community Review — Track A
+
+        Use this issue to leave **qualitative feedback** on this candidate. Use the **Google Form** to submit your **Importance**, **Clarity**, and **Distinctness** scores. One ballot covers all 18 entries (both tracks).
+
+        - Vote: https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform — page through to the Track A section, then to this candidate
+        - Voting closes: **May 18, 2026 at 23:59 UTC**
+        - Code of Conduct: [OWASP Code of Conduct](https://owasp.org/www-policy/operational/code-of-conduct)
+
+        ### Scoring rubric
+
+        - **Importance** (1–5): How critical is this risk to LLM application security in 2026?
+        - **Clarity** (1–5): How clearly does the candidate describe the risk and mitigations?
+        - **Distinctness** (1–5): Is this materially different from existing entries (LLM01–LLM10), or could it be merged into one of them?
+
+        ### Why Distinctness matters
+
+        Sprint 3 cuts 8 candidates down to 5. A high-Importance candidate that overlaps heavily with an existing entry is a merge target, not a standalone winner. Distinctness scores let the working group make defensible cut/keep/merge calls.
+
+        ### What good feedback looks like
+
+        - Specific to this candidate (not the Top 10 as a whole)
+        - Names the existing entry (LLM01–LLM10) this candidate overlaps with, if any
+        - References a citation, CVE, incident, or research note when possible
+        - Proposes language for definitions, examples, or mitigations
+
+  - type: input
+    id: candidate_id
+    attributes:
+      label: Candidate ID
+      description: The TA-XXXX label for this candidate (e.g., TA-MCPX).
+      placeholder: TA-MCPX
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: Feedback category
+      description: Pick the closest match. Use one issue per category if you have multiple types of feedback.
+      options:
+        - Definition or scope
+        - Common examples
+        - Prevention or mitigation strategies
+        - Attack scenarios
+        - Reference or supporting research
+        - Distinctness — overlaps with existing entry
+        - Distinctness — should be merged into another candidate
+        - Editorial (clarity, formatting, terminology)
+        - Recommend dropping from consideration
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: overlap_with
+    attributes:
+      label: If this overlaps with an existing entry, which one?
+      description: Optional. Only fill if you flagged Distinctness as your feedback category.
+      options:
+        - "N/A — this is distinct"
+        - LLM01 Prompt Injection
+        - LLM02 Sensitive Information Disclosure
+        - LLM03 Supply Chain
+        - LLM04 Data and Model Poisoning
+        - LLM05 Improper Output Handling
+        - LLM06 Excessive Agency
+        - LLM07 System Prompt Leakage
+        - LLM08 Vector and Embedding Weaknesses
+        - LLM09 Misinformation
+        - LLM10 Unbounded Consumption
+        - Multiple existing entries (specify in body)
+    validations:
+      required: false
+
+  - type: textarea
+    id: feedback_body
+    attributes:
+      label: Your feedback
+      description: Be specific. Quote the section or phrase you are referring to. Propose alternative language where possible.
+      placeholder: |
+        Section: <which section of the candidate>
+        Issue: <what is wrong, missing, unclear, or duplicative>
+        Proposed change: <your suggested fix, addition, or merge target>
+        Evidence: <CVE, paper, incident, or research note ID if applicable>
+    validations:
+      required: true
+
+  - type: input
+    id: github_handle
+    attributes:
+      label: GitHub username (optional)
+      description: For voters who also commented here. Helps cross-validate engagement against the ballot data.
+      placeholder: "@your-handle"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgments
+      options:
+        - label: I have read the candidate entry I am commenting on.
+          required: true
+        - label: I agree to abide by the OWASP Code of Conduct.
+          required: true
+        - label: I understand my comment will be public and may be quoted in Sprint 3 working notes.
+          required: true

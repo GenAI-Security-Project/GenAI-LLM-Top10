@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 OWASP Top 10 for LLM Applications — 2026 Update
-Sprint 2: Bulk-create the 18 feedback issues (10 Track A + 8 Track B).
+Sprint 2: Bulk-create the 18 feedback issues (10 Track B + 8 Track A).
 
 Owner:    Rock Lambros (rock@rockcyber.ai)
 Version:  1.0
@@ -11,21 +11,32 @@ WHAT THIS DOES
   1. Ensures the 22 Sprint 2 labels exist in the repo (idempotent — creates
      missing, leaves existing alone, updates color/description on existing).
   2. Creates one feedback issue per existing entry (10) and per candidate (8).
-  3. Substitutes the Track A and Track B Form URLs into each issue body.
+  3. Substitutes the Track B and Track A Form URLs into each issue body.
 
 USAGE
-  export GH_TOKEN="ghp_..."          # PAT with `repo` scope
+  # Initial fire (creates all 18 issues + 22 labels)
+  export GH_TOKEN="ghp_..."          # PAT with `repo` scope, or use $(gh auth token)
   python create_issues.py \\
       --form-url "https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform" \\
       --dry-run                      # render without posting
+
+  # Mid-sprint update: fire issues for ONLY new entries you added
+  python create_issues.py \\
+      --form-url "https://..." \\
+      --only-ids "TA-NEW1,TA-NEW2"   # comma-separated entry IDs from issues.json
 
   Run without --dry-run to fire for real. Issues post sequentially with a
   short pause to stay under GitHub's secondary rate limits.
 
   --form-url is a single Google Form URL covering both tracks. Sprint 2
   consolidated to one ballot so voters land on a single URL and roll from
-  Track A into Track B in one captive session. The live URL is also
+  Track B into Track A in one captive session. The live URL is also
   recorded in issues.json under _meta.form.published_url.
+
+  --only-ids filters issues.json by entry ID (LLM01, TA-CFAS, etc.). Use
+  when adding new candidates mid-sprint to avoid duplicating the existing
+  issues. Labels still upsert idempotently. Without --only-ids the script
+  fires all entries from issues.json.
 
 EXIT CODES
   0  success
@@ -111,7 +122,7 @@ def ensure_labels(labels: list[dict], token: str, dry_run: bool) -> None:
 
 # ---------- Issue bodies ----------
 
-TRACK_A_BODY = """## Sprint 2 Feedback — {entry_id} {entry_title}
+TRACK_B_BODY = """## Sprint 2 Feedback — {entry_id} {entry_title}
 
 This issue collects **qualitative feedback** on the refreshed **{entry_id} {entry_title}** entry. \
 Submit your **Importance** and **Clarity** scores via the Sprint 2 Google Form (single ballot covering both tracks).
@@ -140,7 +151,7 @@ Evidence: <CVE, paper, incident, or research note ID if applicable>
 ### Out of scope here
 
 - Cross-cutting comments → use [Discussions]({discussions_url})
-- Questions about Track B candidates → comment on the relevant Track B issue
+- Questions about Track A candidates → comment on the relevant Track A issue
 - Process or governance questions → comment in [Discussions]({discussions_url})
 
 ### Triage
@@ -153,12 +164,12 @@ Working group entry leads classify each comment within 48 hours as:
 Sprint 3 begins May 18 with this issue's triage as input.
 """
 
-TRACK_B_BODY = """## Sprint 2 Feedback — {entry_title}
+TRACK_A_BODY = """## Sprint 2 Feedback — {entry_title}
 
 This issue collects **qualitative feedback** on the **{entry_title}** new candidate entry. \
 Submit your **Importance**, **Clarity**, and **Distinctness** scores via the Sprint 2 Google Form (single ballot covering both tracks).
 
-- **Vote**: {form_url} — page through to the Track B section, then to **{entry_title}**
+- **Vote**: {form_url} — page through to the Track A section, then to **{entry_title}**
 - **Read the draft**: https://github.com/{repo}/blob/main/2026/new_entry_candidates/{file}
 - **Voting closes**: May 18, 2026 at 23:59 UTC
 - **Code of Conduct**: https://owasp.org/www-policy/operational/code-of-conduct
@@ -188,7 +199,7 @@ Evidence: <CVE, paper, incident, or research note ID if applicable>
 ### Out of scope here
 
 - Cross-cutting comments → use [Discussions]({discussions_url})
-- Comments on existing entries (LLM01–LLM10) → comment on the relevant Track A issue
+- Comments on existing entries (LLM01–LLM10) → comment on the relevant Track B issue
 - Process or governance questions → comment in [Discussions]({discussions_url})
 
 ### Triage
@@ -205,9 +216,9 @@ DISCUSSIONS_URL = f"https://github.com/{REPO}/discussions"
 
 # ---------- Issue creation ----------
 
-def render_track_a(entry: dict, form_url: str) -> tuple[str, str]:
-    title = f"[Track A] Feedback: {entry['id']} — {entry['title']}"
-    body = TRACK_A_BODY.format(
+def render_track_b(entry: dict, form_url: str) -> tuple[str, str]:
+    title = f"[Track B] Feedback: {entry['id']} — {entry['title']}"
+    body = TRACK_B_BODY.format(
         entry_id=entry["id"],
         entry_title=entry["title"],
         file=entry["file"],
@@ -217,9 +228,9 @@ def render_track_a(entry: dict, form_url: str) -> tuple[str, str]:
     )
     return title, body
 
-def render_track_b(entry: dict, form_url: str) -> tuple[str, str]:
-    title = f"[Track B] Feedback: {entry['title']}"
-    body = TRACK_B_BODY.format(
+def render_track_a(entry: dict, form_url: str) -> tuple[str, str]:
+    title = f"[Track A] Feedback: {entry['title']}"
+    body = TRACK_A_BODY.format(
         entry_title=entry["title"],
         file=entry["file"],
         repo=REPO,
@@ -247,12 +258,23 @@ def post_issue(title: str, body: str, labels: list[str], token: str, dry_run: bo
 
 # ---------- Main ----------
 
+def _parse_only_ids(raw: str | None) -> set[str]:
+    """Parse the --only-ids CSV into a set. Empty or None -> empty set (no filter)."""
+    if not raw:
+        return set()
+    return {part.strip() for part in raw.split(",") if part.strip()}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Create Sprint 2 feedback issues.")
     parser.add_argument("--form-url", required=True, help="Published URL for the Sprint 2 Google Form (single ballot, both tracks)")
     parser.add_argument("--dry-run", action="store_true", help="Render but do not post.")
     parser.add_argument("--issues-file", default=str(ISSUES_PATH), help="Path to issues.json")
     parser.add_argument("--skip-labels", action="store_true", help="Skip the label upsert step.")
+    parser.add_argument("--only-ids", default=None,
+                        help="Comma-separated entry IDs to create (e.g. 'TA-CFAS,TA-NEW1'). "
+                             "When set, only matching entries fire. Labels still upsert. "
+                             "Use for mid-sprint additions without duplicating existing issues.")
     args = parser.parse_args()
 
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
@@ -266,30 +288,49 @@ def main() -> int:
         return 1
 
     config = json.loads(issues_file.read_text())
+    only_ids = _parse_only_ids(args.only_ids)
+
+    # Filter both track lists if --only-ids was supplied.
+    track_b = [e for e in config["track_b"] if not only_ids or e["id"] in only_ids]
+    track_a = [e for e in config["track_a"] if not only_ids or e["id"] in only_ids]
+
+    if only_ids:
+        matched = {e["id"] for e in track_b + track_a}
+        unmatched = only_ids - matched
+        if unmatched:
+            print(f"WARNING: --only-ids contained IDs not found in issues.json: {sorted(unmatched)}",
+                  file=sys.stderr)
+        if not matched:
+            print("ERROR: --only-ids filter matched zero entries. Aborting.", file=sys.stderr)
+            return 1
+
     print(f"OWASP Top 10 LLM 2026 — Sprint 2 issue creator (dry_run={args.dry_run})")
     print(f"  repo:     {REPO}")
     print(f"  form url: {args.form_url}")
-    print(f"  track A:  {len(config['track_a'])} issues")
-    print(f"  track B:  {len(config['track_b'])} issues")
+    print(f"  filter:   {sorted(only_ids) if only_ids else '(none — all entries)'}")
+    print(f"  track B:  {len(track_b)} issues")
+    print(f"  track A:  {len(track_a)} issues")
 
     if not args.skip_labels:
         ensure_labels(config["labels"], token or "", args.dry_run)
 
-    print("[track-a] creating issues")
-    for entry in config["track_a"]:
-        title, body = render_track_a(entry, args.form_url)
-        post_issue(title, body, ["sprint-2", "track-a", "feedback", entry["id"]],
-                   token or "", args.dry_run)
-        if not args.dry_run:
-            time.sleep(RATE_PAUSE_SEC)
+    if track_b:
+        print("[track-b] creating issues")
+        for entry in track_b:
+            title, body = render_track_b(entry, args.form_url)
+            post_issue(title, body, ["sprint-2", "track-b", "feedback", entry["id"]],
+                       token or "", args.dry_run)
+            if not args.dry_run:
+                time.sleep(RATE_PAUSE_SEC)
 
-    print("[track-b] creating issues")
-    for entry in config["track_b"]:
-        title, body = render_track_b(entry, args.form_url)
-        post_issue(title, body, ["sprint-2", "track-b", "feedback", entry["id"]],
-                   token or "", args.dry_run)
-        if not args.dry_run:
-            time.sleep(RATE_PAUSE_SEC)
+    if track_a:
+        print("[track-a] creating issues")
+        for entry in track_a:
+            title, body = render_track_a(entry, args.form_url)
+            post_issue(title, body, ["sprint-2", "track-a", "feedback", entry["id"]],
+                       token or "", args.dry_run)
+            if not args.dry_run:
+                time.sleep(RATE_PAUSE_SEC)
 
     print("done.")
     return 0

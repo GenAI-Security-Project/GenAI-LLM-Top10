@@ -16,8 +16,8 @@ polling/
 ├── .gitignore
 ├── .github/
 │   └── ISSUE_TEMPLATE/
-│       ├── feedback-track-a.yml           # issue form for existing-entry feedback
-│       ├── feedback-track-b.yml           # issue form for candidate-entry feedback
+│       ├── feedback-track-b.yml           # issue form for existing-entry feedback
+│       ├── feedback-track-a.yml           # issue form for candidate-entry feedback
 │       └── config.yml                     # disables blank issues, adds vote link
 ├── forms/
 │   ├── create_form.gs                     # Apps Script: builds the Sprint 2 Google Form
@@ -39,6 +39,7 @@ Form was generated on May 4, 2026 from `forms/create_form.gs` running under Rock
 
 - **Published URL** (used by GitHub issues): https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform
 - **Short URL** (use for LinkedIn, Slack, mailing list): https://forms.gle/jFmqZF1R6k9gCEfi6
+- **Edit URL** (working group only): https://docs.google.com/forms/d/1lNZHaqUQC_A9DJeSy9JJ1FQkzE1T-lA92vbJLoE6K_k/edit
 - **Form ID**: `1lNZHaqUQC_A9DJeSy9JJ1FQkzE1T-lA92vbJLoE6K_k`
 
 The Form ID feeds the aggregation pipeline (it identifies the linked response Sheet). All values are stored in `scripts/issues.json` under `_meta.form` for traceability.
@@ -51,7 +52,7 @@ Copy `polling/.github/ISSUE_TEMPLATE/*.yml` to `.github/ISSUE_TEMPLATE/` in the 
 
 ### 3. Create the 18 feedback issues — **DONE**
 
-Issues fired May 4, 2026 via the Python script (`create_issues.py`) running under Rock's gh CLI auth. 22 labels upserted, 10 Track A issues, 8 Track B issues. Filter: https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/issues?q=is%3Aissue+label%3Asprint-2
+Issues fired May 4, 2026 via the Python script (`create_issues.py`) running under Rock's gh CLI auth. 22 labels upserted, 10 Track B issues, 8 Track A issues. Filter: https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/issues?q=is%3Aissue+label%3Asprint-2
 
 If you ever need to re-run (e.g., to add a candidate mid-sprint):
 
@@ -77,11 +78,11 @@ Body sourced from `comms/github_discussion_pinned.md`. The Discussion is the FAQ
 
 ## Why one combined form
 
-Single URL to promote, single captive audience. A voter who finishes the existing entries (Track A) rolls naturally into the new candidates (Track B) instead of needing to remember a second link. Track B participation rises. Comms simplify.
+Single URL to promote, single captive audience. A voter who finishes the existing entries (Track B) rolls naturally into the new candidates (Track A) instead of needing to remember a second link. Track A participation rises. Comms simplify.
 
-The cost is voter fatigue mid-form. All Likert questions are optional, so drop-off is graceful and tracked as a metric in aggregation. Per-entry response rate proxies completion. The aggregation pipeline distinguishes "completed Track A only" from "completed both" so partial ballots still count.
+The cost is voter fatigue mid-form. All Likert questions are optional, so drop-off is graceful and tracked as a metric in aggregation. Per-entry response rate proxies completion. The aggregation pipeline distinguishes "completed Track B only" from "completed both" so partial ballots still count.
 
-Tracks remain analytically separate. Question titles tag every score with its entry ID (`LLM01 — Importance`, `TB-MCPX — Distinctness`), so the aggregation pipeline splits the data cleanly.
+Tracks remain analytically separate. Question titles tag every score with its entry ID (`LLM01 — Importance`, `TA-MCPX — Distinctness`), so the aggregation pipeline splits the data cleanly.
 
 ## Voter integrity
 
@@ -118,8 +119,8 @@ Adding entries mid-sprint resets voting baselines. Avoid if possible.
 
 | Decision | Rationale |
 | --- | --- |
-| Single combined Form (Track A then Track B) | One URL to promote. Captive audience rolls from familiar existing entries into new candidates. Higher Track B participation. |
-| Track B includes Distinctness Likert | Sprint 3 cuts 8→5. High-Importance candidates that overlap heavily with existing entries are merge targets, not standalone winners. Distinctness gives a defensible cut/keep/merge signal. |
+| Single combined Form (Track B then Track A) | One URL to promote. Captive audience rolls from familiar existing entries into new candidates. Higher Track A participation. |
+| Track A includes Distinctness Likert | Sprint 3 cuts 8→5. High-Importance candidates that overlap heavily with existing entries are merge targets, not standalone winners. Distinctness gives a defensible cut/keep/merge signal. |
 | All Likerts optional, none required | Forced votes from unqualified voters add noise. Skip rate is a deliberate metric. |
 | Each entry on its own page | Progress visible. Voters can stop and resume. |
 | GitHub for comments, Form for scores | Comments need durability and version history (GitHub). Structured numeric data needs clean export (Form → Sheet). Two systems, linked, each playing to its strength. |
@@ -129,7 +130,7 @@ Adding entries mid-sprint resets voting baselines. Avoid if possible.
 ## Known limitations
 
 - **Section deep-linking**: Google Forms always opens at page 1. Voters arriving from a specific entry's GitHub issue still see "About You" first and have to page through. The issue body explains the navigation.
-- **Order bias**: Track A always precedes Track B. Each track lists entries in canonical order. Voters who fatigue mid-form score later entries less generously. Aggregation reports per-entry response rate to flag.
+- **Order bias**: Track B always precedes Track A. Each track lists entries in canonical order. Voters who fatigue mid-form score later entries less generously. Aggregation reports per-entry response rate to flag.
 - **Drop-off mid-form**: 19 pages is long. Aggregation tracks completion per entry as the participation signal.
 - **Workspace gating**: native one-response-per-user enforcement requires Workspace. Email dedup compensates.
 - **Brigading risk**: a public Form is a brigading target. Anomaly detection compensates.

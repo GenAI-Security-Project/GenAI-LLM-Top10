@@ -7,6 +7,7 @@
     "form": {
       "published_url": "https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform",
       "short_url":     "https://forms.gle/jFmqZF1R6k9gCEfi6",
+      "edit_url":      "https://docs.google.com/forms/d/1lNZHaqUQC_A9DJeSy9JJ1FQkzE1T-lA92vbJLoE6K_k/edit",
       "form_id":       "1lNZHaqUQC_A9DJeSy9JJ1FQkzE1T-lA92vbJLoE6K_k",
       "generated":     "May 4, 2026",
       "covers_tracks": ["A", "B"]
@@ -22,8 +23,8 @@
   },
   "labels": [
     {"name": "sprint-2",  "color": "0E8A16", "description": "Sprint 2 — Community Review and Voting (May 4–18, 2026)"},
-    {"name": "track-a",   "color": "1D76DB", "description": "Track A — feedback on existing Top 10 entries"},
-    {"name": "track-b",   "color": "5319E7", "description": "Track B — feedback on new candidate entries"},
+    {"name": "track-a",   "color": "1D76DB", "description": "Track A — feedback on new candidate entries"},
+    {"name": "track-b",   "color": "5319E7", "description": "Track B — feedback on existing Top 10 entries"},
     {"name": "feedback",  "color": "FBCA04", "description": "Community feedback on a specific entry"},
     {"name": "LLM01",     "color": "C5DEF5", "description": "LLM01 Prompt Injection"},
     {"name": "LLM02",     "color": "C5DEF5", "description": "LLM02 Sensitive Information Disclosure"},
@@ -35,16 +36,26 @@
     {"name": "LLM08",     "color": "C5DEF5", "description": "LLM08 Vector and Embedding Weaknesses"},
     {"name": "LLM09",     "color": "C5DEF5", "description": "LLM09 Misinformation"},
     {"name": "LLM10",     "color": "C5DEF5", "description": "LLM10 Unbounded Consumption"},
-    {"name": "TB-CFAS",   "color": "D4C5F9", "description": "Compositional Fine-Tuning Alignment Subversion"},
-    {"name": "TB-CMSB",   "color": "D4C5F9", "description": "Cross-Modal Safety Bypass"},
-    {"name": "TB-ITSC",   "color": "D4C5F9", "description": "Inference-Time Side-Channel Disclosure"},
-    {"name": "TB-MCPX",   "color": "D4C5F9", "description": "MCP Tool Interface Exploitation"},
-    {"name": "TB-MMIS",   "color": "D4C5F9", "description": "Model Misalignment"},
-    {"name": "TB-MSDA",   "color": "D4C5F9", "description": "Model Scheming and Deceptive Alignment"},
-    {"name": "TB-SICG",   "color": "D4C5F9", "description": "Systemic Insecure Code Generation"},
-    {"name": "TB-WLLA",   "color": "D4C5F9", "description": "Weaponized LLM Abuse"}
+    {"name": "TA-CFAS",   "color": "D4C5F9", "description": "Compositional Fine-Tuning Alignment Subversion"},
+    {"name": "TA-CMSB",   "color": "D4C5F9", "description": "Cross-Modal Safety Bypass"},
+    {"name": "TA-ITSC",   "color": "D4C5F9", "description": "Inference-Time Side-Channel Disclosure"},
+    {"name": "TA-MCPX",   "color": "D4C5F9", "description": "MCP Tool Interface Exploitation"},
+    {"name": "TA-MMIS",   "color": "D4C5F9", "description": "Model Misalignment"},
+    {"name": "TA-MSDA",   "color": "D4C5F9", "description": "Model Scheming and Deceptive Alignment"},
+    {"name": "TA-SICG",   "color": "D4C5F9", "description": "Systemic Insecure Code Generation"},
+    {"name": "TA-WLLA",   "color": "D4C5F9", "description": "Weaponized LLM Abuse"}
   ],
   "track_a": [
+    {"id": "TA-CFAS", "title": "Compositional Fine-Tuning Alignment Subversion", "file": "compositional-finetuning-alignment-subversion.md"},
+    {"id": "TA-CMSB", "title": "Cross-Modal Safety Bypass",                       "file": "cross-modal-safety-bypass.md"},
+    {"id": "TA-ITSC", "title": "Inference-Time Side-Channel Disclosure",          "file": "inference-time-side-channel-disclosure.md"},
+    {"id": "TA-MCPX", "title": "MCP Tool Interface Exploitation",                 "file": "mcp-tool-interface-exploitation.md"},
+    {"id": "TA-MMIS", "title": "Model Misalignment",                              "file": "model-misalignment.md"},
+    {"id": "TA-MSDA", "title": "Model Scheming and Deceptive Alignment",          "file": "model-scheming-and-deceptive-alignment.md"},
+    {"id": "TA-SICG", "title": "Systemic Insecure Code Generation",               "file": "systemic-insecure-code-generation.md"},
+    {"id": "TA-WLLA", "title": "Weaponized LLM Abuse",                            "file": "weaponized-llm-abuse.md"}
+  ],
+  "track_b": [
     {"id": "LLM01", "title": "Prompt Injection",                       "file": "LLM01_PromptInjection.md"},
     {"id": "LLM02", "title": "Sensitive Information Disclosure",       "file": "LLM02_SensitiveInformationDisclosure.md"},
     {"id": "LLM03", "title": "Supply Chain",                           "file": "LLM03_SupplyChain.md"},
@@ -55,15 +66,5 @@
     {"id": "LLM08", "title": "Vector and Embedding Weaknesses",        "file": "LLM08_VectorAndEmbeddingWeaknesses.md"},
     {"id": "LLM09", "title": "Misinformation",                         "file": "LLM09_Misinformation.md"},
     {"id": "LLM10", "title": "Unbounded Consumption",                  "file": "LLM10_UnboundedConsumption.md"}
-  ],
-  "track_b": [
-    {"id": "TB-CFAS", "title": "Compositional Fine-Tuning Alignment Subversion", "file": "compositional-finetuning-alignment-subversion.md"},
-    {"id": "TB-CMSB", "title": "Cross-Modal Safety Bypass",                       "file": "cross-modal-safety-bypass.md"},
-    {"id": "TB-ITSC", "title": "Inference-Time Side-Channel Disclosure",          "file": "inference-time-side-channel-disclosure.md"},
-    {"id": "TB-MCPX", "title": "MCP Tool Interface Exploitation",                 "file": "mcp-tool-interface-exploitation.md"},
-    {"id": "TB-MMIS", "title": "Model Misalignment",                              "file": "model-misalignment.md"},
-    {"id": "TB-MSDA", "title": "Model Scheming and Deceptive Alignment",          "file": "model-scheming-and-deceptive-alignment.md"},
-    {"id": "TB-SICG", "title": "Systemic Insecure Code Generation",               "file": "systemic-insecure-code-generation.md"},
-    {"id": "TB-WLLA", "title": "Weaponized LLM Abuse",                            "file": "weaponized-llm-abuse.md"}
   ]
 }
