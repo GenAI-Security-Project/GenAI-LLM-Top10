@@ -77,7 +77,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 # Reuse helpers from create_issues so the issue body templates and label
 # upsert logic stay in one place.
@@ -480,10 +480,14 @@ def write_config(config: dict) -> None:
 
 
 def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
-                       dry_run: bool, existing_issues: list[dict]) -> dict:
+                       dry_run: bool, existing_issues: list[dict],
+                       force_rebuild: bool = False) -> dict:
     """Two-phase sync against GitHub issues:
        1. UPDATE existing issues for entries that changed (rename, title edit)
        2. CREATE issues for entries that don't have one yet
+    With force_rebuild=True, the Phase 2 "covered but unchanged" branch
+    PATCHes the existing issue with freshly-rendered title+body instead of
+    skipping. Use after a structural change to the rendering templates.
     Returns a summary dict.
     """
     summary: dict[str, list[str]] = {
@@ -500,21 +504,22 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
     issue_by_id = issues_by_entry_id(existing_issues)
 
     # ---- Phase 1: UPDATE changed entries ----
-    changed_entries: list[tuple[str, dict, dict]] = []
+    # Tag each changed entry with its renderer directly so we don't have to
+    # juggle a track-letter local that has to map back to the right template.
+    changed_entries: list[tuple[Callable[[dict, str], tuple[str, str]], dict, dict]] = []
     for old, new in diff.get("changed_b", []):
-        changed_entries.append(("a", old, new))
+        changed_entries.append((create_issues.render_track_b, old, new))
     for old, new in diff.get("changed_a", []):
-        changed_entries.append(("b", old, new))
+        changed_entries.append((create_issues.render_track_a, old, new))
 
     if changed_entries:
         print("\n[issues] updating existing issues for changed entries...")
-        for track, old, new in changed_entries:
+        for renderer, old, new in changed_entries:
             issue = issue_by_id.get(new["id"])
             if not issue:
                 summary["missing_after_rename"].append(new["id"])
                 print(f"    ! {new['id']} marked changed but no existing issue with that label found. Will create below.")
                 continue
-            renderer = create_issues.render_track_b if track == "a" else create_issues.render_track_a
             new_title, new_body = renderer(new, form_url)
             issue_num = issue["number"]
             if dry_run:
@@ -528,11 +533,33 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
             summary["updated"].append(new["id"])
 
     # ---- Phase 2: CREATE issues for entries with no coverage ----
+    # If --force-rebuild is set, the "covered but unchanged" branch instead
+    # PATCHes each existing issue with freshly-rendered title+body.
     covered = set(issue_by_id.keys())
-    print("\n[issues] firing for entries missing a GitHub issue...")
+    if force_rebuild:
+        print("\n[issues] --force-rebuild: re-rendering covered issues with current templates...")
+    else:
+        print("\n[issues] firing for entries missing a GitHub issue...")
+
+    def force_patch(entry: dict, renderer: Callable[[dict, str], tuple[str, str]]) -> None:
+        issue = issue_by_id[entry["id"]]
+        new_title, new_body = renderer(entry, form_url)
+        issue_num = issue["number"]
+        if dry_run:
+            print(f"    [dry-run] would force-rebuild #{issue_num}: {new_title}")
+        else:
+            if patch_issue(issue_num, new_title, new_body, token):
+                print(f"    ~ force-rebuilt #{issue_num}: {new_title}")
+                time.sleep(RATE_PAUSE_SEC)
+        summary["updated"].append(entry["id"])
+
     for entry in config["track_b"]:
         if entry["id"] in covered:
-            if entry["id"] not in summary["updated"]:
+            if entry["id"] in summary["updated"]:
+                continue
+            if force_rebuild:
+                force_patch(entry, create_issues.render_track_b)
+            else:
                 summary["skipped_unchanged"].append(entry["id"])
             continue
         title, body = create_issues.render_track_b(entry, form_url)
@@ -546,7 +573,11 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
 
     for entry in config["track_a"]:
         if entry["id"] in covered:
-            if entry["id"] not in summary["updated"]:
+            if entry["id"] in summary["updated"]:
+                continue
+            if force_rebuild:
+                force_patch(entry, create_issues.render_track_a)
+            else:
                 summary["skipped_unchanged"].append(entry["id"])
             continue
         title, body = create_issues.render_track_a(entry, form_url)
@@ -571,6 +602,11 @@ def main() -> int:
                         help="Update issues.json but skip firing new GitHub issues.")
     parser.add_argument("--no-write", action="store_true",
                         help="Do not write to issues.json (useful with --no-fire to inspect remote).")
+    parser.add_argument("--force-rebuild", action="store_true",
+                        help="PATCH every existing GitHub issue with fresh title and body, "
+                             "even when the registry says the entry is unchanged. Use after "
+                             "a structural change (e.g., label-scheme rename) where issue "
+                             "content is stale relative to current templates.")
     parser.add_argument("--branch", default="main",
                         help="Read from a branch other than main (default: main).")
     parser.add_argument("--form-url", default=None,
@@ -659,7 +695,8 @@ def main() -> int:
               f"(use --dry-run to preview without writes)")
 
     summary = sync_github_issues(new_config, diff, form_url,
-                                  token or "", args.dry_run, existing)
+                                  token or "", args.dry_run, existing,
+                                  force_rebuild=args.force_rebuild)
 
     print()
     print("=" * 60)
