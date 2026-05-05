@@ -290,6 +290,14 @@ Static test suites underestimate real-world ASR (Attack Success Rate) because th
 32. [AWS-2025-019 (Amazon Q runtime injection)](https://aws.amazon.com/security/security-bulletins/AWS-2025-019/): **AWS Security Bulletin**, July 2025
 33. [EchoLeak (CVE-2025-32711) — Microsoft 365 Copilot zero-click prompt injection](https://arxiv.org/abs/2509.10540): Reddy and Gujral, **Aim Security, AAAI Fall Symposium 2025**; paired with [NVD entry](https://nvd.nist.gov/vuln/detail/CVE-2025-32711)
 34. [CVE-2024-5184 (EmailGPT) advisory](https://www.incibe.es/en/incibe-cert/early-warning/vulnerabilities/cve-2024-5184): **INCIBE-CERT**, 2024
+35. [Anthropic, Google, Microsoft paid AI bug bounties – quietly](https://www.theregister.com/2026/04/15/claude_gemini_copilot_agents_hijacked/): **The Register**
+36. [CamoLeak: Critical GitHub Copilot vulnerability leaks private source code](https://www.legitsecurity.com/blog/camoleak-critical-github-copilot-vulnerability-leaks-private-source-code): **Legit Security**
+37. [How Microsoft defends against indirect prompt injection attacks](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks): **Microsoft MSRC**
+38. [Attacking and Defending Generative AI](https://github.com/NetsecExplained/Attacking-and-Defending-Generative-AI): **NetsecExplained**
+39. [Arcanum Prompt Injection Taxonomy](https://arcanum-sec.github.io/arc_pi_taxonomy): **Arcanum Sec**
+40. [Pangea Prompt Injection Taxonomy](https://pangea.cloud/taxonomy/): **Pangea (CrowdStrike)**
+41. [The Terminology Problem Causing Security Teams Real Risks](https://www.pillar.security/blog/the-terminology-problem-causing-security-teams-real-risks): **Pillar Security**
+42. [Prompt Injection Isn't a Vulnerability](https://josephthacker.com/ai/2025/11/24/prompt-injection-isnt-a-vulnerability.html): **Joseph Thacker**
 
 ---
 ### Related Frameworks and Taxonomies
