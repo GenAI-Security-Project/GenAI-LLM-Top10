@@ -225,10 +225,10 @@ Click the eye/preview icon (top right of the Forms editor) to see the voter view
 Page through. Confirm:
 
 - "About You" page is intact (affiliation, familiarity, GitHub handle, single-ballot pledge).
-- Track B entries are LLM01 through LLM10.
-- Specifically: any entries that were renamed (e.g., LLM07 if today) show the new title.
 - Track A section appears with the correct number of candidates.
 - New candidates are present.
+- Track B entries are LLM01 through LLM10.
+- Specifically: any entries that were renamed (e.g., LLM07 if today) show the new title.
 
 If anything looks wrong, stop. Don't post comms yet.
 
@@ -251,7 +251,7 @@ Steps:
    print(f'Total sprint-2 issues: {len(issues)}')
    for i in issues:
        labels = [l['name'] for l in i['labels']]
-       entry_id = next((l for l in labels if l.startswith('LLM') or l.startswith('TB-')), '?')
+       entry_id = next((l for l in labels if l.startswith('LLM') or l.startswith('TA-')), '?')
        print(f'  #{i[\"number\"]:4d}  [{entry_id:8s}]  {i[\"title\"]}')
    "
 
@@ -354,7 +354,7 @@ Three quick visual checks before posting comms.
 **Browser, three tabs:**
 
 1. Open the Form's published URL: https://forms.gle/jFmqZF1R6k9gCEfi6
-   - Page through. Confirm Track B and Track A sections are correct.
+   - Page through. Confirm Track A and Track B sections are correct.
 
 2. Open the issues filter: https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/issues?q=is%3Aissue+label%3Asprint-2
    - Eyeball the count and titles. Click into any renamed issue (e.g., LLM07) to confirm the body links to the new file path.

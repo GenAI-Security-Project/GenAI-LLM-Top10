@@ -221,21 +221,21 @@ def filename_to_humanized(filename: str) -> str:
     return " ".join(w.capitalize() for w in words if w)
 
 
-def slug_to_tb_id_base(slug: str) -> str:
+def slug_to_ta_id_base(slug: str) -> str:
     """Generate a base TA-XXXX ID from a candidate filename slug.
     First letter of up to 4 words. May collide; caller resolves."""
     words = [w for w in re.split(r"[-_]", slug) if w]
     initials = "".join(w[0] for w in words[:4]).upper()
     if len(initials) < 2:
         initials = (slug[:4] or "X").upper()
-    return f"TB-{initials}"
+    return f"TA-{initials}"
 
 
 def assign_candidate_id(filename: str, known: dict[str, str], used: set[str]) -> str:
     """Use the existing ID if known, otherwise auto-generate with collision resolution."""
     if filename in known:
         return known[filename]
-    base = slug_to_tb_id_base(filename.replace(".md", ""))
+    base = slug_to_ta_id_base(filename.replace(".md", ""))
     eid = base
     suffix = 2
     while eid in used:
@@ -362,7 +362,7 @@ def covered_entry_ids(issues: list[dict]) -> set[str]:
     for issue in issues:
         for label in issue.get("labels", []):
             name = label["name"] if isinstance(label, dict) else label
-            if re.match(r"^(LLM\d{2}|TB-[A-Z0-9]+)$", name):
+            if re.match(r"^(LLM\d{2}|TA-[A-Z0-9]+)$", name):
                 covered.add(name)
     return covered
 
@@ -376,7 +376,7 @@ def issues_by_entry_id(issues: list[dict]) -> dict[str, dict]:
     for issue in issues_sorted:
         for label in issue.get("labels", []):
             name = label["name"] if isinstance(label, dict) else label
-            if re.match(r"^(LLM\d{2}|TB-[A-Z0-9]+)$", name) and name not in by_id:
+            if re.match(r"^(LLM\d{2}|TA-[A-Z0-9]+)$", name) and name not in by_id:
                 by_id[name] = issue
     return by_id
 

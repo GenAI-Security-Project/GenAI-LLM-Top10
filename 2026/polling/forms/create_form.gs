@@ -230,18 +230,18 @@ function rebuildSprintTwoFormDynamic() {
     return;
   }
 
-  const remoteA = registry.track_b || [];
-  const remoteB = registry.track_a || [];
+  const remoteA = registry.track_a || [];
+  const remoteB = registry.track_b || [];
   Logger.log('Fetched registry from remote:');
-  Logger.log('  Track B: ' + remoteA.length + ' entries');
-  Logger.log('  Track A: ' + remoteB.length + ' entries');
+  Logger.log('  Track A: ' + remoteA.length + ' entries');
+  Logger.log('  Track B: ' + remoteB.length + ' entries');
 
   // Override the in-script arrays with the remote ones, in place. Note that
   // const-bound arrays can't be reassigned, but we can mutate them.
-  TRACK_B_ENTRIES.length = 0;
-  remoteA.forEach(function (e) { TRACK_B_ENTRIES.push(e); });
   TRACK_A_ENTRIES.length = 0;
-  remoteB.forEach(function (e) { TRACK_A_ENTRIES.push(e); });
+  remoteA.forEach(function (e) { TRACK_A_ENTRIES.push(e); });
+  TRACK_B_ENTRIES.length = 0;
+  remoteB.forEach(function (e) { TRACK_B_ENTRIES.push(e); });
 
   // Hand off to the existing rebuild function
   rebuildSprintTwoForm();
