@@ -50,9 +50,9 @@ LLM models on device increase the supply-chain attack surface with compromised m
 
 Unclear T&Cs and data privacy policies of model operators can lead to sensitive application data being used for model training and subsequent exposure. This may also apply to risks from using copyrighted material provided by the model supplier.
 
-#### 10. Missing Artifact Integrity and Signed Provenance
+#### 10. Unsigned or Replaceable Model Artifacts
 
-A major recent shift is the need to treat models, adapters, datasets, and conversion outputs like software releases. Unsigned or unverified artifacts can be replaced, repackaged, or silently altered, so provenance, hashes, signatures, and controlled promotion pipelines are now essential supply-chain controls.
+When models, adapters, datasets, and conversion outputs are not signed or hash-pinned, an attacker can replace, repackage, or silently alter artifacts in transit, in storage, or during promotion between environments. Without verifiable provenance, downstream consumers cannot distinguish a tampered artifact from a legitimate one and may load a malicious version under a trusted name.
 
 ### Prevention and Mitigation Strategies
 
@@ -67,16 +67,17 @@ A major recent shift is the need to treat models, adapters, datasets, and conver
 8. Use anomaly detection and adversarial robustness tests on supplied models and data to help detect tampering and poisoning. This should be part of MLOps and LLM pipelines.
 9. Implement a patching policy to mitigate vulnerable or outdated components. Ensure the application relies on maintained versions of APIs and underlying models.
 10. Encrypt models deployed at the edge with integrity checks and use vendor attestation APIs to prevent tampered apps and models. Reject unrecognized firmware and untrusted device states.
-11. Implement verifiable root-of-trust controls across the full lifecycle, including signed artifacts, provenance tracking, tool/skill allowlisting, and continuous validation of agent permissions and upstream model integrity.
+11. Implement verifiable root-of-trust controls across the full lifecycle, including signed artifacts, provenance tracking, and continuous validation of upstream model integrity.
+
 ### Sample Attack Scenarios
 
 #### Scenario #1: Vulnerable Python Library
 
-An attacker exploits a vulnerable Python library to compromise an LLM app. This can happen when a compromised dependency is introduced into a model development or inference environment.
+An attacker exploits a vulnerable Python library to compromise an LLM app. This can happen when a compromised dependency is introduced into a model development or inference environment, as seen in attacks on the PyPI registry that tricked developers into installing a tampered PyTorch dependency, and in the Shadow Ray attacks against the Ray AI framework where unauthenticated dashboards on production servers were exploited in the wild.
 
 #### Scenario #2: Direct Tampering
 
-Direct tampering and publishing a model to spread misinformation. An attacker modifies model parameters to bypass safeguards and distribute a malicious model.
+Direct tampering and publishing a model to spread misinformation, as demonstrated by the PoisonGPT proof-of-concept in which a model with surgically modified parameters was uploaded to Hugging Face under a trusted-looking name and bypassed safety review.
 
 #### Scenario #3: Fine-tuning a Popular Model
 
@@ -108,7 +109,7 @@ Following the removal of WizardLM, an attacker exploits the interest in this mod
 
 #### Scenario #10: Model Merge/Format Conversion Service
 
-An attacker stages an attack through a model merge or format conversion service to compromise a publicly available model and inject malicious behavior.
+An attacker stages an attack through a model merge or format conversion service to compromise a publicly available model and inject malicious behavior, as shown by HiddenLayer's research on hijacking the Safetensors conversion bot on Hugging Face to introduce malicious code into converted models.
 
 #### Scenario #11: Reverse-Engineer Mobile App
 
@@ -131,11 +132,9 @@ An LLM operator changes its T&Cs and privacy policy to require explicit opt-out 
 5. [Using LoRA Adapters with vLLM](https://docs.vllm.ai/en/latest/models/lora.html)
 6. [Removing RLHF Protections in GPT-4 via Fine-Tuning](https://arxiv.org/pdf/2311.05553)
 7. [Model Merging with PEFT](https://huggingface.co/blog/peft_merging)
-8. [HuggingFace SF_Convertbot Scanner](https://gist.github.com/rossja/d84a93e5c6b8dd2d4a538aa010b29163)
-9. [Thousands of servers hacked due to insecurely deployed Ray AI framework](https://www.csoonline.com/article/2075540/thousands-of-servers-hacked-due-to-insecurely-deployed-ray-ai-framework.html)
-10. [LeftoverLocals: Listening to LLM responses through leaked GPU local memory](https://blog.trailofbits.com/2024/01/16/leftoverlocals-listening-to-llm-responses-through-leaked-gpu-local-memory/)
-11. [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS**
-12. [LLM Scalability Risk for Agentic-AI and Model Supply Chain Security](https://arxiv.org/abs/2602.19021): **arXiv**
+8. [Thousands of servers hacked due to insecurely deployed Ray AI framework](https://www.csoonline.com/article/2075540/thousands-of-servers-hacked-due-to-insecurely-deployed-ray-ai-framework.html)
+9. [LeftoverLocals: Listening to LLM responses through leaked GPU local memory](https://blog.trailofbits.com/2024/01/16/leftoverlocals-listening-to-llm-responses-through-leaked-gpu-local-memory/)
+10. [LLM Scalability Risk for Agentic-AI and Model Supply Chain Security](https://arxiv.org/abs/2602.19021): **arXiv**
 
 ### Related Frameworks and Taxonomies
 
