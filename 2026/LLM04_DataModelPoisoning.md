@@ -29,7 +29,7 @@ The data poisoning surface expands because organizations increasingly rely on:
 - Shared models and open repositories (community weights, fine-tunes, adapters)
 - Agentic workflows and automation (AI controlling tasks, actions, and tool use)
 
-Moreover, models distributed through shared repositories or open-source platforms can carry risks through bundled non-weight artifacts — including malicious deserialization (e.g. pickle files) and tampering of bundled non-weight artifacts (chat templates, tokenizer configs, LoRA/PEFT adapters, quantization artifacts) — any of which can execute harmful code or alter model behaviour when the model is loaded. Poisoning may also allow for the implementation of a backdoor. Such backdoors may leave the model's behavior untouched until a certain trigger causes it to change, in effect creating the opportunity for a model to become a sleeper agent.
+Moreover, models distributed through shared repositories or open-source platforms can carry risks through bundled non-weight artifacts — including malicious deserialization (e.g. pickle files) and tampering of bundled non-weight artifacts (chat templates, tokenizer configs, LoRA/PEFT adapters, quantization artifacts) — any of which can execute harmful code or alter model behavior when the model is loaded. Poisoning may also allow for the implementation of a backdoor. Such backdoors may leave the model's behavior untouched until a certain trigger causes it to change, in effect creating the opportunity for a model to become a sleeper agent.
 
 In agentic deployments, poisoning risks extend to tool integrations, persistent memory stores, and RLHF feedback loops — attack surfaces covered in depth in the OWASP Top 10 for Agentic Applications.
 
