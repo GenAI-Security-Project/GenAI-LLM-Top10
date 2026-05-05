@@ -1,4 +1,4 @@
-## LLM10:2025 Unbounded Consumption
+## LLM10:2026 Unbounded Consumption
 
 ### Description
 
@@ -9,7 +9,7 @@ The high computational demands of LLMs, particularly in cloud and pay-per-token 
 This risk is compounded by the growing adoption of extended-thinking and reasoning models with unbounded token generation, multi-modal models that dramatically expand per-request compute costs, agentic architectures and tool-use protocols (such as MCP) that amplify a single request into cascading downstream operations, and shared inference infrastructure that introduces new side-channel and supply-chain attack surfaces. Traditional request-rate limiting alone is no longer sufficient; effective defense demands token-aware cost controls, hard spending caps, agent-level circuit breakers, and continuous cost-attribution monitoring.
 
 
-### Common Examples of Vulnerability
+### Common Examples of Risk
 
 #### 1. Variable-Length Input Flood and Output Explosion
 
