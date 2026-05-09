@@ -41,7 +41,11 @@ Note: Excessive Agency differs from Insecure Output Handling which is concerned 
 
   An LLM extension that is designed to perform operations in the context of an individual user accesses downstream systems with a generic high-privileged identity. E.g., an extension to read the current user's document store connects to the document repository with a privileged account that has access to files belonging to all users.
 
-#### 6. Excessive Autonomy
+#### 6. Excessive Permissions
+
+  In delegated or multi-agent workflows, a downstream agent or extension executes actions using broader permissions than the original user is authorized to exercise. For example, a support agent delegates a task to a finance agent running with service account permissions; if the original user's authorization scope is not preserved and enforced, the finance agent may complete an operation the user was not entitled to request.
+
+#### 7. Excessive Autonomy
 
   An LLM-based application or extension fails to independently verify and approve high-impact actions. E.g., an extension that allows a user's documents to be deleted performs deletions without any confirmation from the user.
 
@@ -67,7 +71,7 @@ The following actions can prevent Excessive Agency:
 
 #### 5. Execute extensions in user's context
 
-  Track user authorization and security scope to ensure actions taken on behalf of a user are executed on downstream systems in the context of that specific user, and with the minimum privileges necessary. For example, an LLM extension that reads a user's code repo should require the user to authenticate via OAuth and with the minimum scope required.
+  Track user authorization and security scope to ensure actions taken on behalf of a user are executed on downstream systems in the context of that specific user, and with the minimum privileges necessary. For example, an LLM extension that reads a user's code repo should require the user to authenticate via OAuth and with the minimum scope required. In delegated or multi-agent workflows, preserve the original user context and authorization scope across chained extension or agent calls, rather than relying only on the permissions of the calling agent or service identity.
 
 #### 6. Require user approval
 
@@ -84,12 +88,16 @@ The following actions can prevent Excessive Agency:
 The following options will not prevent Excessive Agency, but can limit the level of damage caused:
 
 #### 9. Monitor extension use
+
   Log and monitor the activity of LLM extensions and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
 
 #### 10. Rate limiting
-  Establish thresholds around the invocation of extensions and implement circuit breakers that halt, rate-limit or escalate for human review if those thresholds are exceeded. Simple thresholds could be based on the number of invocations, whereas context-aware thresholds could be based on the cumulative value of an input parameter to an extension. 
+
+  Establish thresholds around the invocation of extensions and implement circuit breakers that halt, rate-limit or escalate for human review if those thresholds are exceeded. Simple thresholds could be based on the number of invocations, whereas context-aware thresholds could be based on the cumulative value of an input parameter to an extension.
 
 ### Example Attack Scenarios
+
+#### Scenario #1: Excessive Functionality in a Mailbox Assistant
 
 An LLM-based personal assistant app is granted access to an individual’s mailbox via an extension in order to summarise the content of incoming emails. To achieve this functionality, the extension requires the ability to read messages, however the plugin that the system developer has chosen to use also contains functions for sending messages. Additionally, the app is vulnerable to an indirect prompt injection attack, whereby a maliciously-crafted incoming email tricks the LLM into commanding the agent to scan the user's inbox for sensitive information and forward it to the attacker's email address. This could be avoided by:
 
@@ -98,6 +106,10 @@ An LLM-based personal assistant app is granted access to an individual’s mailb
 * eliminating excessive autonomy by requiring the user to manually review and hit 'send' on every mail drafted by the LLM extension.
 
 Alternatively, the damage caused could be reduced by implementing rate limiting on the mail-sending interface.
+
+#### Scenario #2: Delegated Authorization Bypass in a Multi-Agent Workflow
+
+In a delegated workflow, a user without approval rights asks a support agent to prepare a high-value refund. The support agent delegates the task to a finance agent running with a privileged service identity. If the finance agent authorizes the request based only on the calling agent, without preserving the original user context and authorization scope, the workflow may complete an action the user was not authorized to perform. This could be avoided by propagating the original user context across chained agent or extension calls, enforcing complete mediation downstream, and requiring approval for high-impact actions.
 
 ### Reference Links
 
