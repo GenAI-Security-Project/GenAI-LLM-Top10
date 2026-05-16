@@ -17,7 +17,7 @@ Conventional authentication and access-control flaws in vector-DB software — f
 
 #### 2. Embedding Inversion
 
-Stored embeddings can be inverted to recover source text. Early attacks required millions of paired training samples against a specific encoder and were considered impractical against production systems. Recent zero-shot and few-shot methods recover semantic content with no encoder-specific training, work in cross-domain and black-box settings, and remain effective against differential-privacy noise added at the storage layer. The operational consequence is that vector-database backups, embeddings shipped to third-party services, and embeddings exposed through misconfigured cloud storage should be treated as equivalent to a leak of the underlying source documents. Don't dismiss an "embeddings only" leak as a non-event. Under GDPR and similar regimes, breach notification depends on the risk to data subjects — and because modern embeddings can be inverted, that risk is real.
+Stored embeddings can be inverted to recover source text. Vec2Text (Morris et al., EMNLP 2023, arXiv:2310.06816) recovers 92% of 32-token text with encoder-specific training. ZSInvert (Zhang, Morris, Shmatikov, arXiv:2504.00147) and Zero2Text (Kim et al., arXiv:2602.01757) operate zero-shot with no encoder-specific training and remain effective against differential-privacy noise added at the storage layer. The operational consequence is that vector-database backups, embeddings shipped to third-party services, and embeddings exposed through misconfigured cloud storage should be treated as equivalent to a leak of the underlying source documents. Don't dismiss an "embeddings only" leak as a non-event. Under GDPR and similar regimes, breach notification depends on the risk to data subjects — and because modern embeddings can be inverted, that risk is real.
 
 #### 3. Retrieval-Time Data Poisoning
 
@@ -33,11 +33,11 @@ The attacker wants to know whether a specific document — a medical record, a l
 
 #### 6. Semantic Cache and Deduplication Poisoning
 
-Semantic caches and near-duplicate detection pipelines use a cosine-similarity threshold to decide that two pieces of content are "the same." An attacker who can craft content that lands just above or just below that threshold can poison a cache entry so it serves attacker text to all semantically equivalent queries, bypass deduplication by injecting many near-duplicates of poisoned content, or force legitimate new content to be silently dropped as a duplicate. All three failure modes depend on the geometry of the embedding space and are invisible to controls applied at the document level.
+Semantic caches and near-duplicate detection pipelines use a cosine-similarity threshold to decide that two pieces of content are "the same." An attacker who can craft content that lands just above or just below that threshold can poison a cache entry so it serves attacker text to all semantically equivalent queries, bypass deduplication by injecting many near-duplicates of poisoned content, or force legitimate new content to be silently dropped as a duplicate. Wu et al. (NDSS 2026, "When Cache Poisoning Meets LLM Systems") demonstrate semantic cache poisoning end-to-end across AWS, Azure, and Alibaba deployments. Zhao & Mastorakis et al. (arXiv:2601.23088) cover black-box key-collision attacks using surrogate embedding models to engineer threshold-straddling vectors without access to the target encoder. All three failure modes depend on the geometry of the embedding space and are invisible to controls applied at the document level.
 
 #### 7. Multimodal Embedding Poisoning
 
-Cross-modal encoders such as CLIP and ColPali map images, audio, code, and text into the same vector space so that semantically related content across modalities produces similar vectors. An attacker who can contribute non-text content can craft an image whose embedding sits close to a sensitive text query. When a user submits that query, the attacker's image is retrieved and fed to the model as trusted context. To a human reviewer, the image appears unremarkable. Standard text-based content scanning does not catch the payload because the payload is not text. Image, audio, and code ingestion should carry the same provenance and trust-tier controls as text, and externally sourced non-text assets should not share an index with sensitive text content.
+Cross-modal encoders such as CLIP and ColPali map images, audio, code, and text into the same vector space so that semantically related content across modalities produces similar vectors. An attacker who can contribute non-text content can craft an image whose embedding sits close to a sensitive text query. When a user submits that query, the attacker's image is retrieved and fed to the model as trusted context. MM-PoisonRAG (Ha et al., arXiv:2502.17832) and Poisoned-MRAG (Liu et al., arXiv:2503.06254) demonstrate both local and global poisoning across multimodal RAG pipelines; "One Pic is All it Takes" (arXiv:2504.02132) shows that a single image is sufficient for targeted and universal VD-RAG poisoning. To a human reviewer, the image appears unremarkable. Standard text-based content scanning does not catch the payload because the payload is not text. Image, audio, and code ingestion should carry the same provenance and trust-tier controls as text, and externally sourced non-text assets should not share an index with sensitive text content.
 
 ### Prevention and Mitigation Strategies
 
@@ -103,10 +103,12 @@ An e-commerce assistant uses a shared multimodal index that stores both product 
 12. [RevPRAG: Revealing Poisoning Attacks in Retrieval-Augmented Generation through LLM Activation Analysis](https://aclanthology.org/2025.findings-emnlp.698/): Tan et al., **Findings of EMNLP 2025**, arXiv:2411.18948.
 13. [MM-PoisonRAG: Disrupting Multimodal RAG with Local and Global Poisoning Attacks](https://arxiv.org/abs/2502.17832): Ha et al., **arXiv:2502.17832**.
 14. [Poisoned-MRAG: Knowledge Poisoning Attacks to Multimodal Retrieval Augmented Generation](https://arxiv.org/abs/2503.06254): Liu et al., **arXiv:2503.06254**.
-15. [The Hidden Threat in Plain Text: Attacking RAG Data Loaders](https://dl.acm.org/doi/10.1145/3733799.3762976): Castagnaro et al., **AISec '25 (CCS 2025)**, arXiv:2507.05093.
-16. [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](https://arxiv.org/abs/2410.07176): **arXiv:2410.07176**.
-17. [GHSA-mhjq-8c7m-3f7p — Milvus Proxy Authentication Bypass (CVE-2025-64513)](https://github.com/milvus-io/milvus/security/advisories/GHSA-mhjq-8c7m-3f7p): **CVSS 9.3**, affects Milvus < 2.4.24, < 2.5.21, < 2.6.5.
-18. [GHSA-9j5g-g4xm-57w7 — RAGFlow Predictable Token Generation (CVE-2025-69286)](https://github.com/infiniflow/ragflow/security/advisories/GHSA-9j5g-g4xm-57w7): **CVSS 9.3**, affects RAGFlow < 0.22.0.
+15. [One Pic is All it Takes: Poisoning Visual Retrieval-Augmented Generation](https://arxiv.org/abs/2504.02132): **arXiv:2504.02132**.
+16. [When Cache Poisoning Meets LLM Systems](https://www.ndss-symposium.org/): Wu et al., **NDSS 2026**.
+17. [Black-box Key-Collision Attacks on Semantic Caches via Surrogate Embedding Models](https://arxiv.org/abs/2601.23088): Zhao & Mastorakis et al., **arXiv:2601.23088**.
+18. [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](https://arxiv.org/abs/2410.07176): **arXiv:2410.07176**.
+19. [GHSA-mhjq-8c7m-3f7p — Milvus Proxy Authentication Bypass (CVE-2025-64513)](https://github.com/milvus-io/milvus/security/advisories/GHSA-mhjq-8c7m-3f7p): **CVSS 9.3**, affects Milvus < 2.4.24, < 2.5.21, < 2.6.5.
+20. [GHSA-9j5g-g4xm-57w7 — RAGFlow Predictable Token Generation (CVE-2025-69286)](https://github.com/infiniflow/ragflow/security/advisories/GHSA-9j5g-g4xm-57w7): **CVSS 9.3**, affects RAGFlow < 0.22.0.
 
 ### Related Frameworks and Taxonomies
 
