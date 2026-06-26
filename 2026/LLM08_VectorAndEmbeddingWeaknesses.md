@@ -105,7 +105,7 @@ An e-commerce assistant uses a shared multimodal index that stores both product 
 14. [Poisoned-MRAG: Knowledge Poisoning Attacks to Multimodal Retrieval Augmented Generation](https://arxiv.org/abs/2503.06254): Liu et al., **arXiv:2503.06254**.
 15. [One Pic is All it Takes: Poisoning Visual Retrieval-Augmented Generation](https://arxiv.org/abs/2504.02132): **arXiv:2504.02132**.
 16. [When Cache Poisoning Meets LLM Systems](https://www.ndss-symposium.org/): Wu et al., **NDSS 2026**.
-17. [Black-box Key-Collision Attacks on Semantic Caches via Surrogate Embedding Models](https://arxiv.org/abs/2601.23088): Zhao & Mastorakis et al., **arXiv:2601.23088**.
+17. [From Similarity to Vulnerability: Key Collision Attack on LLM Semantic Caching](https://arxiv.org/abs/2601.23088): Zhang, Liu, Xie, Huang, She., **arXiv:2601.23088**.
 18. [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](https://arxiv.org/abs/2410.07176): **arXiv:2410.07176**.
 19. [GHSA-mhjq-8c7m-3f7p — Milvus Proxy Authentication Bypass (CVE-2025-64513)](https://github.com/milvus-io/milvus/security/advisories/GHSA-mhjq-8c7m-3f7p): **CVSS 9.3**, affects Milvus < 2.4.24, < 2.5.21, < 2.6.5.
 20. [GHSA-9j5g-g4xm-57w7 — RAGFlow Predictable Token Generation (CVE-2025-69286)](https://github.com/infiniflow/ragflow/security/advisories/GHSA-9j5g-g4xm-57w7): **CVSS 9.3**, affects RAGFlow < 0.22.0.
