@@ -37,7 +37,7 @@ In agentic deployments, poisoning risks extend to tool integrations, persistent 
 
 ### Common Examples of Risk
 
-1. **Training & Fine-Tuning Data Poisoning:** Attackers manipulate training or fine-tuning datasets by injecting biased or malicious content. Microsoft Tay demonstrated this when users poisoned its learning data, causing harmful outputs within hours. This shows how untrusted inputs can rapidly degrade model integrity in adaptive or continuously learning AI systems.
+1. **Training & Fine-Tuning Data Poisoning:** Attackers manipulate training or fine-tuning datasets by injecting biased or malicious content. Microsoft Tay demonstrated this when users poisoned its learning data, causing harmful outputs within hours. This shows how untrusted inputs can rapidly degrade model integrity in adaptive or continuously learning AI systems. A more targeted variant involves deliberately subverting alignment and safety training rather than corrupting task performance — attackers craft fine-tuning data that erodes refusal behaviors while preserving general accuracy, making the degradation hard to catch through standard evaluation.
 
 2. **Financial Model Data Poisoning:** In financial systems, attackers inject mislabeled or manipulated transaction data to influence fraud detection models. For example, labeling fraudulent transactions as legitimate trains the model to ignore real threats. This targeted poisoning enables fraud bypass, leading to financial losses and undermining trust in AI-driven decision-making systems.
 
