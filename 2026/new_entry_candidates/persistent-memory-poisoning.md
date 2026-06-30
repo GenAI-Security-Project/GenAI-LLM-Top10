@@ -24,16 +24,39 @@ This entry is distinct from existing 2025 categories: it is not single-turn inpu
 ### Prevention and Mitigation Strategies
 
 1. **Treat memory writes as privileged state transitions**: Require explicit, surfaced user confirmation for every memory mutation, with a diff of what is being added, modified, or removed. Memory must not be a silent by-product of summarization.
-2. **Enforce strict provenance tracking**: Tag every candidate memory entry with its **source class** (direct user utterance, model inference, tool output, untrusted document, web content). Block, or downgrade trust on, any write whose lineage includes an untrusted source.
+   
+2. **Enforce a concrete provenance taxonomy on every memory write**: Tag each candidate memory entry with one of the following **source classes** and propagate the class transitively along its full lineage. The candidate's trust level is the **minimum across all sources that contributed to it**:
+   - `direct_user` — explicitly stated by the user in their own words in the active session.
+   - `model_inference` — generated, summarized, paraphrased, or otherwise produced by the model from conversation context. Reflective and self-summarizing outputs are a subclass whose trust never exceeds the trust of the trajectory they reflect over.
+   - `tool_output_internal` — returned from a first-party tool with a vetted output schema and no free-form passthrough of third-party content.
+   - `tool_output_external` — returned from third-party MCP servers, web-fetching tools, agent-to-agent calls, or any endpoint that can include attacker-controllable strings. Treated as `untrusted_document`.
+   - `untrusted_document` — derived from external content (web pages, email, uploaded files, RAG retrieval from external corpora, agent observations of the environment).
+
+   **Default policy:**
+   - `direct_user` → allow with standard content sanitization.
+   - `model_inference` and `tool_output_internal` → medium trust: sanitize, strip imperatives and conditional triggers, do not block by default. Downgraded to the lowest-trust class in the lineage.
+   - `tool_output_external` and `untrusted_document` → block, or require explicit out-of-band user confirmation showing a diff of the proposed write.
+
+This transitive rule is what closes the SpAIware and MINJA gap: a `model_inference` candidate whose lineage includes any `untrusted_document` source is downgraded to `untrusted_document` at the write site, regardless of how many summarization or reflection hops sit between the source and the memory writer.
+
 3. **Disable memory-write tools while processing untrusted context**: Apply the same isolation principle used for sensitive tool invocation. If the active context includes external content, the memory-write tool must be unavailable until the untrusted span is cleared and the user has issued a fresh, direct instruction.
+   
 4. **Apply input and output moderation with composite trust scoring**: Score candidate memory entries across multiple orthogonal signals — instruction-likeness, presence of tool/role keywords, encoded payloads, conditional triggers, URL/markdown link content — and reject entries above threshold.
+   
 5. **Sanitize memory at retrieval time**: Apply trust-aware retrieval with **temporal decay**, pattern-based filtering for instruction-like content, and rejection of entries that contain conditional logic or references to system roles, tool names, or function calls.
+   
 6. **Cap memory blast radius**: Make memory **read-only** for high-risk tools (code execution, network, email, payments). Memory may inform conversational responses but must not be permitted to drive privileged actions without re-prompting the user.
+   
 7. **Isolate memory per session class and per origin**: Maintain separate memory namespaces for (a) interactive chat, (b) agentic tool-use trajectories, (c) ingestion of external documents. Do not cross-pollinate.
+   
 8. **Default memory to off; require per-app, per-purpose opt-in**: Persistent memory should be disabled by default, with users explicitly enabling it for specific use cases and able to view, edit, and revoke entries at any time.
+   
 9. **Render memory mutations to the user out-of-band**: Surface memory writes in a UI element that cannot be controlled or styled by the model (no in-chat-only "Memory updated" notifications that the model can suppress or spoof).
+    
 10. **Continuously red-team the memory layer**: Include MINJA-style query-only injection, delayed tool invocation, indirect web-summarization poisoning, and CSRF vectors in the standard pre-deployment evaluation suite. Re-test after every memory architecture change.
+    
 11. **Audit memory contents periodically with an independent model**: Use a second, isolated model to scan stored memory for instruction-like content, exfiltration scaffolds, or conditional triggers, and flag for human review.
+    
 12. **Constrain memory output channels**: Strip or refuse to render markdown images, hyperlinks, and tool-formatted strings that originate from memory entries written from untrusted sources.
 
 ### Example Attack Scenarios
