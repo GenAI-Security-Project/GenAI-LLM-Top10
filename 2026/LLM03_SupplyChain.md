@@ -139,6 +139,10 @@ An attacker modifies a model's computational graph to insert logic that activate
 
 An organization relies on a loader option documented as safe against code execution (for example, loading weights only) or on a scanner-gated ingestion step to accept third-party models. An attacker crafts a model file that defeats the control, bypassing the safe-loader option or evading the scanner through tricks such as file-extension mismatch or archive corruption, and still achieves arbitrary code execution when the model is loaded. Both safe-loader flags and model scanners have had such bypasses assigned CVEs, so treat them as defense-in-depth layers rather than guarantees, alongside provenance verification and keeping loaders and parsers patched.
 
+#### Scenario #18: Compromised Build Pipeline for Model Artifacts
+
+An attacker compromises the CI/CD pipeline an organization uses to fine-tune and publish an LLM, for example through a malicious GitHub Actions dependency, a stolen artifact-registry credential, or a tampered build secret. The next training or packaging run produces a backdoored model artifact. Because the artifact is built and signed by the organization's own release infrastructure, it passes downstream provenance checks, internal attestation, and supply-chain scanners that only flag externally sourced components. The same build-time substitution that affected traditional software supply chains, as in the xz-utils backdoor and the Codecov breach, applies wherever model artifacts are produced by automated pipelines without model-specific integrity controls such as reproducible builds, transparency logs, or post-build behavioral evaluation.
+
 ### Reference Links
 
 1. [PoisonGPT: How we hid a lobotomized LLM on Hugging Face to spread fake news](https://blog.mithrilsecurity.io/poisongpt-how-we-hid-a-lobotomized-llm-on-hugging-face-to-spread-fake-news)
