@@ -1,4 +1,4 @@
-## LLM03:2025 Supply Chain
+## LLM03:2026 Supply Chain
 
 ### Description
 
@@ -11,7 +11,7 @@ Creating LLMs is a specialized task that often depends on third-party models and
 Some of the risks discussed here are also discussed in "LLM04 Data and Model Poisoning." This entry focuses on the supply-chain aspect of the risks. Supply-chain risks specific to agentic applications are covered by ASI04 Agentic Supply Chain Vulnerabilities in the OWASP Top 10 for Agentic Applications.
 A simple threat model can be found [here](https://github.com/jsotiro/ThreatModels/blob/main/LLM%20Threats-LLM%20Supply%20Chain.png).
 
-### Common Examples of Risks
+### Common Examples of Risk
 
 #### 1. Traditional Third-party Package Vulnerabilities
 
@@ -69,7 +69,7 @@ When models, adapters, datasets, and conversion outputs are not signed or hash-p
 10. Encrypt models deployed at the edge with integrity checks and use vendor attestation APIs to prevent tampered apps and models. Reject unrecognized firmware and untrusted device states.
 11. Implement verifiable root-of-trust controls across the full lifecycle, including signed artifacts, provenance tracking, and continuous validation of upstream model integrity.
 
-### Sample Attack Scenarios
+### Example Attack Scenarios
 
 #### Scenario #1: Vulnerable Python Library
 
@@ -145,15 +145,15 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 
 ### Reference Links
 
-1. [PoisonGPT: How we hid a lobotomized LLM on Hugging Face to spread fake news](https://blog.mithrilsecurity.io/poisongpt-how-we-hid-a-lobotomized-llm-on-hugging-face-to-spread-fake-news)
-2. [Large Language Models On-Device with MediaPipe and TensorFlow Lite](https://developers.googleblog.com/en/large-language-models-on-device-with-mediapipe-and-tensorflow-lite/)
-3. [Hijacking Safetensors Conversion on Hugging Face](https://hiddenlayer.com/research/silent-sabotage/)
-4. [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010)
-5. [Using LoRA Adapters with vLLM](https://docs.vllm.ai/en/latest/models/lora.html)
-6. [Removing RLHF Protections in GPT-4 via Fine-Tuning](https://arxiv.org/pdf/2311.05553)
-7. [Model Merging with PEFT](https://huggingface.co/blog/peft_merging)
-8. [Thousands of servers hacked due to insecurely deployed Ray AI framework](https://www.csoonline.com/article/2075540/thousands-of-servers-hacked-due-to-insecurely-deployed-ray-ai-framework.html)
-9. [LeftoverLocals: Listening to LLM responses through leaked GPU local memory](https://blog.trailofbits.com/2024/01/16/leftoverlocals-listening-to-llm-responses-through-leaked-gpu-local-memory/)
+1. [PoisonGPT: How we hid a lobotomized LLM on Hugging Face to spread fake news](https://blog.mithrilsecurity.io/poisongpt-how-we-hid-a-lobotomized-llm-on-hugging-face-to-spread-fake-news): **Mithril Security**
+2. [Large Language Models On-Device with MediaPipe and TensorFlow Lite](https://developers.googleblog.com/en/large-language-models-on-device-with-mediapipe-and-tensorflow-lite/): **Google Developers Blog**
+3. [Hijacking Safetensors Conversion on Hugging Face](https://hiddenlayer.com/research/silent-sabotage/): **HiddenLayer**
+4. [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS**
+5. [Using LoRA Adapters with vLLM](https://docs.vllm.ai/en/latest/models/lora.html): **vLLM**
+6. [Removing RLHF Protections in GPT-4 via Fine-Tuning](https://arxiv.org/pdf/2311.05553): **arXiv**
+7. [Model Merging with PEFT](https://huggingface.co/blog/peft_merging): **Hugging Face**
+8. [Thousands of servers hacked due to insecurely deployed Ray AI framework](https://www.csoonline.com/article/2075540/thousands-of-servers-hacked-due-to-insecurely-deployed-ray-ai-framework.html): **CSO Online**
+9. [LeftoverLocals: Listening to LLM responses through leaked GPU local memory](https://blog.trailofbits.com/2024/01/16/leftoverlocals-listening-to-llm-responses-through-leaked-gpu-local-memory/): **Trail of Bits**
 10. [LLM Scalability Risk for Agentic-AI and Model Supply Chain Security](https://arxiv.org/abs/2602.19021): **arXiv**
 11. [Model Namespace Reuse: An AI Supply-Chain Attack Exploiting Model Name Trust](https://unit42.paloaltonetworks.com/model-namespace-reuse/): **Unit 42, Palo Alto Networks**
 12. [Malicious ML models discovered on Hugging Face platform (nullifAI)](https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face): **ReversingLabs**
@@ -170,4 +170,4 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 
 Refer to this section for comprehensive information, scenario strategies relating to infrastructure deployment, applied environment controls, and other best practices.
 
-- [AI Supply Chain Compromise (AML.T0010)](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS** — including sub-techniques for Hardware (.000), AI Software (.001), Data (.002), Model (.003), Container Registry (.004), and AI Agent Tool (.005)
+* [AI Supply Chain Compromise (AML.T0010)](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS** — including sub-techniques for Hardware (.000), AI Software (.001), Data (.002), Model (.003), Container Registry (.004), and AI Agent Tool (.005)

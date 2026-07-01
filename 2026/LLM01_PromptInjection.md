@@ -12,13 +12,13 @@ A single attack typically combines one item from each axis. *Example:* the Augus
 
 The severity and nature of a successful prompt injection vary with the business context the model operates in and the agency with which it is architected. Generally, prompt injection can lead to outcomes that include but are not limited to:
 
-- Disclosure of sensitive information, system-prompt content, retrieved private documents, or infrastructure details.
-- Manipulation of model output to produce biased, harmful, or attacker-chosen content that downstream systems or users act on.
-- Unauthorized invocation of tools the agent is permitted to call (file system, shell, email, cloud APIs).
-- Data exfiltration via image-URL channels, hidden Unicode characters in rendered output, or covert tool-logging side channels.
-- Persistent compromise of agent behavior across sessions through memory or RAG corpus poisoning.
-- Where the agent has shell, file-system, or cloud-API access: arbitrary command execution and destructive actions on the host or connected systems.
-- Crafting of high-success-rate adversarial payloads against closed-weight production models by abusing a vendor's fine-tuning API as a gradient oracle (the "fun-tuning" class), which expands earlier white-box optimization techniques into reach against closed-weight deployments.
+* Disclosure of sensitive information, system-prompt content, retrieved private documents, or infrastructure details.
+* Manipulation of model output to produce biased, harmful, or attacker-chosen content that downstream systems or users act on.
+* Unauthorized invocation of tools the agent is permitted to call (file system, shell, email, cloud APIs).
+* Data exfiltration via image-URL channels, hidden Unicode characters in rendered output, or covert tool-logging side channels.
+* Persistent compromise of agent behavior across sessions through memory or RAG corpus poisoning.
+* Where the agent has shell, file-system, or cloud-API access: arbitrary command execution and destructive actions on the host or connected systems.
+* Crafting of high-success-rate adversarial payloads against closed-weight production models by abusing a vendor's fine-tuning API as a gradient oracle (the "fun-tuning" class), which expands earlier white-box optimization techniques into reach against closed-weight deployments.
 
 *Note: prompt injection differs from LLM02:2025 Sensitive Information Disclosure, which addresses what the model leaks through its outputs — including reasoning-channel content — and from LLM06:2025 Excessive Agency, which addresses the consequences of model output reaching privileged actions. This entry concerns the input boundary itself.*
 
@@ -38,15 +38,15 @@ While prompt injection and jailbreaking are related concepts in LLM security, th
 
 The model ingests content from an external source — a web page, a document, an email, a tool response, a retrieved RAG passage, an image, an MCP server's output, a database row, an issue title — that contains data which acts as prompt injection. The user did not supply or see those instructions. The trust profile of the delivery surface (axis (a) of the anatomy) determines what defenses are practical:
 
-- **Untrusted surfaces.** Public web pages, emails from unknown senders, public files, search results. Defenders must generally treat anything from these sources as suspicious. Most prompt-injection research has focused here.
-- **Semi-trusted surfaces.** Issue titles in a public bug tracker, package READMEs and changelogs, third-party API responses, content the user *chose* to retrieve but did not author. The user trusts the platform but not necessarily individual contributors.
-- **Trusted surfaces.** Code in a repository the developer owns, rows in the developer's own production database, internal documents, the user's own emails or calendar, content authored by colleagues. The developer may not realize an attacker has placed content here — perhaps via an unrelated upstream vector such as a public bug-report form or a customer-facing input.
+* **Untrusted surfaces.** Public web pages, emails from unknown senders, public files, search results. Defenders must generally treat anything from these sources as suspicious. Most prompt-injection research has focused here.
+* **Semi-trusted surfaces.** Issue titles in a public bug tracker, package READMEs and changelogs, third-party API responses, content the user *chose* to retrieve but did not author. The user trusts the platform but not necessarily individual contributors.
+* **Trusted surfaces.** Code in a repository the developer owns, rows in the developer's own production database, internal documents, the user's own emails or calendar, content authored by colleagues. The developer may not realize an attacker has placed content here — perhaps via an unrelated upstream vector such as a public bug-report form or a customer-facing input.
 
 The shared structure: the attacker does not need to compromise the backend directly. They place text where the developer's LLM will read it, and the LLM — operating with the developer's privileges — does the work. Defenses that focus only on the chat surface miss this entirely. 
 
 Indirect prompt injection is increasingly used to turn the user's own LLM instance into the weapon against the user's own backend. The pattern: an attacker submits text into a *trusted-by-the-user* location through a low-privilege channel (a public form, a customer ticket, a community pull request), and waits for the user's MCP-connected agent or developer assistant to read that text while operating under the user's elevated credentials. The agent — not the attacker — performs the privileged action. Researcher proof-of-concept attacks against production systems include a poisoned GitHub issue causing an MCP-connected coding assistant to exfiltrate private repository contents (Invariant Labs, May 2025); a customer support ticket causing Cursor's Supabase MCP server to dump the production database into the user-visible support thread (General Analysis, July 2025); and a crafted code comment in a third-party library causing a developer's IDE coding agent to flip a configuration flag and enable unrestricted command execution (CVE-2025-53773, August 2025).
 
-### Common Examples of Vulnerability
+### Common Examples of Risk
 
 1. **Direct prompt-input override.** A user-supplied message bypasses the system prompt's role and capability constraints, causing the model to disclose, generate, or act outside its intended scope. The input can be intentional or unintentional; both should be handled.
 
@@ -229,7 +229,7 @@ Static test suites underestimate real-world ASR (Attack Success Rate) because th
 5. [Generative AI Profile (NIST AI 600-1)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf): **NIST**, July 2024
 6. [Prompt injection is not SQL injection](https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection): **UK NCSC**, December 2025
 7. [Principles for the Secure Integration of AI in Operational Technology](https://www.cisa.gov/sites/default/files/2025-12/joint-guidance-principles-for-the-secure-integration-of-artificial-intelligence-in-operational-technology-508c.pdf): **CISA + FBI + NSA + ACSC + allied partners**, December 2025
-8. [The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against LLM Jailbreaks and Prompt Injections](https://arxiv.org/abs/2510.09023): Nasr, Carlini et al., October 2025
+8. [The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against LLM Jailbreaks and Prompt Injections](https://arxiv.org/abs/2510.09023): Nasr, Carlini et al., **arXiv** 2510.09023, October 2025
 9. [Prompt injection attacks on vision language models in oncology](https://www.nature.com/articles/s41467-024-55631-x): Clusmann et al., ***Nature Communications***, 2024
 10. [JPS: Jailbreak Multimodal LLMs with Collaborative Visual Perturbation and Textual Steering](https://dl.acm.org/doi/10.1145/3746027.3754561): Wang et al., **ACM MM 2025**
 11. [Bypassing Prompt Injection Guardrails via Code-Switching and Unicode Transcoding](https://arxiv.org/html/2504.11168v2): **arXiv**:2504.11168, 2025
@@ -273,19 +273,19 @@ Static test suites underestimate real-world ASR (Attack Success Rate) because th
 
 Refer to this section for comprehensive information, scenarios, strategies, and best practices that complement this entry.
 
-- AML.T0051.000 — LLM Prompt Injection: Direct (MITRE ATLAS)
-- AML.T0051.001 — LLM Prompt Injection: Indirect (MITRE ATLAS)
-- AML.T0054 — LLM Jailbreak Injection: Direct (MITRE ATLAS)
-- AML.T0057 — LLM Data Leakage (MITRE ATLAS)
-- AML.T0065 — LLM Prompt Crafting (MITRE ATLAS)
-- AML.T0068 — LLM Prompt Obfuscation (MITRE ATLAS)
-- AML.T0070 — RAG Poisoning (MITRE ATLAS)
-- AML.T0080.001 — AI Agent Context Poisoning: Memory (MITRE ATLAS)
-- AML.T0099 — AI Agent Tool Data Poisoning (MITRE ATLAS)
-- AML.T0086 — Exfiltration via AI Agent Tool Invocation (MITRE ATLAS)
-- AML.T0102 — Generate Malicious Commands (MITRE ATLAS)
-- AML.T0105 — Escape to Host (MITRE ATLAS)
-- AML.T0110 — AI Agent Tool Poisoning (MITRE ATLAS)
-- T1195 — Supply Chain Compromise (MITRE ATT&CK)
-- NIST AI 100-2 E2025 — Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations
-- OWASP AIVSS — AI Vulnerability Scoring System
+* AML.T0051.000 — LLM Prompt Injection: Direct (MITRE ATLAS)
+* AML.T0051.001 — LLM Prompt Injection: Indirect (MITRE ATLAS)
+* AML.T0054 — LLM Jailbreak Injection: Direct (MITRE ATLAS)
+* AML.T0057 — LLM Data Leakage (MITRE ATLAS)
+* AML.T0065 — LLM Prompt Crafting (MITRE ATLAS)
+* AML.T0068 — LLM Prompt Obfuscation (MITRE ATLAS)
+* AML.T0070 — RAG Poisoning (MITRE ATLAS)
+* AML.T0080.001 — AI Agent Context Poisoning: Memory (MITRE ATLAS)
+* AML.T0099 — AI Agent Tool Data Poisoning (MITRE ATLAS)
+* AML.T0086 — Exfiltration via AI Agent Tool Invocation (MITRE ATLAS)
+* AML.T0102 — Generate Malicious Commands (MITRE ATLAS)
+* AML.T0105 — Escape to Host (MITRE ATLAS)
+* AML.T0110 — AI Agent Tool Poisoning (MITRE ATLAS)
+* T1195 — Supply Chain Compromise (MITRE ATT&CK)
+* NIST AI 100-2 E2025 — Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations
+* OWASP AIVSS — AI Vulnerability Scoring System
