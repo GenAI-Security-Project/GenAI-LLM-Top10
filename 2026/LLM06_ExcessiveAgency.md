@@ -67,7 +67,7 @@ The following actions can prevent Excessive Agency:
 
 #### 5. Execute extensions in user's context
 
-  Track user authorization and security scope to ensure actions taken on behalf of a user are executed on downstream systems in the context of that specific user, and with the minimum privileges necessary. For example, an LLM extension that reads a user's code repo should require the user to authenticate via OAuth and with the minimum scope required.
+  Track user authorization and security scope to ensure actions taken on behalf of a user are executed on downstream systems in the context of that specific user, and with the minimum privileges necessary. For example, an LLM extension that reads a user's code repo should require the user to authenticate via OAuth and with the minimum scope required. In delegated or multi-agent workflows, preserve the original user context and authorization scope across chained extension or agent calls, rather than relying only on the permissions of the calling agent or service identity.
 
 #### 6. Require user approval
 
@@ -84,10 +84,12 @@ The following actions can prevent Excessive Agency:
 The following options will not prevent Excessive Agency, but can limit the level of damage caused:
 
 #### 9. Monitor extension use
+
   Log and monitor the activity of LLM extensions and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
 
 #### 10. Rate limiting
-  Establish thresholds around the invocation of extensions and implement circuit breakers that halt, rate-limit or escalate for human review if those thresholds are exceeded. Simple thresholds could be based on the number of invocations, whereas context-aware thresholds could be based on the cumulative value of an input parameter to an extension. 
+
+  Establish thresholds around the invocation of extensions and implement circuit breakers that halt, rate-limit or escalate for human review if those thresholds are exceeded. Simple thresholds could be based on the number of invocations, whereas context-aware thresholds could be based on the cumulative value of an input parameter to an extension.
 
 ### Example Attack Scenarios
 
