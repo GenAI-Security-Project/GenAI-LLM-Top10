@@ -19,7 +19,7 @@ Excessive Agency can lead to a broad range of impacts across the confidentiality
 
 Note: Excessive Agency differs from Insecure Output Handling which is concerned with insufficient scrutiny of LLM outputs.
 
-### Common Examples of Risks
+### Common Examples of Risk
 
 #### 1. Excessive Functionality
 
@@ -71,15 +71,15 @@ The following actions can prevent Excessive Agency:
 
 #### 6. Require user approval
 
-  Utilise human-in-the-loop control to require a human to approve high-impact actions before they are taken. This may be implemented in a downstream system (outside the scope of the LLM application) or within the LLM extension itself. For example, an LLM-based app that creates and posts social media content on behalf of a user should include a user approval routine within the extension that implements the 'post' operation.
+  Utilize human-in-the-loop control to require a human to approve high-impact actions before they are taken. This may be implemented in a downstream system (outside the scope of the LLM application) or within the LLM extension itself. For example, an LLM-based app that creates and posts social media content on behalf of a user should include a user approval routine within the extension that implements the 'post' operation.
 
 #### 7. Complete mediation
 
   Implement authorization in logic rather than relying on an LLM to decide if an action is allowed or not. Enforce the complete mediation principle so that all requests made to downstream systems are validated against security policies by the extension, by an independent pre-execution policy decision point between the extension and the downstream system, or by the downstream system itself. Such policies can help manage cases where an agent's nominally-permitted action is contextually unsafe. A graduated enforcement policy (audit, warn, block, escalate) permits low-consequence actions to auto-approve while high-consequence ones route to human review. For example, consider a customer service chatbot that has an extension to issue refunds; refunds below a given threshold are automatically processed, whereas those above are routed for human approval.
 
-#### 8. Sanitise LLM inputs and outputs
+#### 8. Sanitize LLM inputs and outputs
 
-  Follow secure coding best practice, such as applying OWASP’s recommendations in ASVS (Application Security Verification Standard), with a particularly strong focus on input sanitisation. Use Static Application Security Testing (SAST) and Dynamic and Interactive application testing (DAST, IAST) in development pipelines.
+  Follow secure coding best practice, such as applying OWASP’s recommendations in ASVS (Application Security Verification Standard), with a particularly strong focus on input sanitization. Use Static Application Security Testing (SAST) and Dynamic and Interactive application testing (DAST, IAST) in development pipelines.
 
 The following options will not prevent Excessive Agency, but can limit the level of damage caused:
 
@@ -108,9 +108,10 @@ Alternatively, the damage caused could be reduced by implementing rate limiting 
 5. [Embrace the Red: Confused Deputy Problem](https://embracethered.com/blog/posts/2023/chatgpt-cross-plugin-request-forgery-and-prompt-injection./): **Embrace The Red**
 6. [NeMo-Guardrails: Interface guidelines](https://github.com/NVIDIA/NeMo-Guardrails/blob/main/docs/security/guidelines.md): **NVIDIA Github**
 7. [Sandboxing Agentic AI Workflows with WebAssembly](https://developer.nvidia.com/blog/sandboxing-agentic-ai-workflows-with-webassembly/): **NVIDIA, Joe Lucas**
+8. [Agents Rule of Two: A Practical Approach to AI Agent Security](https://ai.meta.com/blog/practical-ai-agent-security/): **Meta**
 
 ### Related Frameworks and Taxonomies
 
-- [ASI02: Tool Misuse and Exploitation](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/) **OWASP Agentic Top-10**
-- [ASI03: Identity and Privilege Abuse](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/) **OWASP Agentic Top-10**
-- [ASI08: Cascading Failures](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/) **OWASP Agentic Top-10**
+* [ASI02: Tool Misuse and Exploitation](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/): **OWASP Agentic Top-10**
+* [ASI03: Identity and Privilege Abuse](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/): **OWASP Agentic Top-10**
+* [ASI08: Cascading Failures](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/): **OWASP Agentic Top-10**

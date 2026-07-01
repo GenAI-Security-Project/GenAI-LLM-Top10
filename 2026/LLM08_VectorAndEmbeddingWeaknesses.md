@@ -59,7 +59,7 @@ Flag any new vector that sits unusually close to a wide range of common queries;
 
 #### 5. Storage Lifecycle Controls
 
-When a source document is deleted, its embeddings must be deleted within a bounded time. Verify with reconciliation audits. Treat vector-database backups at the same sensitivity tier as the source documents, because embeddings can be inverted. Encrypt embeddings at rest. When the embedding model is rotated, re-embed the corpus rather than mixing old-model and new-model vectors in a single index. Heterogeneous embeddings create exploitable gaps in similarity behavior. Treat embedding-API keys as secrets; a leaked key gives an attacker query access to your exact encoder.
+When a source document is deleted, its embeddings must be deleted within a bounded time. Verify with reconciliation audits. Treat vector-database backups at the same sensitivity tier as the source documents, because embeddings can be inverted. Encrypt embeddings at rest. Manage encryption keys separately from the application layer, so an application-layer compromise does not also hand over the keys to decrypt stored embeddings. When the embedding model is rotated, re-embed the corpus rather than mixing old-model and new-model vectors in a single index. Heterogeneous embeddings create exploitable gaps in similarity behavior. Treat embedding-API keys as secrets; a leaked key gives an attacker query access to your exact encoder.
 
 #### 6. Monitoring, Logging, and Incident Response
 

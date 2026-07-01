@@ -7,14 +7,14 @@ Improper Output Handling differs from Overreliance in that it deals with LLM-gen
 Successful exploitation of an Improper Output Handling vulnerability can result in XSS and CSRF in web browsers as well as SSRF, privilege escalation, or remote code execution on backend systems.
 The following conditions can increase the impact of this vulnerability:
 
-- The application grants the LLM privileges beyond what is intended for end users, enabling escalation of privileges or remote code execution.
-- The application is vulnerable to indirect prompt injection attacks, which could allow an attacker to gain privileged access to a target user's environment.
-- 3rd party extensions do not adequately validate inputs.
-- Lack of proper output encoding for different contexts (e.g., HTML, JavaScript, SQL)
-- Insufficient monitoring and logging of LLM outputs
-- Absence of rate limiting or anomaly detection for LLM usage
-- Terminal, log, or IDE sinks render model output without neutralizing control characters such as ANSI escape sequences.
-- The client renderer (browser, chat UI, IDE, terminal) automatically fetches external resources referenced in model output (e.g., Markdown images, link previews, iframes), enabling exfiltration of context data through outbound requests.
+* The application grants the LLM privileges beyond what is intended for end users, enabling escalation of privileges or remote code execution.
+* The application is vulnerable to indirect prompt injection attacks, which could allow an attacker to gain privileged access to a target user's environment.
+* 3rd party extensions do not adequately validate inputs.
+* Lack of proper output encoding for different contexts (e.g., HTML, JavaScript, SQL)
+* Insufficient monitoring and logging of LLM outputs
+* Absence of rate limiting or anomaly detection for LLM usage
+* Terminal, log, or IDE sinks render model output without neutralizing control characters such as ANSI escape sequences.
+* The client renderer (browser, chat UI, IDE, terminal) automatically fetches external resources referenced in model output (e.g., Markdown images, link previews, iframes), enabling exfiltration of context data through outbound requests.
 
 ### Common Examples of Risk
 

@@ -10,24 +10,24 @@ The key idea: poisoning targets the model's "learning process," not a single run
 
 Poisoning can occur across multiple stages of the LLM lifecycle:
 
-- **Pre-training:** The model learns from broad, large-scale corpora. If a portion of that corpus is maliciously crafted or contaminated, the model may absorb harmful patterns, unsafe instructions, or skewed representations.
+* **Pre-training:** The model learns from broad, large-scale corpora. If a portion of that corpus is maliciously crafted or contaminated, the model may absorb harmful patterns, unsafe instructions, or skewed representations.
 
-- **Fine-tuning:** Models are adapted for specific tasks or domains (e.g., customer support, coding assistants, financial Q&A). If fine-tuning datasets contain manipulated samples, the model can inherit domain-specific failure modes or hidden triggers.
+* **Fine-tuning:** Models are adapted for specific tasks or domains (e.g., customer support, coding assistants, financial Q&A). If fine-tuning datasets contain manipulated samples, the model can inherit domain-specific failure modes or hidden triggers.
 
-- **Embeddings and vectorization:** Text is converted into vectors for search and retrieval. Poisoning can target embedding generation data (or the stored vectors) to influence what content is retrieved, resulting in "steered" answers or subtle misinformation.
+* **Embeddings and vectorization:** Text is converted into vectors for search and retrieval. Poisoning can target embedding generation data (or the stored vectors) to influence what content is retrieved, resulting in "steered" answers or subtle misinformation.
 
-- **Transfer learning / model reuse:** Organizations frequently reuse pre-trained models or community models. If the source model is compromised, downstream systems inherit that compromise.
+* **Transfer learning / model reuse:** Organizations frequently reuse pre-trained models or community models. If the source model is compromised, downstream systems inherit that compromise.
 
-- **Continuous learning / retraining pipelines:** Some systems update with new data over time. If ingestion is automated and insufficiently validated, attackers can feed poisoned data into the loop and gradually shape model behavior.
+* **Continuous learning / retraining pipelines:** Some systems update with new data over time. If ingestion is automated and insufficiently validated, attackers can feed poisoned data into the loop and gradually shape model behavior.
 
 Understanding these stages is essential because it clarifies where vulnerabilities originate and how they propagate.
 
 The data poisoning surface expands because organizations increasingly rely on:
 
-- External datasets (public sources, scraped content, third-party corpora)
-- RAG and embeddings (vector databases, retrieval pipelines, document ingestion)
-- Shared models and open repositories (community weights, fine-tunes, adapters)
-- Agentic workflows and automation (AI controlling tasks, actions, and tool use)
+* External datasets (public sources, scraped content, third-party corpora)
+* RAG and embeddings (vector databases, retrieval pipelines, document ingestion)
+* Shared models and open repositories (community weights, fine-tunes, adapters)
+* Agentic workflows and automation (AI controlling tasks, actions, and tool use)
 
 Moreover, models distributed through shared repositories or open-source platforms can carry risks through bundled non-weight artifacts — including malicious deserialization (e.g. pickle files) and tampering of bundled non-weight artifacts (chat templates, tokenizer configs, LoRA/PEFT adapters, quantization artifacts) — any of which can execute harmful code or alter model behavior when the model is loaded. Poisoning may also allow for the implementation of a backdoor. Such backdoors may leave the model's behavior untouched until a certain trigger causes it to change, in effect creating the opportunity for a model to become a sleeper agent.
 
@@ -37,7 +37,7 @@ In agentic deployments, poisoning risks extend to tool integrations, persistent 
 
 ### Common Examples of Risk
 
-1. **Training & Fine-Tuning Data Poisoning:** Attackers manipulate training or fine-tuning datasets by injecting biased or malicious content. Microsoft Tay demonstrated this when users poisoned its learning data, causing harmful outputs within hours. This shows how untrusted inputs can rapidly degrade model integrity in adaptive or continuously learning AI systems.
+1. **Training & Fine-Tuning Data Poisoning:** Attackers manipulate training or fine-tuning datasets by injecting biased or malicious content. Microsoft Tay demonstrated this when users poisoned its learning data, causing harmful outputs within hours. This shows how untrusted inputs can rapidly degrade model integrity in adaptive or continuously learning AI systems. A more targeted variant involves deliberately subverting alignment and safety training rather than corrupting task performance — attackers craft fine-tuning data that erodes refusal behaviors while preserving general accuracy, making the degradation hard to catch through standard evaluation.
 
 2. **Financial Model Data Poisoning:** In financial systems, attackers inject mislabeled or manipulated transaction data to influence fraud detection models. For example, labeling fraudulent transactions as legitimate trains the model to ignore real threats. This targeted poisoning enables fraud bypass, leading to financial losses and undermining trust in AI-driven decision-making systems.
 
@@ -131,45 +131,45 @@ An attacker interacts with an AI agent and injects malicious instructions into i
 
 ### Reference Links
 
-1. [CycloneDX — Machine Learning Bill of Materials (AI/ML-BOM)](https://cyclonedx.org/capabilities/mlbom/)
-2. [OWASP Developer Guide — CycloneDX](https://owasp.org/www-project-developer-guide/)
-3. [CycloneDX (official site)](https://cyclonedx.org)
-4. [OWASP Foundation — CycloneDX project page](https://owasp.org/www-project-cyclonedx/)
-5. [ECMA-424 — CycloneDX Bill of Materials specification](https://www.ecma-international.org/publications-and-standards/standards/ecma-424/)
-6. [DVC — Documentation](https://dvc.org/doc)
-7. [DVC — Get Started](https://dvc.org/doc/start)
-8. [DVC — User Guide](https://dvc.org/doc/user-guide)
-9. [redteams.ai — RAG Retrieval Poisoning](https://redteams.ai)
-10. [GitHub — AI Red Team Framework: RAG Poisoning Playbook](https://github.com)
-11. [MITRE ATLAS (official site)](https://atlas.mitre.org)
-12. [MITRE ATLAS case study — Split-View poisoning](https://atlas.mitre.org/studies)
-13. [NIST CSRC — MITRE ATLAS Overview (PDF)](https://csrc.nist.gov)
-14. [PyTorch — SafeTensors project page](https://pytorch.org)
-15. [JFrog Security Research — GGUF-SSTI (Jinja2 template injection)](https://jfrog.com/blog/)
-16. [PromptFoo LLM Security DB — Chat Template Hidden Instructions](https://promptfoo.dev)
-17. [GitHub Security Advisory — Giskard agents Jinja2 SSTI (GHSA-frv4-x25r-588m)](https://github.com/advisories/GHSA-frv4-x25r-588m)
-18. [GitLab Advisory — CVE-2026-34172 (Giskard agents SSTI)](https://gitlab.com)
-19. [F5 Operations Guide — Data and model poisoning](https://f5.com)
-20. [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates — Fogel et al., arXiv:2602.04653](https://arxiv.org/abs/2602.04653)
+1. [CycloneDX — Machine Learning Bill of Materials (AI/ML-BOM)](https://cyclonedx.org/capabilities/mlbom/): **CycloneDX**
+2. [OWASP Developer Guide — CycloneDX](https://owasp.org/www-project-developer-guide/): **OWASP**
+3. [CycloneDX (official site)](https://cyclonedx.org): **CycloneDX**
+4. [OWASP Foundation — CycloneDX project page](https://owasp.org/www-project-cyclonedx/): **OWASP**
+5. [ECMA-424 — CycloneDX Bill of Materials specification](https://www.ecma-international.org/publications-and-standards/standards/ecma-424/): **Ecma International**
+6. [DVC — Documentation](https://dvc.org/doc): **DVC**
+7. [DVC — Get Started](https://dvc.org/doc/start): **DVC**
+8. [DVC — User Guide](https://dvc.org/doc/user-guide): **DVC**
+9. [redteams.ai — RAG Retrieval Poisoning](https://redteams.ai): **redteams.ai**
+10. [GitHub — AI Red Team Framework: RAG Poisoning Playbook](https://github.com): **GitHub**
+11. [MITRE ATLAS (official site)](https://atlas.mitre.org): **MITRE ATLAS**
+12. [MITRE ATLAS case study — Split-View poisoning](https://atlas.mitre.org/studies): **MITRE ATLAS**
+13. [NIST CSRC — MITRE ATLAS Overview (PDF)](https://csrc.nist.gov): **NIST CSRC**
+14. [PyTorch — SafeTensors project page](https://pytorch.org): **PyTorch**
+15. [JFrog Security Research — GGUF-SSTI (Jinja2 template injection)](https://jfrog.com/blog/): **JFrog**
+16. [PromptFoo LLM Security DB — Chat Template Hidden Instructions](https://promptfoo.dev): **Promptfoo**
+17. [GitHub Security Advisory — Giskard agents Jinja2 SSTI (GHSA-frv4-x25r-588m)](https://github.com/advisories/GHSA-frv4-x25r-588m): **GitHub Security Advisories**
+18. [GitLab Advisory — CVE-2026-34172 (Giskard agents SSTI)](https://gitlab.com): **GitLab**
+19. [F5 Operations Guide — Data and model poisoning](https://f5.com): **F5**
+20. [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates — Fogel et al., arXiv:2602.04653](https://arxiv.org/abs/2602.04653): **arXiv**
 
 ---
 
 ### Related Frameworks and Taxonomies
 
-- **MITRE ATLAS™** — ATT&CK-style matrix of AI/ML tactics and techniques, including poisoning-related techniques and case studies. [MITRE ATLAS](https://atlas.mitre.org)
+* **MITRE ATLAS™** — ATT&CK-style matrix of AI/ML tactics and techniques, including poisoning-related techniques and case studies. [MITRE ATLAS](https://atlas.mitre.org)
 
-- **MITRE ATLAS case study: Web-scale Split-View poisoning** — demonstrates dataset poisoning risks in URL-based datasets. [ATLAS split-view poisoning case study](https://atlas.mitre.org/studies)
+* **MITRE ATLAS case study: Web-scale Split-View poisoning** — demonstrates dataset poisoning risks in URL-based datasets. [ATLAS split-view poisoning case study](https://atlas.mitre.org/studies)
 
-- **NIST CSRC overview referencing ATLAS** — useful for governance and security audiences linking ATLAS to assurance concepts. [NIST CSRC ATLAS overview](https://csrc.nist.gov)
+* **NIST CSRC overview referencing ATLAS** — useful for governance and security audiences linking ATLAS to assurance concepts. [NIST CSRC ATLAS overview](https://csrc.nist.gov)
 
-- **NIST AI Risk Management Framework (AI RMF 1.0)** — lifecycle risk management functions (Govern/Map/Measure/Manage) that can be mapped to poisoning controls. [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+* **NIST AI Risk Management Framework (AI RMF 1.0)** — lifecycle risk management functions (Govern/Map/Measure/Manage) that can be mapped to poisoning controls. [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
 
-- **NIST AI RMF publication (NIST.AI.100-1 PDF)** — authoritative document for formal citations. [NIST AI RMF PDF](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf)
+* **NIST AI RMF publication (NIST.AI.100-1 PDF)** — authoritative document for formal citations. [NIST AI RMF PDF](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf)
 
-- **CSA AI Controls Matrix (AICM)** — vendor-agnostic control objectives framework for cloud AI systems, including mappings to ISO 42001 and NIST AI RMF. [CSA AICM](https://cloudsecurityalliance.org)
+* **CSA AI Controls Matrix (AICM)** — vendor-agnostic control objectives framework for cloud AI systems, including mappings to ISO 42001 and NIST AI RMF. [CSA AICM](https://cloudsecurityalliance.org)
 
-- **ISO/IEC 42001 (AI Management System / AIMS)** — certifiable management system standard for governing AI responsibly across lifecycle. [ISO/IEC 42001](https://www.iso.org/standard/81230.html)
+* **ISO/IEC 42001 (AI Management System / AIMS)** — certifiable management system standard for governing AI responsibly across lifecycle. [ISO/IEC 42001](https://www.iso.org/standard/81230.html)
 
-- **CycloneDX (ECMA-424) Bill of Materials standard** — supports SBOMs and AI/ML-BOM for model and dataset transparency and provenance tracking. [CycloneDX ML-BOM](https://cyclonedx.org/capabilities/mlbom/)
+* **CycloneDX (ECMA-424) Bill of Materials standard** — supports SBOMs and AI/ML-BOM for model and dataset transparency and provenance tracking. [CycloneDX ML-BOM](https://cyclonedx.org/capabilities/mlbom/)
 
-- **OWASP Top 10 for Agentic Applications — ASI04 (Supply Chain) and ASI06 (Memory and Context Poisoning)** — for practitioners extending LLM04 controls to agentic deployment contexts. [OWASP Agentic Top 10](https://genai.owasp.org)
+* **OWASP Top 10 for Agentic Applications — ASI04 (Supply Chain) and ASI06 (Memory and Context Poisoning)** — for practitioners extending LLM04 controls to agentic deployment contexts. [OWASP Agentic Top 10](https://genai.owasp.org)
