@@ -50,22 +50,9 @@ LLM models on device increase the supply-chain attack surface with compromised m
 
 Unclear terms and conditions (T&Cs) and data privacy policies of model operators can lead to sensitive application data being used for model training and subsequent exposure. This may also apply to risks from using copyrighted material provided by the model supplier.
 
-#### 10. LLM Artifact Promotion and Trust Failures
+#### 10. Unsigned or Replaceable Model Artifacts
 
-When models, adapters, datasets, fine-tuned checkpoints, and conversion outputs move through build, validation, staging, and deployment pipelines, organizations make a trust decision about whether those artifacts are eligible for promotion into trusted environments. Weak promotion controls can allow tampered, impersonated, or insufficiently verified AI artifacts to be accepted as trusted releases.
-
-Unlike general supply-chain compromise, this risk focuses specifically on the promotion and release boundary, where automated pipelines may rely on mutable tags, repository metadata, unsigned artifacts, incomplete provenance, or missing policy enforcement rather than cryptographic verification and release attestations.
-
-Examples include:
-
-* Promoting a model referenced only by a mutable tag (for example, `latest`) instead of an immutable digest.
-* Automatically approving converted or merged models without validating that the output matches the trusted source artifact.
-* Promoting LoRA adapters or fine-tuned checkpoints without verifying provenance or compatibility with the approved base model.
-* Accepting artifacts from trusted-looking repositories based only on namespace or metadata.
-* Allowing CI/CD or MLOps pipelines to promote artifacts without signature verification, attestation validation, or policy gates.
-* Trusting conversion or packaging outputs that have not been cryptographically linked to the original approved artifact.
-
-These failures may result in deployment of backdoored models, malicious adapters, altered inference behavior, unauthorized model replacement, or downstream compromise of AI-enabled systems.
+When models, adapters, datasets, fine-tuned checkpoints, and conversion outputs are not signed or hash-pinned, an attacker can replace, repackage, or silently alter artifacts in transit, in storage, or at the promotion boundary where automated pipelines accept artifacts into trusted environments. Pipelines that resolve artifacts by a mutable reference (for example, a `latest` tag) instead of an immutable digest, or that trust namespace and repository metadata alone, can be made to load a malicious version under a trusted name.
 
 ### Prevention and Mitigation Strategies
 
