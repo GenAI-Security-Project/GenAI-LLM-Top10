@@ -77,7 +77,7 @@ An attacker exploits a vulnerable Python library to compromise an LLM app. This 
 
 #### Scenario #2: Direct Tampering
 
-Direct tampering and publishing a model to spread misinformation, as demonstrated by the PoisonGPT proof-of-concept in which a model with surgically modified parameters was uploaded to Hugging Face under a trusted-looking name and bypassed safety review.
+Direct tampering and publishing a model to spread misinformation, as demonstrated by the PoisonGPT proof-of-concept in which a model with surgically modified parameters was uploaded to Hugging Face under a trusted-looking name and evaded detection by standard benchmark evaluation.
 
 #### Scenario #3: Fine-tuning a Popular Model
 
