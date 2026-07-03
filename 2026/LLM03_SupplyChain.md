@@ -99,9 +99,9 @@ An attacker infiltrates a third-party supplier and compromises the production of
 
 These attacks target cloud infrastructures, leveraging shared resources and vulnerabilities in virtualization layers. CloudBorne involves exploiting firmware vulnerabilities in shared cloud environments, while CloudJacking refers to malicious control or misuse of cloud instances. Both represent significant risks for supply chains reliant on cloud-based ML models.
 
-#### Scenario #8: LeftOvers (CVE-2023-4969)
+#### Scenario #8: LeftoverLocals (CVE-2023-4969)
 
-LeftOvers exploitation of leaked GPU local memory to recover sensitive data. An attacker can use this attack to exfiltrate sensitive data from production servers and development workstations.
+LeftoverLocals exploitation of leaked GPU local memory to recover sensitive data. An attacker can use this attack to exfiltrate sensitive data from production servers and development workstations.
 
 #### Scenario #9: WizardLM
 
