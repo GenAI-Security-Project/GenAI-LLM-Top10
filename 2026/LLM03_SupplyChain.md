@@ -6,7 +6,7 @@ LLM supply chains are susceptible to vulnerabilities that can affect the integri
 
 These external elements can be manipulated through tampering, poisoning, or malicious artifact replacement.
 
-Creating LLMs is a specialized task that often depends on third-party models and reusable adapters. The rise of open-access LLMs and new fine-tuning methods like LoRA (Low-Rank Adaptation) and PEFT (Parameter-Efficient Fine-Tuning), especially on platforms like Hugging Face, introduce new supply-chain risks. The biggest recent shift is that the supply chain now includes model artifacts, provenance, and conversion/merge workflows as first-class attack surfaces. Finally, the emergence of on-device LLMs increases the attack surface and supply-chain risks for LLM applications.
+Creating LLMs is a specialized task that often depends on third-party models and reusable adapters. The rise of open-access LLMs and new fine-tuning methods like LoRA (Low-Rank Adaptation) and PEFT (Parameter-Efficient Fine-Tuning), especially on platforms like Hugging Face, introduces new supply-chain risks. The biggest recent shift is that the supply chain now includes model artifacts, provenance, and conversion/merge workflows as first-class attack surfaces. Finally, the emergence of on-device LLMs increases the attack surface and supply-chain risks for LLM applications.
 
 Some of the risks discussed here are also discussed in "LLM04 Data and Model Poisoning." This entry focuses on the supply-chain aspect of the risks. Supply-chain risks specific to agentic applications are covered by ASI04 Agentic Supply Chain Vulnerabilities in the OWASP Top 10 for Agentic Applications.
 A simple threat model can be found [here](https://github.com/jsotiro/ThreatModels/blob/main/LLM%20Threats-LLM%20Supply%20Chain.png).
@@ -15,7 +15,7 @@ A simple threat model can be found [here](https://github.com/jsotiro/ThreatModel
 
 #### 1. Traditional Third-party Package Vulnerabilities
 
-Such as outdated or deprecated components, which attackers can exploit to compromise LLM applications. This is similar to "A06:2021 – Vulnerable and Outdated Components" with increased risks when components are used during model development, fine-tuning, or inference.
+These include outdated or deprecated components, which attackers can exploit to compromise LLM applications. This is similar to "A06:2021 – Vulnerable and Outdated Components" with increased risks when components are used during model development, fine-tuning, or inference.
 (Ref. link: [A06:2021 – Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/))
 
 #### 2. Licensing Risks
@@ -28,7 +28,7 @@ Using outdated or deprecated models that are no longer maintained leads to secur
 
 #### 4. Vulnerable Pre-Trained Model
 
-Models are binary black boxes and unlike open source, static inspection can offer little to no security assurances. Vulnerable pre-trained models can contain hidden biases, backdoors, or other malicious features that have not been identified through the safety evaluations of model repositories. Vulnerable models can be created by poisoned datasets, direct model tampering, or malicious re-publication of a trusted model. Migrating away from unsafe serialization formats such as Python pickle, which can execute arbitrary code on load, reduces but does not eliminate this risk: a backdoor can be embedded directly in a model's computational graph and persist in formats widely considered safe, such as ONNX.
+Models are binary black boxes and, unlike with open-source code, static inspection can offer little to no security assurances. Vulnerable pre-trained models can contain hidden biases, backdoors, or other malicious features that have not been identified through the safety evaluations of model repositories. Vulnerable models can be created by poisoned datasets, direct model tampering, or malicious re-publication of a trusted model. Migrating away from unsafe serialization formats such as Python pickle, which can execute arbitrary code on load, reduces but does not eliminate this risk: a backdoor can be embedded directly in a model's computational graph and persist in formats widely considered safe, such as ONNX.
 
 #### 5. Weak Model Provenance
 
@@ -48,7 +48,7 @@ LLM models on device increase the supply-chain attack surface with compromised m
 
 #### 9. Unclear T&Cs and Data Privacy Policies
 
-Unclear T&Cs and data privacy policies of model operators can lead to sensitive application data being used for model training and subsequent exposure. This may also apply to risks from using copyrighted material provided by the model supplier.
+Unclear terms and conditions (T&Cs) and data privacy policies of model operators can lead to sensitive application data being used for model training and subsequent exposure. This may also apply to risks from using copyrighted material provided by the model supplier.
 
 #### 10. Unsigned or Replaceable Model Artifacts
 
@@ -77,7 +77,7 @@ An attacker exploits a vulnerable Python library to compromise an LLM app. This 
 
 #### Scenario #2: Direct Tampering
 
-Direct tampering and publishing a model to spread misinformation, as demonstrated by the PoisonGPT proof-of-concept in which a model with surgically modified parameters was uploaded to Hugging Face under a trusted-looking name and evaded detection by standard benchmark evaluation.
+An attacker directly tampers with a model and publishes it to spread misinformation, as demonstrated by the PoisonGPT proof-of-concept in which a model with surgically modified parameters was uploaded to Hugging Face under a trusted-looking name and evaded detection by standard benchmark evaluation.
 
 #### Scenario #3: Fine-tuning a Popular Model
 
@@ -101,7 +101,7 @@ These attacks target cloud infrastructures, leveraging shared resources and vuln
 
 #### Scenario #8: LeftoverLocals (CVE-2023-4969)
 
-LeftoverLocals exploitation of leaked GPU local memory to recover sensitive data. An attacker can use this attack to exfiltrate sensitive data from production servers and development workstations.
+An attacker exploits LeftoverLocals to recover data leaked in GPU local memory, exfiltrating sensitive information from production servers and development workstations.
 
 #### Scenario #9: WizardLM
 
@@ -168,6 +168,6 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 
 ### Related Frameworks and Taxonomies
 
-Refer to this section for comprehensive information, scenario strategies relating to infrastructure deployment, applied environment controls, and other best practices.
+Refer to this section for comprehensive information, scenarios, and strategies relating to infrastructure deployment, applied environment controls, and other best practices.
 
 * [AI Supply Chain Compromise (AML.T0010)](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS** — including sub-techniques for Hardware (.000), AI Software (.001), Data (.002), Model (.003), Container Registry (.004), and AI Agent Tool (.005)
