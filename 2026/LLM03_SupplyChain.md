@@ -28,7 +28,7 @@ Using outdated or deprecated models that are no longer maintained leads to secur
 
 #### 4. Vulnerable Pre-Trained Model
 
-Models are binary black boxes and, unlike with open-source code, static inspection can offer little to no security assurances. Vulnerable pre-trained models can contain hidden biases, backdoors, or other malicious features that have not been identified through the safety evaluations of model repositories. Vulnerable models can be created by poisoned datasets, direct model tampering, or malicious re-publication of a trusted model. Migrating away from unsafe serialization formats such as Python pickle, which can execute arbitrary code on load, reduces but does not eliminate this risk: a backdoor can be embedded directly in a model's computational graph and persist in formats widely considered safe, such as ONNX.
+Models are binary black boxes and, unlike with open-source code, static inspection can offer little to no security assurances. Vulnerable pre-trained models can contain hidden biases, backdoors, or other malicious features that have not been identified through the safety evaluations of model repositories. Vulnerable models can be created by poisoned datasets, direct model tampering, or malicious re-publication of a trusted model. Migrating away from unsafe serialization formats such as Python pickle, which can execute arbitrary code on load, reduces but does not eliminate this risk: a backdoor can be embedded directly in a model's computational graph and persist in formats widely considered safe, such as ONNX. Likewise, a crafted model file can exploit memory-corruption bugs in a format's native parser, as shown by heap overflows in llama.cpp's GGUF parsing (CVE-2024-23496), executing code even though the format itself carries none.
 
 #### 5. Weak Model Provenance
 
@@ -40,7 +40,7 @@ LoRA is a popular fine-tuning technique that enhances modularity by allowing pre
 
 #### 7. Compromised Model Conversion and Merge Workflows
 
-Collaborative model merge and model handling services, including format conversion pipelines, can be exploited to introduce vulnerabilities into shared models. Model merging is popular on model hubs and can be abused to bypass review controls. Conversion services are especially risky because a malicious change can be introduced during transformation between model formats.
+Collaborative model merge and model handling services, including format conversion pipelines, can be exploited to introduce vulnerabilities into shared models. Model merging is popular on model hubs and can be abused to bypass review controls. Conversion services are especially risky because a malicious change can be introduced during transformation between model formats. Quantization is a related transformation risk: model weights can be crafted so that the full-precision model behaves benignly under evaluation while the standard quantized version exhibits attacker-chosen behavior, so assurances obtained on the full-precision artifact do not transfer to the deployed quantized artifact.
 
 #### 8. LLM Model On-Device Supply-Chain Vulnerabilities
 
@@ -73,7 +73,7 @@ When models, adapters, datasets, and conversion outputs are not signed or hash-p
 
 #### Scenario #1: Vulnerable Python Library
 
-An attacker exploits a vulnerable Python library to compromise an LLM app. This can happen when a compromised dependency is introduced into a model development or inference environment, as in the December 2022 PyTorch supply-chain attack where a malicious `torchtriton` package on the PyPI registry shadowed the legitimate PyTorch-nightly dependency and exfiltrated data, and in the ShadowRay attacks against the Ray AI framework where the disputed CVE-2023-48022 (unauthenticated dashboards on production servers) was exploited in the wild.
+An attacker exploits a vulnerable Python library to compromise an LLM app. This can happen when a compromised dependency is introduced into a model development or inference environment, as in the December 2022 PyTorch supply-chain attack where a malicious `torchtriton` package on the PyPI registry shadowed the legitimate PyTorch-nightly dependency and exfiltrated data, and in the ShadowRay attacks against the Ray AI framework where the disputed CVE-2023-48022 (unauthenticated dashboards on production servers) was exploited in the wild. Model-serving frameworks are part of the same attack surface: in Ollama, CVE-2024-37032 allowed remote code execution through a malicious model manifest pulled from a registry.
 
 #### Scenario #2: Direct Tampering
 
@@ -97,7 +97,7 @@ An attacker infiltrates a third-party supplier and compromises the production of
 
 #### Scenario #7: CloudBorne and CloudJacking Attacks
 
-These attacks target cloud infrastructures, leveraging shared resources and vulnerabilities in virtualization layers. CloudBorne involves exploiting firmware vulnerabilities in shared cloud environments, while CloudJacking refers to malicious control or misuse of cloud instances. Both represent significant risks for supply chains reliant on cloud-based ML models.
+These attacks target cloud infrastructures, leveraging shared resources and vulnerabilities in virtualization layers. CloudBorne involves exploiting firmware vulnerabilities in shared cloud environments, while CloudJacking refers to malicious control or misuse of cloud instances. Both represent significant risks for supply chains reliant on cloud-based ML models. Researchers have since demonstrated the AI-specific variant: uploading a malicious model to a shared AI-as-a-service platform and escaping the inference container to reach other customers' models and datasets.
 
 #### Scenario #8: LeftoverLocals (CVE-2023-4969)
 
@@ -165,6 +165,12 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 18. [Coalition for Secure AI Releases Two Actionable Frameworks for AI Model Signing and Incident Response](https://www.oasis-open.org/2025/11/18/coalition-for-secure-ai-releases-two-actionable-frameworks-for-ai-model-signing-and-incident-response/): **OASIS / CoSAI**
 19. [Evolving AI Transparency: The Journey of the AIBOM Generator and Its New Home at OWASP](https://genai.owasp.org/2025/12/18/evolving-ai-transparency-the-journey-of-the-aibom-generator-and-its-new-home-at-owasp/): **OWASP GenAI Security Project**
 20. [OWASP Top 10 for Agentic Applications (2026)](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/): **OWASP GenAI Security Project**
+21. [Exploiting LLM Quantization](https://arxiv.org/abs/2405.18137): **Kazuki Egashira et al., arXiv**
+22. [Compromised PyTorch-nightly dependency chain between December 25th and December 30th, 2022](https://pytorch.org/blog/compromised-nightly-dependency/): **PyTorch**
+23. [llama.cpp GGUF library gguf_fread_str heap-based buffer overflow vulnerability (TALOS-2024-1913)](https://talosintelligence.com/vulnerability_reports/TALOS-2024-1913): **Cisco Talos**
+24. [Probllama: Ollama Remote Code Execution Vulnerability (CVE-2024-37032)](https://www.wiz.io/blog/probllama-ollama-vulnerability-cve-2024-37032): **Wiz**
+25. [Wiz Research finds architecture risks that may compromise AI-as-a-Service providers](https://www.wiz.io/blog/wiz-and-hugging-face-address-risks-to-ai-infrastructure): **Wiz**
+26. [Machine Learning Bill of Materials (ML-BOM)](https://cyclonedx.org/capabilities/mlbom/): **OWASP CycloneDX**
 
 ### Related Frameworks and Taxonomies
 
