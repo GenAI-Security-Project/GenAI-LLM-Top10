@@ -6,7 +6,7 @@ LLM supply chains are susceptible to vulnerabilities that can affect the integri
 
 These external elements can be manipulated through tampering, poisoning, or malicious artifact replacement.
 
-Creating LLMs is a specialized task that often depends on third-party models and reusable adapters. The rise of open-access LLMs and new fine-tuning methods like LoRA (Low-Rank Adaptation) and PEFT (Parameter-Efficient Fine-Tuning), especially on platforms like Hugging Face, introduce new supply-chain risks. The biggest recent shift is that the supply chain now includes model artifacts, provenance, and conversion/merge workflows as first-class attack surfaces. Finally, the emergence of on-device LLMs increases the attack surface and supply-chain risks for LLM applications.
+Creating LLMs is a specialized task that often depends on third-party models and reusable adapters. The rise of open-access LLMs and new fine-tuning methods like LoRA (Low-Rank Adaptation) and PEFT (Parameter-Efficient Fine-Tuning), especially on platforms like Hugging Face, introduces new supply-chain risks. The biggest recent shift is that the supply chain now includes model artifacts, provenance, and conversion/merge workflows as first-class attack surfaces. Finally, the emergence of on-device LLMs increases the attack surface and supply-chain risks for LLM applications.
 
 Some of the risks discussed here are also discussed in "LLM04 Data and Model Poisoning." This entry focuses on the supply-chain aspect of the risks. Supply-chain risks specific to agentic applications are covered by ASI04 Agentic Supply Chain Vulnerabilities in the OWASP Top 10 for Agentic Applications.
 A simple threat model can be found [here](https://github.com/jsotiro/ThreatModels/blob/main/LLM%20Threats-LLM%20Supply%20Chain.png).
@@ -15,7 +15,7 @@ A simple threat model can be found [here](https://github.com/jsotiro/ThreatModel
 
 #### 1. Traditional Third-party Package Vulnerabilities
 
-Such as outdated or deprecated components, which attackers can exploit to compromise LLM applications. This is similar to "A06:2021 – Vulnerable and Outdated Components" with increased risks when components are used during model development, fine-tuning, or inference.
+These include outdated or deprecated components, which attackers can exploit to compromise LLM applications. This is similar to "A06:2021 – Vulnerable and Outdated Components" with increased risks when components are used during model development, fine-tuning, or inference.
 (Ref. link: [A06:2021 – Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/))
 
 #### 2. Licensing Risks
@@ -28,7 +28,7 @@ Using outdated or deprecated models that are no longer maintained leads to secur
 
 #### 4. Vulnerable Pre-Trained Model
 
-Models are binary black boxes and unlike open source, static inspection can offer little to no security assurances. Vulnerable pre-trained models can contain hidden biases, backdoors, or other malicious features that have not been identified through the safety evaluations of model repositories. Vulnerable models can be created by poisoned datasets, direct model tampering, or malicious re-publication of a trusted model. Migrating away from unsafe serialization formats such as Python pickle, which can execute arbitrary code on load, reduces but does not eliminate this risk: a backdoor can be embedded directly in a model's computational graph and persist in formats widely considered safe, such as ONNX.
+Models are binary black boxes and, unlike with open-source code, static inspection can offer little to no security assurances. Vulnerable pre-trained models can contain hidden biases, backdoors, or other malicious features that have not been identified through the safety evaluations of model repositories. Vulnerable models can be created by poisoned datasets, direct model tampering, or malicious re-publication of a trusted model. Migrating away from unsafe serialization formats such as Python pickle, which can execute arbitrary code on load, reduces but does not eliminate this risk: a backdoor can be embedded directly in a model's computational graph and persist in formats widely considered safe, such as ONNX. Likewise, a crafted model file can exploit memory-corruption bugs in a format's native parser, as shown by heap overflows in llama.cpp's GGUF parsing (CVE-2024-23496), executing code even though the format itself carries none.
 
 #### 5. Weak Model Provenance
 
@@ -40,7 +40,7 @@ LoRA is a popular fine-tuning technique that enhances modularity by allowing pre
 
 #### 7. Compromised Model Conversion and Merge Workflows
 
-Collaborative model merge and model handling services, including format conversion pipelines, can be exploited to introduce vulnerabilities into shared models. Model merging is popular on model hubs and can be abused to bypass review controls. Conversion services are especially risky because a malicious change can be introduced during transformation between model formats.
+Collaborative model merge and model handling services, including format conversion pipelines, can be exploited to introduce vulnerabilities into shared models. Model merging is popular on model hubs and can be abused to bypass review controls. Conversion services are especially risky because a malicious change can be introduced during transformation between model formats. Quantization is a related transformation risk: model weights can be crafted so that the full-precision model behaves benignly under evaluation while the standard quantized version exhibits attacker-chosen behavior, so assurances obtained on the full-precision artifact do not transfer to the deployed quantized artifact.
 
 #### 8. LLM Model On-Device Supply-Chain Vulnerabilities
 
@@ -48,7 +48,7 @@ LLM models on device increase the supply-chain attack surface with compromised m
 
 #### 9. Unclear T&Cs and Data Privacy Policies
 
-Unclear T&Cs and data privacy policies of model operators can lead to sensitive application data being used for model training and subsequent exposure. This may also apply to risks from using copyrighted material provided by the model supplier.
+Unclear terms and conditions (T&Cs) and data privacy policies of model operators can lead to sensitive application data being used for model training and subsequent exposure. This may also apply to risks from using copyrighted material provided by the model supplier.
 
 #### 10. Unsigned or Replaceable Model Artifacts
 
@@ -73,11 +73,11 @@ When models, adapters, datasets, and conversion outputs are not signed or hash-p
 
 #### Scenario #1: Vulnerable Python Library
 
-An attacker exploits a vulnerable Python library to compromise an LLM app. This can happen when a compromised dependency is introduced into a model development or inference environment, as in the December 2022 PyTorch supply-chain attack where a malicious `torchtriton` package on the PyPI registry shadowed the legitimate PyTorch-nightly dependency and exfiltrated data, and in the ShadowRay attacks against the Ray AI framework where the disputed CVE-2023-48022 (unauthenticated dashboards on production servers) was exploited in the wild.
+An attacker exploits a vulnerable Python library to compromise an LLM app. This can happen when a compromised dependency is introduced into a model development or inference environment, as in the December 2022 PyTorch supply-chain attack where a malicious `torchtriton` package on the PyPI registry shadowed the legitimate PyTorch-nightly dependency and exfiltrated data, and in the ShadowRay attacks against the Ray AI framework where the disputed CVE-2023-48022 (unauthenticated dashboards on production servers) was exploited in the wild. Model-serving frameworks are part of the same attack surface: in Ollama, CVE-2024-37032 allowed remote code execution through a malicious model manifest pulled from a registry.
 
 #### Scenario #2: Direct Tampering
 
-Direct tampering and publishing a model to spread misinformation, as demonstrated by the PoisonGPT proof-of-concept in which a model with surgically modified parameters was uploaded to Hugging Face under a trusted-looking name and bypassed safety review.
+An attacker directly tampers with a model and publishes it to spread misinformation, as demonstrated by the PoisonGPT proof-of-concept in which a model with surgically modified parameters was uploaded to Hugging Face under a trusted-looking name and evaded detection by standard benchmark evaluation.
 
 #### Scenario #3: Fine-tuning a Popular Model
 
@@ -97,11 +97,11 @@ An attacker infiltrates a third-party supplier and compromises the production of
 
 #### Scenario #7: CloudBorne and CloudJacking Attacks
 
-These attacks target cloud infrastructures, leveraging shared resources and vulnerabilities in virtualization layers. CloudBorne involves exploiting firmware vulnerabilities in shared cloud environments, while CloudJacking refers to malicious control or misuse of cloud instances. Both represent significant risks for supply chains reliant on cloud-based ML models.
+These attacks target cloud infrastructures, leveraging shared resources and vulnerabilities in virtualization layers. CloudBorne involves exploiting firmware vulnerabilities in shared cloud environments, while CloudJacking refers to malicious control or misuse of cloud instances. Both represent significant risks for supply chains reliant on cloud-based ML models. Researchers have since demonstrated the AI-specific variant: uploading a malicious model to a shared AI-as-a-service platform and escaping the inference container to reach other customers' models and datasets.
 
-#### Scenario #8: LeftOvers (CVE-2023-4969)
+#### Scenario #8: LeftoverLocals (CVE-2023-4969)
 
-LeftOvers exploitation of leaked GPU local memory to recover sensitive data. An attacker can use this attack to exfiltrate sensitive data from production servers and development workstations.
+An attacker exploits LeftoverLocals to recover data leaked in GPU local memory, exfiltrating sensitive information from production servers and development workstations.
 
 #### Scenario #9: WizardLM
 
@@ -148,13 +148,13 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 1. [PoisonGPT: How we hid a lobotomized LLM on Hugging Face to spread fake news](https://blog.mithrilsecurity.io/poisongpt-how-we-hid-a-lobotomized-llm-on-hugging-face-to-spread-fake-news): **Mithril Security**
 2. [Large Language Models On-Device with MediaPipe and TensorFlow Lite](https://developers.googleblog.com/en/large-language-models-on-device-with-mediapipe-and-tensorflow-lite/): **Google Developers Blog**
 3. [Hijacking Safetensors Conversion on Hugging Face](https://hiddenlayer.com/research/silent-sabotage/): **HiddenLayer**
-4. [ML Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS**
-5. [Using LoRA Adapters with vLLM](https://docs.vllm.ai/en/latest/models/lora.html): **vLLM**
-6. [Removing RLHF Protections in GPT-4 via Fine-Tuning](https://arxiv.org/pdf/2311.05553): **arXiv**
-7. [Model Merging with PEFT](https://huggingface.co/blog/peft_merging): **Hugging Face**
+4. [AI Supply Chain Compromise](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS**
+5. [Using LoRA Adapters with vLLM](https://docs.vllm.ai/en/latest/features/lora/): **vLLM**
+6. [Removing RLHF Protections in GPT-4 via Fine-Tuning](https://arxiv.org/abs/2311.05553): **Qiusi Zhan et al., arXiv**
+7. [PEFT welcomes new merging methods](https://huggingface.co/blog/peft_merging): **Hugging Face**
 8. [Thousands of servers hacked due to insecurely deployed Ray AI framework](https://www.csoonline.com/article/2075540/thousands-of-servers-hacked-due-to-insecurely-deployed-ray-ai-framework.html): **CSO Online**
 9. [LeftoverLocals: Listening to LLM responses through leaked GPU local memory](https://blog.trailofbits.com/2024/01/16/leftoverlocals-listening-to-llm-responses-through-leaked-gpu-local-memory/): **Trail of Bits**
-10. [LLM Scalability Risk for Agentic-AI and Model Supply Chain Security](https://arxiv.org/abs/2602.19021): **arXiv**
+10. [LLM Scalability Risk for Agentic-AI and Model Supply Chain Security](https://arxiv.org/abs/2602.19021): **Kiarash Ahi et al., arXiv**
 11. [Model Namespace Reuse: An AI Supply-Chain Attack Exploiting Model Name Trust](https://unit42.paloaltonetworks.com/model-namespace-reuse/): **Unit 42, Palo Alto Networks**
 12. [Malicious ML models discovered on Hugging Face platform (nullifAI)](https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face): **ReversingLabs**
 13. [PyTorch Users at Risk: Unveiling 3 Zero-Day PickleScan Vulnerabilities](https://jfrog.com/blog/unveiling-3-zero-day-vulnerabilities-in-picklescan/): **JFrog**
@@ -165,9 +165,15 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 18. [Coalition for Secure AI Releases Two Actionable Frameworks for AI Model Signing and Incident Response](https://www.oasis-open.org/2025/11/18/coalition-for-secure-ai-releases-two-actionable-frameworks-for-ai-model-signing-and-incident-response/): **OASIS / CoSAI**
 19. [Evolving AI Transparency: The Journey of the AIBOM Generator and Its New Home at OWASP](https://genai.owasp.org/2025/12/18/evolving-ai-transparency-the-journey-of-the-aibom-generator-and-its-new-home-at-owasp/): **OWASP GenAI Security Project**
 20. [OWASP Top 10 for Agentic Applications (2026)](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/): **OWASP GenAI Security Project**
+21. [Exploiting LLM Quantization](https://arxiv.org/abs/2405.18137): **Kazuki Egashira et al., arXiv**
+22. [Compromised PyTorch-nightly dependency chain between December 25th and December 30th, 2022](https://pytorch.org/blog/compromised-nightly-dependency/): **PyTorch**
+23. [llama.cpp GGUF library gguf_fread_str heap-based buffer overflow vulnerability (TALOS-2024-1913)](https://talosintelligence.com/vulnerability_reports/TALOS-2024-1913): **Cisco Talos**
+24. [Probllama: Ollama Remote Code Execution Vulnerability (CVE-2024-37032)](https://www.wiz.io/blog/probllama-ollama-vulnerability-cve-2024-37032): **Wiz**
+25. [Wiz Research finds architecture risks that may compromise AI-as-a-Service providers](https://www.wiz.io/blog/wiz-and-hugging-face-address-risks-to-ai-infrastructure): **Wiz**
+26. [Machine Learning Bill of Materials (ML-BOM)](https://cyclonedx.org/capabilities/mlbom/): **OWASP CycloneDX**
 
 ### Related Frameworks and Taxonomies
 
-Refer to this section for comprehensive information, scenario strategies relating to infrastructure deployment, applied environment controls, and other best practices.
+Refer to this section for comprehensive information, scenarios, and strategies relating to infrastructure deployment, applied environment controls, and other best practices.
 
 * [AI Supply Chain Compromise (AML.T0010)](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS** — including sub-techniques for Hardware (.000), AI Software (.001), Data (.002), Model (.003), Container Registry (.004), and AI Agent Tool (.005)
