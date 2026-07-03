@@ -67,8 +67,7 @@ When models, adapters, datasets, fine-tuned checkpoints, and conversion outputs 
 8. Use anomaly detection and adversarial robustness tests on supplied models and data to help detect tampering and poisoning. This should be part of MLOps and LLM pipelines.
 9. Implement a patching policy to mitigate vulnerable or outdated components. Ensure the application relies on maintained versions of APIs and underlying models.
 10. Encrypt models deployed at the edge with integrity checks and use vendor attestation APIs to prevent tampered apps and models. Reject unrecognized firmware and untrusted device states.
-11. Implement verifiable root-of-trust controls across the full lifecycle, including signed artifacts, provenance tracking, and continuous validation of upstream model integrity.
-12. Implement secure artifact promotion controls throughout the AI release pipeline. Require cryptographic signing, immutable artifact references, provenance and attestation verification, policy-based release gates, and independent validation before models, adapters, datasets, or conversion outputs are promoted into trusted environments. Treat model conversion, packaging, and merge workflows as high-risk promotion points and reject artifacts that fail integrity or provenance verification.
+11. Implement verifiable root-of-trust controls across the full lifecycle, including signed artifacts, immutable artifact references, provenance tracking, policy-based release gates, and continuous validation of upstream model integrity.
 
 ### Example Attack Scenarios
 
