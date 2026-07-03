@@ -171,6 +171,7 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 24. [Probllama: Ollama Remote Code Execution Vulnerability (CVE-2024-37032)](https://www.wiz.io/blog/probllama-ollama-vulnerability-cve-2024-37032): **Wiz**
 25. [Wiz Research finds architecture risks that may compromise AI-as-a-Service providers](https://www.wiz.io/blog/wiz-and-hugging-face-address-risks-to-ai-infrastructure): **Wiz**
 26. [Machine Learning Bill of Materials (ML-BOM)](https://cyclonedx.org/capabilities/mlbom/): **OWASP CycloneDX**
+27. [Supply-chain Levels for Software Artifacts (SLSA)](https://slsa.dev): **OpenSSF**
 
 ### Related Frameworks and Taxonomies
 
