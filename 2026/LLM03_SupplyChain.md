@@ -58,7 +58,7 @@ Unlike general supply-chain compromise, this risk focuses specifically on the pr
 
 Examples include:
 
-* Promoting a model referenced only by a mutable tag (for example, latest) instead of an immutable digest.
+* Promoting a model referenced only by a mutable tag (for example, `latest`) instead of an immutable digest.
 * Automatically approving converted or merged models without validating that the output matches the trusted source artifact.
 * Promoting LoRA adapters or fine-tuned checkpoints without verifying provenance or compatibility with the approved base model.
 * Accepting artifacts from trusted-looking repositories based only on namespace or metadata.
