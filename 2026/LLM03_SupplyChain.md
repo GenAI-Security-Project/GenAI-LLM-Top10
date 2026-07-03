@@ -58,12 +58,12 @@ Unlike general supply-chain compromise, this risk focuses specifically on the pr
 
 Examples include:
 
-Promoting a model referenced only by a mutable tag (for example, latest) instead of an immutable digest.
-Automatically approving converted or merged models without validating that the output matches the trusted source artifact.
-Promoting LoRA adapters or fine-tuned checkpoints without verifying provenance or compatibility with the approved base model.
-Accepting artifacts from trusted-looking repositories based only on namespace or metadata.
-Allowing CI/CD or MLOps pipelines to promote artifacts without signature verification, attestation validation, or policy gates.
-Trusting conversion or packaging outputs that have not been cryptographically linked to the original approved artifact.
+* Promoting a model referenced only by a mutable tag (for example, latest) instead of an immutable digest.
+* Automatically approving converted or merged models without validating that the output matches the trusted source artifact.
+* Promoting LoRA adapters or fine-tuned checkpoints without verifying provenance or compatibility with the approved base model.
+* Accepting artifacts from trusted-looking repositories based only on namespace or metadata.
+* Allowing CI/CD or MLOps pipelines to promote artifacts without signature verification, attestation validation, or policy gates.
+* Trusting conversion or packaging outputs that have not been cryptographically linked to the original approved artifact.
 
 These failures may result in deployment of backdoored models, malicious adapters, altered inference behavior, unauthorized model replacement, or downstream compromise of AI-enabled systems.
 
