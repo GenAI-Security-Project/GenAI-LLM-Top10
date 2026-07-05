@@ -9,9 +9,9 @@ Repo:    GenAI-Security-Project/GenAI-LLM-Top10
 
 WHAT THIS DOES
   Reads everything from the REMOTE repo at run time:
-    - 2026/                          (existing entries: LLM01_*.md ... LLM10_*.md)
-    - 2026/new_entry_candidates/     (Track A candidates: *.md)
-    - 2026/polling/scripts/issues.json  (the registry baseline)
+    - 2026/working/                          (existing entries: LLM01_*.md ... LLM10_*.md)
+    - 2026/working/new_entry_candidates/     (Track A candidates: *.md)
+    - 2026/working/polling/scripts/issues.json  (the registry baseline)
 
   Computes a fresh registry from the markdown source-of-truth, diffs it
   against the remote registry, and produces a new local issues.json plus
@@ -41,7 +41,7 @@ USAGE
   python3 sync_sprint2.py
 
   # After applying, commit issues.json and push so Apps Script can fetch:
-  git add 2026/polling/scripts/issues.json
+  git add 2026/working/polling/scripts/issues.json
   git commit -m "Sprint 2: sync entry registry"
   git push
 
@@ -96,8 +96,8 @@ RATE_PAUSE_SEC = 1.0
 ISSUES_PATH = SCRIPT_DIR / "issues.json"
 
 EXISTING_DIR_PATH = "2026"
-CANDIDATE_DIR_PATH = "2026/new_entry_candidates"
-REGISTRY_REPO_PATH = "2026/polling/scripts/issues.json"
+CANDIDATE_DIR_PATH = "2026/working/new_entry_candidates"
+REGISTRY_REPO_PATH = "2026/working/polling/scripts/issues.json"
 
 # Existing entries are LLM01..LLM10. LLM00_Preface and similar non-votable
 # files are excluded.
@@ -247,7 +247,7 @@ def assign_candidate_id(filename: str, known: dict[str, str], used: set[str]) ->
 # ---------- Remote -> registry ----------
 
 def load_existing_from_remote(branch: str, token: str | None) -> list[dict]:
-    """Read existing entries (LLM01..LLM10) from remote 2026/.
+    """Read existing entries (LLM01..LLM10) from remote 2026/working/.
     Excludes LLM00_Preface.md and any non-LLMXX files."""
     items = list_directory(EXISTING_DIR_PATH, branch, token)
     entries: list[dict] = []
@@ -269,7 +269,7 @@ def load_existing_from_remote(branch: str, token: str | None) -> list[dict]:
 
 def load_candidates_from_remote(branch: str, token: str | None,
                                 known: dict[str, str]) -> tuple[list[dict], list[str]]:
-    """Read Track A candidates from remote 2026/new_entry_candidates/.
+    """Read Track A candidates from remote 2026/working/new_entry_candidates/.
     Returns (entries, warnings)."""
     items = list_directory(CANDIDATE_DIR_PATH, branch, token)
     entries: list[dict] = []
@@ -713,7 +713,7 @@ def main() -> int:
 
     if not args.dry_run and (has_changes or summary["created"] or summary["updated"]):
         print("NEXT STEPS:")
-        print("  1. git add 2026/polling/scripts/issues.json")
+        print("  1. git add 2026/working/polling/scripts/issues.json")
         print("  2. git commit -m 'Sprint 2: sync entry registry'")
         print("  3. git push")
         print("  4. In Apps Script, run rebuildSprintTwoFormDynamic() to refresh the form.")

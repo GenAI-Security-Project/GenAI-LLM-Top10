@@ -10,7 +10,7 @@ Both tracks share the same pull-request workflow, style guide, and review rules.
 > [!IMPORTANT]
 > **All changes to this repository must be made through a pull request.** There are no exceptions for contributors — direct pushes to `main` are blocked by branch protection. This applies to every change: new entries, entry upgrades, typo fixes, link repairs, artifact additions, style-guide edits, and README tweaks. If you are unsure whether your change qualifies, open a PR.
 
-For the broader project-level contributor overview, see the repository-root [`README.md`](../README.md). The style guide lives in [`documentation/style/`](../documentation/style/README.md) and is required reading before submitting any prose.
+For the broader project-level contributor overview, see the repository-root [`README.md`](../../README.md). The style guide lives in [`documentation/style/`](../../documentation/style/README.md) and is required reading before submitting any prose.
 
 ---
 
@@ -19,9 +19,9 @@ For the broader project-level contributor overview, see the repository-root [`RE
 | You are... | Use this track |
 |---|---|
 | Writing a brand-new risk/vulnerability proposal for the 2026 list | [Track A](#track-a--propose-a-new-entry) |
-| Named in [`CODEOWNERS`](../.github/CODEOWNERS) or on an entry sub-team and improving `LLM01`–`LLM10` content | [Track B](#track-b--upgrade-an-existing-entry) |
+| Named in [`CODEOWNERS`](../../.github/CODEOWNERS) or on an entry sub-team and improving `LLM01`–`LLM10` content | [Track B](#track-b--upgrade-an-existing-entry) |
 | Fixing a typo, broken link, or small style nit in any 2026 file | [Track B](#track-b--upgrade-an-existing-entry) (treat it as a small upgrade) |
-| Adding glossary terms, diagrams, or style updates | Open a PR against [`documentation/`](../documentation/) — outside the scope of this file |
+| Adding glossary terms, diagrams, or style updates | Open a PR against [`documentation/`](../../documentation/) — outside the scope of this file |
 
 ---
 
@@ -31,13 +31,13 @@ Complete these once, before your first PR:
 
 1. **GitHub account.** **Every change lands on `main` through a pull request — no exceptions.** Direct pushes to `main` are blocked by branch protection and will be rejected by the server. You work on a feature branch (in your fork or the upstream repo), open a PR, and merge only after it satisfies every rule in [Branch protection and what reviewers will check](#branch-protection-and-what-reviewers-will-check).
 2. **Read the style guide.** Every entry must follow:
-   - [`documentation/style/README.md`](../documentation/style/README.md) — overview
-   - [`documentation/style/general.md`](../documentation/style/general.md) — Markdown, headings, tone, US English
-   - [`documentation/style/entries.md`](../documentation/style/entries.md) — required sections and structure for `LLMXX` entries
-   - [`documentation/style/branding.md`](../documentation/style/branding.md) — if you reuse project assets
-3. **Skim the template.** Every entry (new or upgraded) conforms to [`2026/_template.md`](./_template.md). It defines the five required sections: *Description*, *Common Examples of Risk*, *Prevention and Mitigation Strategies*, *Example Attack Scenarios*, *Reference Links*.
+   - [`documentation/style/README.md`](../../documentation/style/README.md) — overview
+   - [`documentation/style/general.md`](../../documentation/style/general.md) — Markdown, headings, tone, US English
+   - [`documentation/style/entries.md`](../../documentation/style/entries.md) — required sections and structure for `LLMXX` entries
+   - [`documentation/style/branding.md`](../../documentation/style/branding.md) — if you reuse project assets
+3. **Skim the template.** Every entry (new or upgraded) conforms to [`2026/_template.md`](../_template.md). It defines the five required sections: *Description*, *Common Examples of Risk*, *Prevention and Mitigation Strategies*, *Example Attack Scenarios*, *Reference Links*.
 4. **Enable signed commits.** Required by branch protection on `main`. See [Signing your commits](#signing-your-commits).
-5. **Review existing entries** in [`2026/`](./) so you understand tone, depth, and scope before you write.
+5. **Review existing entries** in [`2026/working/`](./) so you understand tone, depth, and scope before you write.
 
 ---
 
@@ -45,26 +45,30 @@ Complete these once, before your first PR:
 
 ```
 2026/
-├── CONTRIBUTING.md             # this file
-├── _template.md                # entry template — copy this for new entries
-├── LLM00_Preface.md            # preface (non-numbered)
-├── LLM01_PromptInjection.md    # existing numbered entries LLM01..LLM10
-├── ...
-├── LLM10_UnboundedConsumption.md
-├── new_entry_candidates/       # staging area for proposed (Track A) entries
-└── artifacts/                  # diagrams, PDFs, supporting images
+├── _template.md                # entry template — copy this for new entries (stays at cycle root)
+├── working/                    # in-flight entries (old numbering) and cycle tooling
+│   ├── CONTRIBUTING.md         # this file
+│   ├── LLM00_Preface.md        # preface (non-numbered)
+│   ├── LLM01_PromptInjection.md ... LLM10_UnboundedConsumption.md  # in-flight entries
+│   ├── new_entry_candidates/   # staging area for proposed (Track A) entries
+│   ├── artifacts/              # diagrams, PDFs, supporting images
+│   ├── Leads/                  # entry-lead roster (gitignored)
+│   └── polling/                # community-polling tooling
+└── final/                      # renumbered release (new order)
+    ├── LLM00_Preface.md
+    └── LLM01_PromptInjection.md ... LLM10_ImproperOutputHandling.md
 ```
 
 Other directories you may touch indirectly:
 
-- [`.github/CODEOWNERS`](../.github/CODEOWNERS) — required reviewers (see [Review process](#review-process)).
-- [`documentation/style/`](../documentation/style/README.md) — style guide.
+- [`.github/CODEOWNERS`](../../.github/CODEOWNERS) — required reviewers (see [Review process](#review-process)).
+- [`documentation/style/`](../../documentation/style/README.md) — style guide.
 
 ---
 
 ## Track A — Propose a new entry
 
-Use this track when you want to nominate a **new** risk/vulnerability for inclusion in the 2026 list. Your proposal lives in [`2026/new_entry_candidates/`](./new_entry_candidates/) until the core team evaluates it for inclusion; if accepted, it is later promoted to a numbered `LLMXX_*.md` slot.
+Use this track when you want to nominate a **new** risk/vulnerability for inclusion in the 2026 list. Your proposal lives in [`2026/working/new_entry_candidates/`](./new_entry_candidates/) until the core team evaluates it for inclusion; if accepted, it is later promoted to a numbered `LLMXX_*.md` slot.
 
 ### Step 1 — Open a discussion issue (recommended)
 
@@ -96,31 +100,31 @@ git checkout -b new-entry/model-inversion upstream/main
 
 ### Step 4 — Copy the template
 
-Copy [`2026/_template.md`](./_template.md) into [`2026/new_entry_candidates/`](./new_entry_candidates/) and rename it using a descriptive slug (lowercase, hyphenated, no `LLMXX` prefix — numbering is assigned by the core team during promotion):
+Copy [`2026/_template.md`](../_template.md) into [`2026/working/new_entry_candidates/`](./new_entry_candidates/) and rename it using a descriptive slug (lowercase, hyphenated, no `LLMXX` prefix — numbering is assigned by the core team during promotion):
 
 ```bash
-cp 2026/_template.md 2026/new_entry_candidates/model-inversion.md
+cp 2026/_template.md 2026/working/new_entry_candidates/model-inversion.md
 ```
 
 ### Step 5 — Fill in every template section
 
-Your entry **must** include all five sections defined in [`2026/_template.md`](./_template.md), in the same order, at the same heading levels:
+Your entry **must** include all five sections defined in [`2026/_template.md`](../_template.md), in the same order, at the same heading levels:
 
 1. `## <Risk Name>` — level-2 heading. Omit the `LLMXX:` prefix for Track A; numbering is assigned at promotion.
-2. `### Description` — what the risk is, at a high level. Follow the paragraph style in [`documentation/style/entries.md`](../documentation/style/entries.md#description).
-3. `### Common Examples of Risk` — at least one numbered example. High-level categorization, not attack code. See [the *Example of Risk vs. Attack Scenario* guidance](../documentation/style/entries.md#technical-guidance).
+2. `### Description` — what the risk is, at a high level. Follow the paragraph style in [`documentation/style/entries.md`](../../documentation/style/entries.md#description).
+3. `### Common Examples of Risk` — at least one numbered example. High-level categorization, not attack code. See [the *Example of Risk vs. Attack Scenario* guidance](../../documentation/style/entries.md#technical-guidance).
 4. `### Prevention and Mitigation Strategies` — at least one actionable mitigation. Numbered list.
 5. `### Example Attack Scenarios` — at least one concrete scenario, including sample prompts, code, or request flows where applicable. This is where technical specifics belong.
 6. `### Reference Links` — numbered list of citations. For arXiv papers, follow the arXiv-provided citation guidance. Format: `[Title](URL): **Publisher/Outlet**`.
 
-Follow the project-wide Markdown and tone rules in [`documentation/style/general.md`](../documentation/style/general.md): ATX-style headings, US English spellings, no idioms, define jargon on first use, never skip heading levels.
+Follow the project-wide Markdown and tone rules in [`documentation/style/general.md`](../../documentation/style/general.md): ATX-style headings, US English spellings, no idioms, define jargon on first use, never skip heading levels.
 
 ### Step 6 — Commit using signed commits
 
 See [Signing your commits](#signing-your-commits). Keep commits small and focused; one logical change per commit.
 
 ```bash
-git add 2026/new_entry_candidates/model-inversion.md
+git add 2026/working/new_entry_candidates/model-inversion.md
 git commit -S -m "Propose new entry: Model Inversion"
 ```
 
@@ -145,19 +149,19 @@ See [Review process](#review-process). New-entry PRs typically go through severa
 
 If the core team accepts the proposal, a CODEOWNER (not you) will:
 
-1. Rename your file from `2026/new_entry_candidates/<slug>.md` to the next available `2026/LLMXX_<PascalCaseName>.md`.
+1. Rename your file from `2026/working/new_entry_candidates/<slug>.md` to the next available `2026/working/LLMXX_<PascalCaseName>.md`.
 2. Add the `LLMXX:` prefix to the level-2 heading.
-3. Assign a sub-team owner in [`CODEOWNERS`](../.github/CODEOWNERS) for ongoing maintenance (which moves the entry into [Track B](#track-b--upgrade-an-existing-entry)).
+3. Assign a sub-team owner in [`CODEOWNERS`](../../.github/CODEOWNERS) for ongoing maintenance (which moves the entry into [Track B](#track-b--upgrade-an-existing-entry)).
 
 ---
 
 ## Track B — Upgrade an existing entry
 
-Use this track if you own, or are on the sub-team for, one of the numbered entries already present in [`2026/`](./) (`LLM01_PromptInjection.md` through `LLM10_UnboundedConsumption.md`), or if you are making a small fix (typo, link repair, style alignment) to any 2026 file.
+Use this track if you own, or are on the sub-team for, one of the numbered entries already present in [`2026/working/`](./) (`LLM01_PromptInjection.md` through `LLM10_UnboundedConsumption.md`), or if you are making a small fix (typo, link repair, style alignment) to any 2026 file.
 
 ### Step 1 — Confirm ownership
 
-Check [`CODEOWNERS`](../.github/CODEOWNERS) to confirm you (or your sub-team) are the owner for the file you plan to edit. If you are not listed and the change is non-trivial, coordinate with the listed owner first — they control merge approval.
+Check [`CODEOWNERS`](../../.github/CODEOWNERS) to confirm you (or your sub-team) are the owner for the file you plan to edit. If you are not listed and the change is non-trivial, coordinate with the listed owner first — they control merge approval.
 
 ### Step 2 — Clone or pull
 
@@ -184,18 +188,18 @@ git checkout -b upgrade/LLM01-prompt-injection-multimodal upstream/main
 
 ### Step 4 — Edit the entry in place
 
-Edit the existing file directly — do **not** copy it into `new_entry_candidates/`. Preserve the structure required by [`2026/_template.md`](./_template.md) and [`documentation/style/entries.md`](../documentation/style/entries.md): the same five sections, the same heading levels, the `LLMXX:` prefix on the level-2 heading.
+Edit the existing file directly — do **not** copy it into `new_entry_candidates/`. Preserve the structure required by [`2026/_template.md`](../_template.md) and [`documentation/style/entries.md`](../../documentation/style/entries.md): the same five sections, the same heading levels, the `LLMXX:` prefix on the level-2 heading.
 
 Scope guidance for sub-teams:
 
 - **Prefer small, incremental PRs** over one large rewrite. Each PR should address one coherent topic (e.g., "add multimodal attack scenarios", "refresh references", "clarify mitigation #3"). Large PRs slow reviews and invite merge conflicts.
 - **Coordinate cross-entry changes.** If your upgrade touches terminology, examples, or mitigations referenced by other `LLMXX` entries, notify the affected CODEOWNERS in your PR description.
-- **Artifacts go in [`2026/artifacts/`](./artifacts/).** Diagrams and images live there; reference them with relative links (e.g., `![Architecture](./artifacts/architecture.png)`).
+- **Artifacts go in [`2026/working/artifacts/`](./artifacts/).** Diagrams and images live there; reference them with relative links (e.g., `![Architecture](./artifacts/architecture.png)`).
 - **Do not renumber entries.** Numbering is owned by the core team; propose renumbering in a separate issue.
 
 ### Step 5 — Run the style checks yourself
 
-Before opening the PR, reread [`documentation/style/general.md`](../documentation/style/general.md) and [`documentation/style/entries.md`](../documentation/style/entries.md) and confirm:
+Before opening the PR, reread [`documentation/style/general.md`](../../documentation/style/general.md) and [`documentation/style/entries.md`](../../documentation/style/entries.md) and confirm:
 
 - Heading levels are sequential (no jumps from `##` to `####`).
 - Bullet lists use `*`; numbered lists use explicit numbers (`1.`, `2.`, `3.`).
@@ -209,7 +213,7 @@ Before opening the PR, reread [`documentation/style/general.md`](../documentatio
 See [Signing your commits](#signing-your-commits). Group related changes into one commit; keep unrelated changes in separate commits to ease review.
 
 ```bash
-git add 2026/LLM01_PromptInjection.md 2026/artifacts/llm01-multimodal.png
+git add 2026/working/LLM01_PromptInjection.md 2026/working/artifacts/llm01-multimodal.png
 git commit -S -m "LLM01: add multimodal prompt-injection attack scenario"
 ```
 
@@ -241,7 +245,7 @@ Everything below applies to both tracks.
 **All changes to `main` must go through a pull request.** Direct pushes, force-pushes, and branch deletions from contributor accounts are rejected at the server. Every PR must satisfy **all** of the following before it can merge:
 
 1. **Opened as a pull request.** The only path to `main` is a PR from a feature branch. There is no "direct commit" escape hatch for contributors.
-2. **Two approving reviews.** Dismissed on new pushes. One must come from a [`CODEOWNERS`](../.github/CODEOWNERS) entry (enforced for every path).
+2. **Two approving reviews.** Dismissed on new pushes. One must come from a [`CODEOWNERS`](../../.github/CODEOWNERS) entry (enforced for every path).
 3. **Approval of the last push.** Any new commits after approval require re-approval.
 4. **All review conversations resolved.**
 5. **All commits signed.** Unsigned commits are rejected.
@@ -301,7 +305,7 @@ Use `--force-with-lease` (not `--force`) so you do not clobber reviewer commits 
 
 1. Open your PR. Fill out the description completely.
 2. CI and any hooks run. Address any automated feedback.
-3. Request review from at least two reviewers — at least one must be a [`CODEOWNERS`](../.github/CODEOWNERS) entry (GitHub auto-requests them for changed paths).
+3. Request review from at least two reviewers — at least one must be a [`CODEOWNERS`](../../.github/CODEOWNERS) entry (GitHub auto-requests them for changed paths).
 4. Reviewers leave comments. Respond to each one. Either apply the suggestion or explain why not.
 5. When a conversation is resolved, click **"Resolve conversation"** on it — branch protection requires all threads resolved before merge.
 6. If you push new commits after approval, the existing approvals are dismissed. Re-request review.
@@ -316,7 +320,7 @@ Use `--force-with-lease` (not `--force`) so you do not clobber reviewer commits 
 
 ## Style and formatting (short reference)
 
-The full style guide is authoritative: [`documentation/style/`](../documentation/style/README.md). Highlights:
+The full style guide is authoritative: [`documentation/style/`](../../documentation/style/README.md). Highlights:
 
 - **Markdown.** ATX-style headings (`#`, `##`, ...), no skipped levels.
 - **Language.** US English. Clear, international, jargon-defined.
@@ -324,17 +328,17 @@ The full style guide is authoritative: [`documentation/style/`](../documentation
 - **Emphasis.** `**bold**`, `*italic*`.
 - **Links.** Inline, to local paths where a local equivalent exists.
 - **Code.** Backticks for inline, triple backticks for blocks.
-- **Tables.** Markdown pipe syntax (see [`documentation/style/general.md`](../documentation/style/general.md#tables)).
-- **Images.** `![alt](path)`, with assets stored in [`2026/artifacts/`](./artifacts/).
+- **Tables.** Markdown pipe syntax (see [`documentation/style/general.md`](../../documentation/style/general.md#tables)).
+- **Images.** `![alt](path)`, with assets stored in [`2026/working/artifacts/`](./artifacts/).
 
-Entry-specific rules (section order, heading level per section, *Example of Risk* vs. *Example Attack Scenario*) are detailed in [`documentation/style/entries.md`](../documentation/style/entries.md).
+Entry-specific rules (section order, heading level per section, *Example of Risk* vs. *Example Attack Scenario*) are detailed in [`documentation/style/entries.md`](../../documentation/style/entries.md).
 
 ---
 
 ## Getting help
 
 - **Content questions** (what belongs in which section, scope of your entry): open a GitHub issue and tag the relevant CODEOWNERS.
-- **Style questions**: reread [`documentation/style/entries.md`](../documentation/style/entries.md); if unclear, open an issue so the ambiguity gets fixed in the style guide itself.
+- **Style questions**: reread [`documentation/style/entries.md`](../../documentation/style/entries.md); if unclear, open an issue so the ambiguity gets fixed in the style guide itself.
 - **Workflow / tooling questions** (signing, rebasing, branch protection): open an issue or ask in your PR description — reviewers will help.
 
 Thank you for contributing.
