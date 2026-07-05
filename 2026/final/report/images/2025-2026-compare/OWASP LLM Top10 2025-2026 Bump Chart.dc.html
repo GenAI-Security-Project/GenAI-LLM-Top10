@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
+</helmet>
+<div style="width:1600px;height:1650px;background:transparent;">
+  <svg width="1600" height="1650" viewBox="0 0 1600 1650" xmlns="http://www.w3.org/2000/svg" style="display:block;background:transparent;">
+    <defs>
+      <marker id="arrow-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#5B6472"></path>
+      </marker>
+      <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#2D6CDF"></path>
+      </marker>
+      <marker id="arrow-ochre" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#D98A00"></path>
+      </marker>
+      <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#D1362F"></path>
+      </marker>
+    </defs>
+
+    <!-- ===== TITLE ===== -->
+    <text x="800" y="50" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="34" letter-spacing="1.5" fill="#16233B">OWASP GenAI/LLM Top 10 (2025 &#8594; 2026): Rank Migration Bump Chart</text>
+    <line x1="620" y1="68" x2="980" y2="68" stroke="#17A2B8" stroke-width="4"></line>
+
+    <!-- ===== COLUMN HEADERS ===== -->
+    <text x="330" y="120" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="24" letter-spacing="4" fill="#5B6472">2025 RELEASE</text>
+    <text x="1270" y="120" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-weight="600" font-size="24" letter-spacing="4" fill="#5B6472">2026 RELEASE &#8212; FINAL</text>
+
+    <!-- ===== CONNECTING CURVES (drawn behind chips) ===== -->
+    <!-- L0 LLM01 -> R0 LLM01 : unchanged -->
+    <path d="M610,215 C800,215 800,215 990,215" fill="none" stroke="#5B6472" stroke-width="3.5" marker-end="url(#arrow-slate)"></path>
+    <!-- L1 LLM02 -> R1 LLM02 : unchanged -->
+    <path d="M610,345 C800,345 800,345 990,345" fill="none" stroke="#5B6472" stroke-width="3.5" marker-end="url(#arrow-slate)"></path>
+    <!-- L2 LLM03 Supply Chain -> R3 LLM04 Supply Chain : down -->
+    <path d="M610,475 C800,475 800,605 990,605" fill="none" stroke="#D98A00" stroke-width="3.5" marker-end="url(#arrow-ochre)"></path>
+    <!-- L3 LLM04 Poisoning -> R4 LLM05 Poisoning : down -->
+    <path d="M610,605 C800,605 800,735 990,735" fill="none" stroke="#D98A00" stroke-width="3.5" marker-end="url(#arrow-ochre)"></path>
+    <!-- L4 LLM05 Improper Output Handling -> R9 LLM10 Improper Output Handling : down -->
+    <path d="M610,735 C800,735 800,1385 990,1385" fill="none" stroke="#D98A00" stroke-width="3.5" marker-end="url(#arrow-ochre)"></path>
+    <!-- L5 LLM06 Excessive Agency -> R2 LLM03 Excessive Agency : up -->
+    <path d="M610,865 C800,865 800,475 990,475" fill="none" stroke="#2D6CDF" stroke-width="3.5" marker-end="url(#arrow-blue)"></path>
+    <!-- L6 LLM07 System Prompt Leakage -> R7 LLM08 Hidden Context Exposure : renamed -->
+    <path d="M610,995 C800,995 800,1125 990,1125" fill="none" stroke="#D1362F" stroke-width="3.5" stroke-dasharray="9 6" marker-end="url(#arrow-red)"></path>
+    <!-- L7 LLM08 Vector/Embedding -> R8 LLM09 Vector/Embedding : down -->
+    <path d="M610,1125 C800,1125 800,1255 990,1255" fill="none" stroke="#D98A00" stroke-width="3.5" marker-end="url(#arrow-ochre)"></path>
+    <!-- L8 LLM09 Misinformation -> R6 LLM07 Misinformation : up -->
+    <path d="M610,1255 C800,1255 800,995 990,995" fill="none" stroke="#2D6CDF" stroke-width="3.5" marker-end="url(#arrow-blue)"></path>
+    <!-- L9 LLM10 Unbounded Consumption -> R5 LLM06 Unbounded Consumption : up -->
+    <path d="M610,1385 C800,1385 800,865 990,865" fill="none" stroke="#2D6CDF" stroke-width="3.5" marker-end="url(#arrow-blue)"></path>
+
+    <!-- ===== LEFT COLUMN CHIPS (2025, ranked 1-10 top to bottom) ===== -->
+    <g>
+      <rect x="50" y="185" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="222" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM01</tspan><tspan dx="14" font-weight="400">Prompt Injection</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="315" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="352" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM02</tspan><tspan dx="14" font-weight="400">Sensitive Information Disclosure</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="445" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="482" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM03</tspan><tspan dx="14" font-weight="400">Supply Chain</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="575" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="612" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM04</tspan><tspan dx="14" font-weight="400">Data and Model Poisoning</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="705" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="742" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM05</tspan><tspan dx="14" font-weight="400">Improper Output Handling</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="835" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="872" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM06</tspan><tspan dx="14" font-weight="400">Excessive Agency</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="965" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="1002" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM07</tspan><tspan dx="14" font-weight="400">System Prompt Leakage</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="1095" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="1132" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM08</tspan><tspan dx="14" font-weight="400">Vector and Embedding Weaknesses</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="1225" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="1262" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM09</tspan><tspan dx="14" font-weight="400">Misinformation</tspan></text>
+    </g>
+    <g>
+      <rect x="50" y="1355" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="74" y="1392" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM10</tspan><tspan dx="14" font-weight="400">Unbounded Consumption</tspan></text>
+    </g>
+
+    <!-- ===== RIGHT COLUMN CHIPS (2026 final, ranked 1-10 top to bottom) ===== -->
+    <g>
+      <rect x="990" y="185" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="222" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM01</tspan><tspan dx="14" font-weight="400">Prompt Injection</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="315" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="352" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM02</tspan><tspan dx="14" font-weight="400">Sensitive Information Disclosure</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="445" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="482" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM03</tspan><tspan dx="14" font-weight="400">Excessive Agency</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="575" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="612" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM04</tspan><tspan dx="14" font-weight="400">Supply Chain</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="705" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="742" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM05</tspan><tspan dx="14" font-weight="400">Data and Model Poisoning</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="835" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="872" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM06</tspan><tspan dx="14" font-weight="400">Unbounded Consumption</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="965" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="1002" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM07</tspan><tspan dx="14" font-weight="400">Misinformation</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="1095" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <rect x="990" y="1095" width="560" height="60" rx="9" ry="9" fill="none" stroke="#D1362F" stroke-width="2.5" stroke-dasharray="7 5"></rect>
+      <text x="1014" y="1132" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM08</tspan><tspan dx="14" font-weight="400">Hidden Context Exposure</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="1225" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="1262" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM09</tspan><tspan dx="14" font-weight="400">Vector and Embedding Weaknesses</tspan></text>
+    </g>
+    <g>
+      <rect x="990" y="1355" width="560" height="60" rx="9" ry="9" fill="#16233B"></rect>
+      <text x="1014" y="1392" font-family="'IBM Plex Sans', sans-serif" font-size="22" fill="#F5F7FA"><tspan font-weight="700">LLM10</tspan><tspan dx="14" font-weight="400">Improper Output Handling</tspan></text>
+    </g>
+
+    <!-- ===== LEGEND ===== -->
+    <g font-family="'IBM Plex Sans', sans-serif" font-size="19" fill="#5B6472">
+      <line x1="120" y1="1470" x2="164" y2="1470" stroke="#5B6472" stroke-width="4"></line>
+      <text x="174" y="1477">Unchanged rank</text>
+
+      <line x1="400" y1="1470" x2="444" y2="1470" stroke="#2D6CDF" stroke-width="4"></line>
+      <text x="454" y="1477">Escalated (moved up)</text>
+
+      <line x1="740" y1="1470" x2="784" y2="1470" stroke="#D98A00" stroke-width="4"></line>
+      <text x="794" y="1477">Deprioritized (moved down)</text>
+
+      <line x1="1130" y1="1470" x2="1174" y2="1470" stroke="#D1362F" stroke-width="4" stroke-dasharray="7 5"></line>
+      <text x="1184" y="1477">Renamed / re-scoped</text>
+    </g>
+
+    <!-- ===== CAPTION ===== -->
+    <text x="800" y="1550" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-weight="400" font-size="26" fill="#5B6472">Ten risks, ten releases later: same count, different priorities.</text>
+    <text x="800" y="1580" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-weight="400" font-size="18" fill="#5B6472">Dashed red: System Prompt Leakage (2025) evolves into Hidden Context Exposure (2026).</text>
+  </svg>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 800, &quot;height&quot;: 825}}"></script>
+</body>
+</html>
