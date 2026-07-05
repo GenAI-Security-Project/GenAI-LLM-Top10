@@ -77,3 +77,14 @@ The following conditions can increase the impact of this vulnerability:
 9. [Terminal DiLLMa: LLM-powered Apps Can Hijack Your Terminal Via Prompt Injection](https://embracethered.com/blog/posts/2024/terminal-dillmas-prompt-injection-ansi-sequences/): **Embrace The Red**
 10. [GitHub Copilot Chat: From Prompt Injection to Data Exfiltration](https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/): **Embrace The Red**
 11. [Markdown exfiltration tracker](https://simonwillison.net/tags/markdown-exfiltration/): **Simon Willison**
+
+### Related Frameworks and Taxonomies
+
+| Framework | Reference | Relevance |
+|---|---|---|
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI02 — Tool Misuse & Exploitation | 2026 addition, justified against this entry's own content: a general-purpose LLM passes its response to a privileged extension without output validation, causing the extension to be misused and shut down (Scenario #1). |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI05 — Unexpected Code Execution (RCE) | Foundational crosswalk mapping; matches this entry's core risk of unvalidated LLM output reaching a shell, `exec`, or `eval`, resulting in remote code execution (Description; Common Example of Risk #1). |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI09 — Human-Agent Trust Exploitation | Canonical crosswalk baseline mapping — ASI09 lists Improper Output Handling as a contributing LLM risk. The content match is loose: this entry's scenarios are machine-to-machine (unvalidated output reaching a shell, browser, or database), while ASI09 concerns deceiving a human operator; the shared thread is unvalidated model output reaching a downstream trust decision. |
+| **MITRE CWE** | [CWE-116 — Improper Encoding or Escaping of Output](https://cwe.mitre.org/data/definitions/116.html) | Root-cause weakness underlying missing context-aware output encoding across HTML, JavaScript, SQL, and shell sinks (Reference Links #8). |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI12 — Unsafe Natural-Language Data Gateways (LLM-to-SQL/Graph) | An unscrutinized LLM-generated query executed against a live database enables bulk deletion or exfiltration, directly paralleling this entry's Common Example of Risk #3 and Scenario #3 (LLM-crafted SQL that deletes all database tables when not scrutinized). |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI06 — Tool, Plugin & Agent Data Exchange Risks | DSGAI06 covers the same agent/tool boundary this entry's Common Example of Risk #1 targets: unvalidated LLM output crossing from generation into tool or command execution. Note DSGAI06's own cited CVE-2025-66404 (`exec_in_pod`) is a tool-scoping failure, not an output-validation failure — the two entries share a boundary, not a root cause. |

@@ -271,21 +271,30 @@ Static test suites underestimate real-world ASR (Attack Success Rate) because th
 ---
 ### Related Frameworks and Taxonomies
 
-Refer to this section for comprehensive information, scenarios, strategies, and best practices that complement this entry.
-
-* AML.T0051.000 — LLM Prompt Injection: Direct (MITRE ATLAS)
-* AML.T0051.001 — LLM Prompt Injection: Indirect (MITRE ATLAS)
-* AML.T0054 — LLM Jailbreak Injection: Direct (MITRE ATLAS)
-* AML.T0057 — LLM Data Leakage (MITRE ATLAS)
-* AML.T0065 — LLM Prompt Crafting (MITRE ATLAS)
-* AML.T0068 — LLM Prompt Obfuscation (MITRE ATLAS)
-* AML.T0070 — RAG Poisoning (MITRE ATLAS)
-* AML.T0080.001 — AI Agent Context Poisoning: Memory (MITRE ATLAS)
-* AML.T0099 — AI Agent Tool Data Poisoning (MITRE ATLAS)
-* AML.T0086 — Exfiltration via AI Agent Tool Invocation (MITRE ATLAS)
-* AML.T0102 — Generate Malicious Commands (MITRE ATLAS)
-* AML.T0105 — Escape to Host (MITRE ATLAS)
-* AML.T0110 — AI Agent Tool Poisoning (MITRE ATLAS)
-* T1195 — Supply Chain Compromise (MITRE ATT&CK)
-* NIST AI 100-2 E2025 — Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations
-* OWASP AIVSS — AI Vulnerability Scoring System
+| Framework | Reference | Relevance |
+|---|---|---|
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI01 — Agent Goal Hijack | Injected input overrides the system prompt's role and capability constraints, redirecting agent goals (Common Examples #1; Scenario #1) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI02 — Tool Misuse & Exploitation | Injected input drives unauthorized tool invocation; Simon Willison's "lethal trifecta" (private data access, untrusted content, external communication) is cited as the structural diagnosis for when this becomes exploitable (Prevention intro, ¶2; Common Examples #3; Scenario #9) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI03 — Identity & Privilege Abuse | Trusted-surface indirect injection causes the agent to act "under the user's elevated credentials," performing privileged actions the attacker could not perform directly (Indirect Prompt Injection section; Scenario #9) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI05 — Unexpected Code Execution (RCE) | Agent shell, file-system, or cloud-API access turns a successful injection into arbitrary command execution (Description outcomes list, "Where the agent has shell, file-system, or cloud-API access"; Scenario #8, CVE-2025-53773) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI06 — Memory & Context Poisoning | Cross-session memory and RAG corpus poisoning taint every future session reading from the compromised store (Common Examples #6; Control #9, citing MITRE ATLAS AML.T0080.001) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI08 — Cascading Failures | Tool outputs re-enter the context window, enabling chained or self-replicating effects across a multi-step tool chain (Description ¶2; Scenario #9) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI09 — Human-Agent Trust Exploitation | Injected instructions bypass Human-in-the-Loop confirmation, exploiting the trust placed in the confirmation step itself (Control #7; Scenario #8, AWS-2025-019) |
+| **MITRE ATLAS** | AML.T0051.000 — LLM Prompt Injection: Direct | Direct-injection technique underlying the Direct Prompt Injection section and Scenario #1 |
+| **MITRE ATLAS** | AML.T0051.001 — LLM Prompt Injection: Indirect | Indirect-injection technique underlying the Indirect Prompt Injection section and Scenarios #2, #4, #7, #9 |
+| **MITRE ATLAS** | AML.T0054 — LLM Jailbreak Injection: Direct | Jailbreak subset of direct injection discussed in the Direct Prompt Injection section |
+| **MITRE ATLAS** | AML.T0057 — LLM Data Leakage | Disclosure outcome of a successful injection (Common Examples #1) |
+| **MITRE ATLAS** | AML.T0065 — LLM Prompt Crafting | Adversarial payload construction, including the fine-tuning-API gradient-oracle ("fun-tuning") technique (Common Examples #7) |
+| **MITRE ATLAS** | AML.T0068 — LLM Prompt Obfuscation | Invisible-Unicode and multilingual/encoded payload techniques (Common Examples #5, #8) |
+| **MITRE ATLAS** | AML.T0070 — RAG Poisoning | RAG corpus poisoning technique (Common Examples #6; Scenario #4, PoisonedRAG) |
+| **MITRE ATLAS** | AML.T0080.001 — AI Agent Context Poisoning: Memory | Cross-session memory poisoning technique, cited directly in Control #9 against the Gemini memory-persistence PoC |
+| **MITRE ATLAS** | AML.T0099 — AI Agent Tool Data Poisoning | An attacker plants poisoned content in a low-privilege channel for an MCP-connected tool to retrieve, and the agent acts on it under elevated credentials (Common Examples #3; Scenario #9, GitHub MCP / Supabase MCP / postmark-mcp) |
+| **MITRE ATLAS** | AML.T0086 — Exfiltration via AI Agent Tool Invocation | Tool-call-mediated exfiltration (Scenario #9: GitHub MCP, Supabase MCP, postmark-mcp) |
+| **MITRE ATLAS** | AML.T0102 — Generate Malicious Commands | Attacker-directed generation of destructive commands (Scenario #8, Amazon Q) |
+| **MITRE ATLAS** | AML.T0105 — Escape to Host | Host-level command execution and destructive action via agent shell/cloud-API access (Description outcomes list, "Where the agent has shell, file-system, or cloud-API access"; Scenario #8) |
+| **MITRE ATLAS** | AML.T0110 — AI Agent Tool Poisoning | Poisoned MCP server descriptions or tool definitions that trick the model into unauthorized actions (Control #10) |
+| **MITRE ATT&CK** | T1195 — Supply Chain Compromise | Compromised MCP server / npm package as an injection delivery surface (Control #10; Scenario #8, AWS-2025-015; Scenario #9, postmark-mcp) |
+| **NIST AI 100-2 E2025** | Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations | Cited as the baseline position that no robust prevention mechanism exists because LLMs make no architectural distinction between instructions and data (Prevention intro; Control #4, #8) |
+| **OWASP AIVSS** | AI Vulnerability Scoring System | Severity-scoring framework applicable to prompt-injection findings |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI01 — Sensitive Data Leakage | DSGAI01's mitigations name indirect-prompt-injection exfiltration (markdown-image rendering, tool-callback allowlisting) as an explicit control category, and both entries independently cite CVE-2024-5184 (EmailGPT) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI06 — Tool, Plugin & Agent Data Exchange Risks | DSGAI06's "tool poisoning via crafted metadata" vector — malicious MCP server descriptions or plugin manifests that "exploit the model's tendency to treat tool descriptions as trusted instructions" — is the same mechanism as this entry's Control #10, and both entries cite the postmark-mcp incident |

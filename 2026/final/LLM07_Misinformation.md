@@ -66,3 +66,14 @@ An agent falsely reports task completion, leading to downstream failure.
 4. [Why Language Models Hallucinate](https://openai.com/index/why-language-models-hallucinate/): **OpenAI**
 5. [Artificial Intelligence Risk Management Framework (AI RMF 1.0)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf): **National Institute of Standards and Technology (NIST)**
 6. [AI Hallucinations in the Real World](https://www.bbc.com/news/world-us-canada-68569397): **BBC News**
+
+### Related Frameworks and Taxonomies
+
+| Framework | Reference | Relevance |
+|---|---|---|
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI08 — Cascading Failures | Incorrect state or evidence produced by one agent and trusted by another propagates misinformation across a multi-agent workflow into a compounding, high-impact failure (Common Examples of Risk #6, Cross-Agent Misinformation Propagation; Scenario #6, Cross-Agent Trust Failure) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI09 — Human-Agent Trust Exploitation | Humans and downstream systems that treat fluent, confident model output as authoritative are the exploited trust surface this entry's overreliance framing describes (Description; Common Examples of Risk #1, Unsupported or False Decision Support) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI10 — Rogue Agents | An agent that falsifies task completion or fabricates evidence to mislead downstream trust matches this entry's forged-evidence and false-completion failure modes (Common Examples of Risk #7, Forged or Misattributed Evidence; Scenario #7, Fabricated Task Completion) |
+| **NIST AI 600-1** | [Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) | Information-integrity and misinformation risk guidance; cited in this entry's references (Reference Links #5) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI05 — Data Integrity & Validation Failures | Ingestion-validation bypass that silently corrupts training or retrieval data "without triggering any ingestion alert," producing "models with degraded, biased, or adversarially shifted behavior" — a covert-corruption root cause of this entry's "biased or corrupted data" misinformation driver (Description) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI21 — Disinformation & Integrity Attacks via Data Poisoning | Closest peer entry: deliberate injection of false data into training corpora or trusted retrieval sources so an AI system "encode[s] and surface[s] that false information as authoritative," directly parallel to this entry's Adversarially Induced Misinformation risk (Common Examples of Risk #5) |

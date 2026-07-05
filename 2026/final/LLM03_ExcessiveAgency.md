@@ -114,6 +114,14 @@ Alternatively, the damage caused could be reduced by implementing rate limiting 
 
 ### Related Frameworks and Taxonomies
 
-* [ASI02: Tool Misuse and Exploitation](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/): **OWASP Agentic Top-10**
-* [ASI03: Identity and Privilege Abuse](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/): **OWASP Agentic Top-10**
-* [ASI08: Cascading Failures](https://genai.owasp.org/resource/ai-security-solutions-landscape-for-agentic-ai-q2-2026/): **OWASP Agentic Top-10**
+| Framework | Reference | Relevance |
+|---|---|---|
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI01 — Agent Goal Hijack | Prompt injection or hallucination diverting an agent from its intended task is the trigger mechanism this entry's Description names for Excessive Agency ("hallucination/confabulation... or direct/indirect prompt injection") |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI02 — Tool Misuse & Exploitation | Named directly in this entry's Description as a manifestation of Excessive Agency; matches Common Examples of Risk #1-3 (extensions/tools carrying functionality beyond what the task needs) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI03 — Identity & Privilege Abuse | Named directly in this entry's Description as a manifestation of Excessive Agency; matches Common Examples of Risk #4-5 (extensions connecting with generic, over-privileged identities) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI05 — Unexpected Code Execution (RCE) | Common Examples of Risk #3 describes a shell-command extension that fails to filter out unintended commands, and Reference Link #3 documents a coding agent whose excessive autonomy and permissions destroyed production infrastructure |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI07 — Insecure Inter-Agent Communication | This entry's Description lists "a malicious/compromised peer agent" in multi-agent/collaborative systems as a trigger, and Prevention Strategy #5 calls for preserving user authorization scope "across chained extension or agent calls" |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI08 — Cascading Failures | Named directly in this entry's Description as a manifestation of Excessive Agency; matches Prevention Strategy #10 (rate limiting and circuit breakers to halt runaway extension invocation) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI09 — Human-Agent Trust Exploitation | Common Examples of Risk #6 (excessive autonomy: failing to seek confirmation before high-impact actions) and Prevention Strategy #6 (human-in-the-loop approval) both concern trust placed in unsupervised agent action |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI02 — Agent Identity & Credential Exposure | DSGAI02 describes agents inheriting an "overprovisioned credential" that "propagates downstream to sub-agents, tool calls"; matches Common Examples of Risk #5 (generic high-privileged identity) and Prevention Strategy #5 (execute extensions in the user's own OAuth-scoped context) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI06 — Tool, Plugin & Agent Data Exchange Risks | DSGAI06 warns that over-broad execution authority can turn "the agent into a proxy operator"; matches this entry's Example Attack Scenario, where a mail-summarizing extension retains unneeded send capability that an indirect prompt injection then exploits |

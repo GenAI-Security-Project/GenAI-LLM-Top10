@@ -28,3 +28,11 @@ Scenario #2: Another example of an attack scenario showing a different way the r
 
 1. [Link Title](URL): **Name of Outlet/Website/Whatever** (Arxiv papers should follow the citation guide posted with the article)
 2. [Link Title](URL): **Name of Outlet/Website/Whatever** (Arxiv papers should follow the citation guide posted with the article)
+
+### Related Frameworks and Taxonomies
+
+Optional. Maps this entry to related OWASP frameworks (Agentic ASI, GenAI Data Security DSGAI) and external taxonomies (MITRE ATLAS/ATT&CK, CWE, NIST).
+
+| Framework | Reference | Relevance |
+|---|---|---|
+| Framework name | Section or ID | One-line note on how it relates to this entry |

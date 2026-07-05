@@ -85,6 +85,18 @@ When referencing Arxiv whitepapers, please follow the citation guidance posted w
 2. [Link Title](URL): **Name of Outlet/Website/Whatever** (Arxiv papers should follow the citation guide posted with the article)
 ```
 
+## Related Frameworks and Taxonomies (optional)
+
+An entry may include an optional level 3 subsection after References that maps it to related OWASP frameworks (Agentic ASI, GenAI Data Security DSGAI) and external taxonomies (MITRE ATLAS/ATT&CK, CWE, NIST), using a 3-column table:
+
+```markdown
+### Related Frameworks and Taxonomies
+
+| Framework | Reference | Relevance |
+|---|---|---|
+| Framework name | Section or ID | One-line note on how it relates to this entry |
+```
+
 
 ## Technical Guidance
 
