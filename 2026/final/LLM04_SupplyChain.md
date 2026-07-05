@@ -52,7 +52,7 @@ Unclear terms and conditions (T&Cs) and data privacy policies of model operators
 
 #### 10. Unsigned or Replaceable Model Artifacts
 
-When models, adapters, datasets, and conversion outputs are not signed or hash-pinned, an attacker can replace, repackage, or silently alter artifacts in transit, in storage, or during promotion between environments. Without verifiable provenance, downstream consumers cannot distinguish a tampered artifact from a legitimate one and may load a malicious version under a trusted name.
+When models, adapters, datasets, fine-tuned checkpoints, and conversion outputs are not signed or hash-pinned, an attacker can replace, repackage, or silently alter artifacts in transit, in storage, or at the promotion boundary where automated pipelines accept artifacts into trusted environments. Pipelines that resolve artifacts by a mutable reference (for example, a `latest` tag) instead of an immutable digest, or that trust namespace and repository metadata alone, can be made to load a malicious version under a trusted name.
 
 ### Prevention and Mitigation Strategies
 
@@ -67,7 +67,7 @@ When models, adapters, datasets, and conversion outputs are not signed or hash-p
 8. Use anomaly detection and adversarial robustness tests on supplied models and data to help detect tampering and poisoning. This should be part of MLOps and LLM pipelines.
 9. Implement a patching policy to mitigate vulnerable or outdated components. Ensure the application relies on maintained versions of APIs and underlying models.
 10. Encrypt models deployed at the edge with integrity checks and use vendor attestation APIs to prevent tampered apps and models. Reject unrecognized firmware and untrusted device states.
-11. Implement verifiable root-of-trust controls across the full lifecycle, including signed artifacts, provenance tracking, and continuous validation of upstream model integrity.
+11. Implement verifiable root-of-trust controls across the full lifecycle, including signed artifacts, immutable artifact references, provenance tracking, policy-based release gates, and continuous validation of upstream model integrity.
 
 ### Example Attack Scenarios
 
@@ -171,6 +171,7 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 24. [Probllama: Ollama Remote Code Execution Vulnerability (CVE-2024-37032)](https://www.wiz.io/blog/probllama-ollama-vulnerability-cve-2024-37032): **Wiz**
 25. [Wiz Research finds architecture risks that may compromise AI-as-a-Service providers](https://www.wiz.io/blog/wiz-and-hugging-face-address-risks-to-ai-infrastructure): **Wiz**
 26. [Machine Learning Bill of Materials (ML-BOM)](https://cyclonedx.org/capabilities/mlbom/): **OWASP CycloneDX**
+27. [Supply-chain Levels for Software Artifacts (SLSA)](https://slsa.dev): **OpenSSF**
 
 ### Related Frameworks and Taxonomies
 
