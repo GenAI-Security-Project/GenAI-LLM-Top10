@@ -21,6 +21,8 @@ The threat model is materially harder for **open-weights deployments**: with wei
 
 Applicable regimes include the EU AI Act (Regulation (EU) 2024/1689, with high-risk obligations commencing August 2026), the General Data Protection Regulation (GDPR), the Health Insurance Portability and Accountability Act (HIPAA), the California Consumer Privacy Act and California Privacy Rights Act (CCPA/CPRA), ISO/IEC 42001, and the NIST AI Risk Management Framework Generative AI Profile (NIST AI 600-1).
 
+**Scope.** This entry covers foundational disclosure where the LLM operates as a *component* within application logic. Where the model acts as an *autonomous actor* (persistent cross-session memory, tool selection, or multi-step and multi-agent action), the amplified disclosure risk is owned by the OWASP Top 10 for Agentic Applications (ASI), with deeper data-security treatment in the OWASP GenAI Data Security Risks and Mitigations 2026 (DSGAI). This entry points to those rather than reproducing them.
+
 ### Common Examples of Risk
 
 The seven sub-classes below map back to the four-phase model in the Description:
@@ -165,7 +167,7 @@ Mitigations are organized into the **OWASP DSGAI tiered structure** (Tier 1 foun
 
 ### Example Attack Scenarios
 
-The scenarios below are synthesized, forward-looking attacker narratives — not catalogued incidents (those live in the Incident Timeline). Each maps to one or more sub-classes of the *Common Examples of Risk* taxonomy and shows the technique, target, and disclosure outcome concretely.
+The scenarios below are synthesized, forward-looking attacker narratives, not catalogued incidents. Historical incidents are cited inline in the Common Examples of Risk above. Each maps to one or more sub-classes of the *Common Examples of Risk* taxonomy and shows the technique, target, and disclosure outcome concretely.
 
 #### Scenario #1: Training-Data Memorization Extraction via Divergence
 
@@ -225,8 +227,6 @@ A user uploads a financial spreadsheet to a chat assistant and asks for summary 
 
 
 ### Reference Links
-
-#### Reference Research & PoC
 
 1. [OWASP GenAI Data Security Risks and Mitigations 2026 (v1.0)](https://genai.owasp.org/): **OWASP GenAI Security Project**, March 2026 (CC BY-SA 4.0)
 2. [OWASP Top 10 for LLM Applications Charter](https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/blob/main/OWASP%20Top%2010%20for%20LLM%20Applications%20Charter.md): **OWASP GenAI Security Project**
@@ -289,71 +289,6 @@ A user uploads a financial spreadsheet to a chat assistant and asks for summary 
 59. [Differential Privacy for AI: Protecting Training Data (2026)](https://aisecurityandsafety.org/es/guides/differential-privacy-ai): **AI Security and Safety** (2026)
 60. [Exposed DeepSeek Database Revealed Chat Prompts and Internal Data](https://www.wired.com/story/exposed-deepseek-database-revealed-chat-prompts-and-internal-data): **Wired** (Jan 2025)
 
-#### Scope and Relationship to Other Entries
-
-Sensitive information disclosure intersects most other Top 10 entries because disclosure is the *outcome* of many distinct classes of weakness. To maintain a focused, non-duplicative scope, this entry applies the boundaries below, aligned with the OWASP GenAI Security Project Charter's component-vs-actor distinction between the Top 10 for LLM Applications and the Top 10 for Agentic Applications (ASI).
-
-* **In scope.** Foundational disclosure vulnerabilities in systems where the LLM operates as a *component* within application logic — training-data memorization and extraction, inference-time context and output disclosure, embedding and representation inversion, multimodal memorization, side-channel recovery, training-pipeline leakage, and platform/ecosystem disclosure surfaces (observability middleware, SDK logging, aggregate analytics) that exist regardless of agent autonomy.
-* **Amplified in agentic settings, covered by ASI.** Where the model acts as an *autonomous actor* — maintaining persistent memory across sessions, selecting tools, taking multi-step actions, coordinating with other agents, or operating with delegated authority — the amplified disclosure risk is addressed by the OWASP Top 10 for Agentic Applications. Examples in scope of ASI: persistent-memory injection across sessions (see **ASI06 — Memory & Context Poisoning**), multi-agent worm propagation of exfiltration instructions, zero-click exfiltration by autonomous agents over multi-step tool chains, computer-use adjacent-content capture, and Model Context Protocol (MCP) tool poisoning. The OWASP **Agent Memory Guard** project provides a complementary framework for protecting persistent agent memory specifically. This entry treats those as the *agentic amplification* of foundational risks documented here, and points to ASI and Agent Memory Guard rather than reproducing their detail.
-* **Pointers to sibling entries (2026 numbering):**
-  * **LLM01:2026 Prompt Injection** — injection is the delivery mechanism for many disclosure incidents (EchoLeak, Slack AI, ASCII smuggling). Injection technique and detection are covered there. This entry treats only the foundational disclosure outcome where the model-as-component spills its own context in a single response.
-  * **LLM03:2026 Excessive Agency** — over-permissioned tool access and missing authorization. This entry covers disclosure via channels that leak even with correctly scoped permissions (reasoning traces, side channels, memorization).
-  * **LLM04:2026 Supply Chain** — vendor breaches, model-hub poisoning, and compromised third-party components. Sensitive data exposed through supply-chain incidents is a downstream consequence; the supply-chain weakness itself is LLM04.
-  * **LLM05:2026 Data and Model Poisoning** — poisoning that causes the model to disclose on specific triggers (PoisonedRAG, fine-tuning watermark insertion). The poisoning vector is LLM05; the disclosure outcome is in scope here.
-  * **LLM06:2026 Unbounded Consumption** — cost amplification via cache and context patterns; functional model replication from API outputs. Cache cost-as-side-channel and training-data-disclosure-via-distillation are in scope here (§5.3, §6.2); functional model replication itself belongs to LLM06.
-  * **LLM08:2026 Hidden Context Exposure** — exposure, inference, or reconstruction of hidden control context (system prompts, tool schemas, rules). This entry treats only cases where the exposed context contains PII, credentials, or regulated data (i.e., the system prompt or hidden context was misused as a data store).
-  * **LLM09:2026 Vector and Embedding Weaknesses** — embedding-layer mechanisms (inversion, retrieval geometry, cross-tenant similarity search, semantic-cache poisoning, multimodal embedding poisoning) and the implementation controls that mitigate them. This entry intentionally does **not** re-describe those mechanisms; it covers the **disclosure outcome** when recovered or surfaced content is regulated, privileged, or otherwise sensitive — including breach-classification rules under which "embeddings only" leaks of regulated data are equivalent to source-document leaks.
-  * **LLM10:2026 Improper Output Handling** — output-handling failures producing downstream injection. Where the harm is XSS, SQLi, or similar in downstream systems, refer there. This entry treats output handling only as it relates to disclosure of sensitive content.
-* **Companion guidance: OWASP GenAI Data Security Risks and Mitigations 2026 (v1.0).** The DSGAI taxonomy provides deeper, data-security-focused treatment of related risks. This entry cross-references DSGAI sections where they apply: **DSGAI01** (Sensitive Data Leakage) is the closest peer; **DSGAI09** (Multimodal Capture & Cross-Channel Data Leakage); **DSGAI11** (Cross-Context & Multi-User Conversation Bleed); **DSGAI13** (Vector Store Platform Data Security); **DSGAI14** (Excessive Telemetry & Monitoring Leakage); **DSGAI15** (Over-Broad Context Windows & Prompt Over-Sharing); **DSGAI16** (Endpoint & Browser Assistant Overreach); **DSGAI18** (Inference & Data Reconstruction); **DSGAI20** (Model Exfiltration & IP Replication).
-
-### CVE Reference
-
-| CVE / ID | Subject | Year | Relevance |
-|---|---|---|---|
-| **CVE-2019-20634** | ML email-filter bypass (*Proof Pudding*) | 2019 | Canonical training-data extraction enabling model inversion. Listed by DSGAI01. |
-| **CVE-2024-5184** | EmailGPT prompt injection → system-prompt and data leakage | 2024 | Direct disclosure via prompt-injection self-disclosure pathway. Listed by DSGAI01. |
-| **CVE-2025-32711** | Microsoft 365 Copilot — *EchoLeak* | 2025 | Zero-click prompt-injection exfiltration; injection mechanism is LLM01, autonomous-action amplification is ASI, listed here for the disclosure outcome. Listed by DSGAI01. |
-| **CVE-2025-54794** | Claude AI prompt injection ("the jailbreak that talked back") | 2025 | Scope: primarily LLM01 (prompt-injection mechanism) with LLM02 disclosure outcome where injected prompts elicit confidential context or memory contents. Listed by DSGAI01. |
-| **CVE-2026-0612** | The Librarian — information leakage via `web_fetch` tool | 2026 | Information disclosure through tool-mediated fetch. Listed by DSGAI01. |
-| **CVE-2026-0628** | Chrome Gemini Live integration hijack | 2026 | Browser-extension hijack of an AI assistant; cross-references LLM01 (injection delivery), LLM04 (extension supply chain), and ASI (autonomous exfil). Disclosure outcome in scope here. |
-
-Most LLM02-class incidents are tracked through research publications, vendor advisories, and regulatory disclosures rather than CVE identifiers, because disclosure is typically the outcome of an architectural or data-governance weakness rather than a patchable code defect. The CVE list above is illustrative, not exhaustive; consult the Incident Timeline below for tracked incidents that lack CVE assignment.
-
-### Incident Timeline
-
-| Date | Incident | Class | DSGAI / sibling pointer |
-|---|---|---|---|
-| 2023-03 | Samsung confidential source-code exposure through ChatGPT | Training-data ingestion (§1.1) | DSGAI01 |
-| 2023-03 | ChatGPT Redis cross-user leak; 1.2% of Plus subscribers had payment PII exposed | Cross-tenant state leakage (§2.1) | DSGAI11 |
-| 2023-11 | ChatGPT "Poem" divergence attack; 10,000+ memorized examples recovered | Divergence extraction (§1.2) | DSGAI01 |
-| 2023-11+ | Custom GPT knowledge-base extraction (`/mnt/data` zip) becomes routine | Knowledge-base extraction (§3.2) | DSGAI13 |
-| 2023-12 | NYT v. OpenAI exhibits demonstrating verbatim memorization of copyrighted articles | Memorization (§1.1) | DSGAI01 |
-| 2023-2024 | Microsoft 365 Copilot indexing emails labeled "Confidential" in DLP-bypass | Classification-label bypass (§2.8) | DSGAI01 |
-| 2024-02 | Google Gemini share-link URLs indexed by Google search | Platform-level disclosure (§2.2) | DSGAI14 |
-| 2024-08 | Slack AI cross-channel indirect injection (PromptArmor) | Injection-driven disclosure → LLM01 | LLM01:2025 |
-| 2024-08 | ASCII smuggling in M365 Copilot (DEF CON 32) | Injection technique → LLM01 | LLM01:2025 |
-| 2024-08 | Black Hat Bargury Copilot Studio data-exfiltration demonstrations | Excessive agency / autonomous action → LLM06 / ASI | LLM06:2025 / ASI |
-| 2024 | GitHub Copilot hard-coded-secrets leakage research (~7% of recovered credentials active) | Memorization (§1.1) | DSGAI01 |
-| 2024-09 | SpAIware persistent-memory injection (Rehberger) | Persistent-memory amplification → ASI | ASI |
-| 2025-01 | DeepSeek ClickHouse public exposure (1M+ rows of conversations and API keys) | AI-vendor operational disclosure (§7.4) | DSGAI14 / LLM04 |
-| 2025-02 | DeepSeek iOS unencrypted transmission | Vendor operational disclosure | LLM04 |
-| 2025-06 | EchoLeak — CVE-2025-32711 | Zero-click exfil → ASI; foundational example here | ASI / LLM01 |
-| 2025-06 | GeminiJack — Gemini Enterprise zero-click | Zero-click exfil → ASI | ASI |
-| 2025 (mid) | Multiple confirmed indirect-prompt-injection exfil paths against M365 Copilot, Gemini, Sourcegraph Amp, VS Code Continue | Markdown-image / tool-callback exfil | DSGAI01 |
-| 2025-07 | Dong et al. internal-state inversion (USENIX Security 2025) | Side channel (§5.4) | DSGAI18 |
-| 2025-08 | StolenLoRA — LoRA adapter extraction (USENIX Security 2025) | Adapter memorization (§1.4) | DSGAI18 |
-| 2025-Q1 | NDSS 2025: prompt leakage via KV-cache sharing in multi-tenant serving | Prompt-cache side channel (§5.3) | DSGAI11 |
-| 2025-Q4 | NeurIPS 2025: memory injection attacks on agents (INJECMEM) | Agent memory injection → ASI | ASI |
-| 2025-11 | Whisper Leak — topic classification at >98% AUPRC across 28 production LLMs | Side channel (§5.2) | DSGAI18 |
-| 2025-11 | OpenAI / Mixpanel third-party breach | Vendor operational disclosure | LLM04 |
-| 2025 | ChatGPT shared-conversation indexing (4,500+ public conversations indexed by Google) | Platform-level disclosure (§2.2) | DSGAI14 |
-| 2025 | Anthropic distillation-attack detection / disruption announcements | Distillation defense (§6.2) | DSGAI20 |
-| 2026-02 | Check Point Research — ChatGPT data leakage via hidden outbound channel in the code-execution runtime; patched Feb 2026 | Tool-runtime covert exfiltration (§7.6) | LLM02 / LLM03 |
-| 2026-Q1 | "ShadowPrompt" XSS in Claude browser extension; weak URL allowlist allowed any malicious site to inject instructions | Browser-extension injection → LLM01 / LLM04 / ASI | LLM01 / LLM04 / ASI |
-| 2026-Q1 | CVE-2026-0628 — Chrome Gemini Live integration hijack | Browser-extension injection → LLM01 / LLM04 / ASI | LLM01 / LLM04 / ASI |
-| 2026-03 | Anthropic Claude Code source-map leak (~1,900 files / ~512K LOC) | Vendor operational disclosure (§7.4) | LLM04 |
-| 2026-04 | Adversa AI discloses critical Claude Code vulnerability days after the source-map leak | Compounded vendor-ops disclosure | LLM04 / LLM03 |
-
 ### Related Frameworks and Taxonomies
 
 | Framework | Reference | Relevance |
@@ -383,35 +318,10 @@ Most LLM02-class incidents are tracked through research publications, vendor adv
 | **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI16 — Endpoint & Browser Assistant Overreach | Endpoint and browser assistant data collection |
 | **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI18 — Inference & Data Reconstruction | Membership inference, embedding inversion, model inversion |
 | **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI20 — Model Exfiltration & IP Replication | Distillation and extraction-campaign defense |
+| **EU AI Act (Regulation (EU) 2024/1689)** | Art. 10, 13, 15, 26, 50, 72, 99 | Data quality, documentation, robustness, and deployer obligations for high-risk systems. Penalties up to EUR 35M or 7% of turnover. High-risk obligations commence August 2026. |
+| **GDPR (Regulation (EU) 2016/679)** | Art. 5, 17, 25, 32, 33, 35 | Lawful basis, data minimization, right to erasure (unlearning obligations), data protection by design, 72-hour breach notification, DPIA. Membership inference confirming a data subject was in training data is itself an Article 33 event. |
+| **HIPAA** | Security Rule §164.312, Privacy Rule §164.502, Breach Notification §164.404 | Access controls, audit trails, minimum-necessary use, 60-day breach notification. Outputs, reasoning traces, and retrieval results are electronic PHI when they contain identifiable health information. |
+| **CCPA / CPRA** | §1798.100, §1798.105, §1798.185 (ADMT) | California residents' data in training, fine-tuning, and inference. Right to delete creates unlearning obligations. ADMT regulations (finalized 2025) extend to substantial automated decisions. |
+| **ISO/IEC 42001** | Clauses 6.1, 8.4, Annex A | First certifiable international AI management-system standard. Data-management clauses address training and operational data governance. |
 
-#### Regulatory and Governance Mapping
-
-| Regime | Relevant Provisions | Applicability |
-|---|---|---|
-| **EU AI Act (Regulation (EU) 2024/1689)** | Art. 10 (Data and Data Governance), Art. 13 (Transparency), Art. 15 (Accuracy, Robustness, Cybersecurity), Art. 26 (Deployer Obligations), Art. 50 (Output Transparency), Art. 72 (Post-Market Monitoring), Art. 99 (Penalties) | Mandates data quality, documentation, robustness, and deployer obligations for high-risk systems. Prohibited-practice penalties up to EUR 35 million or 7% of worldwide annual turnover; other violations up to EUR 15 million or 3%. High-risk obligations commence August 2026. |
-| **GDPR (Regulation (EU) 2016/679)** | Art. 5, 17, 25, 32, 33, 35 | Lawful basis, data minimization, right to erasure (creates unlearning obligations), data protection by design, 72-hour breach notification, DPIA for high-risk processing. Membership inference confirming a specific data subject was in training data is itself an Article 33 event. |
-| **HIPAA** | Security Rule (§164.312); Privacy Rule (§164.502); Breach Notification Rule (§164.404) | Access controls, audit trails, minimum-necessary use, 60-day breach notification. Model outputs, reasoning traces, and retrieval results constitute electronic PHI when they contain identifiable health information. |
-| **CCPA / CPRA** | §1798.100 (Right to Know), §1798.105 (Right to Delete), §1798.185 (ADMT regulations) | California residents' data in training, fine-tuning, and inference. Right to delete creates unlearning obligations. Automated Decision-Making Technology regulations (finalized 2025) extend to substantial automated decisions by AI systems. |
-| **NIST AI 600-1** | Generative AI Profile of the AI RMF (July 2024) | Generative-AI-specific application of Govern / Map / Measure / Manage. Explicit treatment of data privacy, information integrity, and information security risks. |
-| **ISO/IEC 42001** | Clauses 6.1, 8.4, Annex A | First international AI management-system standard. Certifiable. Data-management clauses directly address training and operational data governance. |
-
-Right-to-explanation obligations (GDPR Art. 22) and equivalent ADMT provisions can be in tension with model-IP confidentiality; reconciling them is a known governance challenge.
-
-
-
-#### Revision Notes
-
-Maintenance guidance for the LLM02 sub-team and future revisions:
-
-1. **Component-vs-actor boundary with the OWASP Top 10 for Agentic Applications (ASI).** This entry applies the boundary from the OWASP GenAI Security Project Charter. Where a disclosure risk is meaningfully amplified by autonomy, persistence, or multi-step execution, detailed treatment belongs to ASI. When ASI revises, re-validate Scope and Threat Taxonomy pointers.
-2. **Companion alignment with OWASP GenAI Data Security 2026 (DSGAI).** This entry intentionally cross-references DSGAI01 / DSGAI09 / DSGAI11 / DSGAI13 / DSGAI14 / DSGAI15 / DSGAI16 / DSGAI18 / DSGAI20. The two documents are designed to be complementary: this entry is the *risk* statement at LLM-application granularity; DSGAI provides deeper, data-security-domain treatment with tiered controls. Keep cross-references current as DSGAI iterates.
-3. **Reasoning-trace disclosure.** Treated here as a foundational inference-time channel because the model emitting its own reasoning is a component-layer property. If reasoning-trace disclosure becomes first-class in ASI through sub-agent forwarding patterns, re-scope.
-4. **Open-weights threat model.** The threat model is materially harder for open-weights deployments (offline, unrate-limited extraction). Future revisions should consider whether open-weights amplification deserves its own subsection or remains a cross-cutting note.
-5. **Cross-entry coordination.** On revisions touching §2.7 (RAG), §3 (Embedding), §4 (Multimodal), §5 (Side channels), §6 (Pipeline), or §7 (Platform/Ecosystem), notify sub-teams for LLM01, LLM03, LLM04, LLM05, LLM08, LLM09, ASI, and the DSGAI working group as applicable.
-6. **Regulatory refresh cadence.** Regulatory mapping changes faster than the entry. Review at each revision cycle for new sub-regulations and enforcement guidance; watch in particular for EU AI Act implementing acts on high-risk obligations (commencing August 2026), CCPA ADMT enforcement, and analogous regimes in APAC (India DPDP Act, Singapore, South Korea).
-7. **Benchmark and incident currency.** Extraction, MIA, embedding-inversion, and side-channel research publish rapidly. Prefer citations that are either foundational (retained for lineage) or the current state of the art (refreshed each cycle).
-8. **Tool-runtime egress controls (§7.6).** Added in 2026 in response to Check Point Research's ChatGPT runtime DNS-exfiltration disclosure. As LLM products embed more code-execution and tool-use sandboxes, expect this surface to grow. Keep §7.6 updated with each major runtime exfiltration class disclosed.
-9. **Browser-extension XSS class (§7.5 extension).** The 2026 ShadowPrompt and CVE-2026-0628 class is jointly owned with LLM01 (injection delivery), LLM04 (extension supply chain), and ASI (autonomous-exfil amplification). Coordinate any future content updates across all four entries.
-10. **AI-vendor operational disclosure (§7.4).** Continues to be a high-volume incident class. New incidents (source-map leaks, exposed databases, build-pipeline failures) typically warrant Incident Timeline entries and a one-line generalization in §7.4 rather than a new sub-section.
-11. **DSGAI version alignment.** This entry currently aligns with DSGAI v1.0 (March 2026). On any DSGAI revision, re-validate the cross-reference list in Scope, the body sub-class pointers, and the Related Frameworks table.
-12. **ASI06 and Agent Memory Guard alignment.** Persistent-memory amplification is in scope of ASI06; the Agent Memory Guard project provides implementation patterns. Both are referenced from Scope and Related Frameworks. On ASI revision, re-validate the ASI06 naming and section number.
+Right-to-explanation obligations (GDPR Art. 22) and equivalent ADMT provisions can conflict with model-IP confidentiality. Reconciling the two is a known governance challenge.
