@@ -1,18 +1,30 @@
 # CODEOWNERS
 # Every PR to main requires approval from a code owner of every changed path.
 # The default rule below covers everything; the per-entry rules below route
-# 2026/LLM0X_*.md PRs to that entry's leads (see 2026/Leads/ for the source list).
+# 2026/LLM0X_*.md PRs to that entry's leads (see 2026/working/Leads/ for the source list).
 
 *       @rossja @rocklambros @virtualsteve-star
 
 # 2026 entry leads
-2026/LLM01_*    @cybershujin
-2026/LLM02_*    @emmanuelgjr @kenhuangus
-2026/LLM03_*    @jsotiro @stefanoamorelli
-2026/LLM04_*    @sjeswani28 @owasprox @anithadakamarri-sudo
-2026/LLM05_*    @ricokomenda @GTKlondike
-2026/LLM06_*    @rot169
-2026/LLM07_*    @atleung @zoh-labs @vingiarrusso
-2026/LLM08_*    @S3DFX-CYBER @arshi016
-2026/LLM09_*    @virtualsteve-star
-2026/LLM10_*    @Sahil-Mehta881 @saikishu
+2026/working/LLM01_*  @cybershujin
+2026/working/LLM02_*  @emmanuelgjr @kenhuangus
+2026/working/LLM03_*  @jsotiro @stefanoamorelli
+2026/working/LLM04_*  @sjeswani28 @owasprox @anithadakamarri-sudo
+2026/working/LLM05_*  @ricokomenda @GTKlondike
+2026/working/LLM06_*  @rot169
+2026/working/LLM07_*  @atleung @zoh-labs @vingiarrusso
+2026/working/LLM08_*  @S3DFX-CYBER @arshi016
+2026/working/LLM09_*  @virtualsteve-star
+2026/working/LLM10_*  @Sahil-Mehta881 @saikishu
+
+# 2026 final (renumbered) release entry leads
+2026/final/LLM01_*  @cybershujin
+2026/final/LLM02_*  @emmanuelgjr @kenhuangus
+2026/final/LLM03_*  @rot169
+2026/final/LLM04_*  @jsotiro @stefanoamorelli
+2026/final/LLM05_*  @sjeswani28 @owasprox @anithadakamarri-sudo
+2026/final/LLM06_*  @Sahil-Mehta881 @saikishu
+2026/final/LLM07_*  @virtualsteve-star
+2026/final/LLM08_*  @atleung @zoh-labs @vingiarrusso
+2026/final/LLM09_*  @S3DFX-CYBER @arshi016
+2026/final/LLM10_*  @ricokomenda @GTKlondike
