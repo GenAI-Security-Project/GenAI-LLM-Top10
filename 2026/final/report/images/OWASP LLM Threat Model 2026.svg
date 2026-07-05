@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2560" height="1820" viewBox="0 0 2560 1820" style="display:block;background:transparent;">
+<defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#5B6472"></path>
+  </marker>
+  <g id="iconCloud">
+    <path d="M16 44 C7 44 0 37 0 28 C0 19 7 12 16 12 C18 12 20 12.4 22 13.2 C25 6 32 2 40 2 C50 2 58 10 58 20 C58 20.3 58 20.7 58 21 C62 22.5 64 26 64 30 C64 37.7 57.7 44 50 44 Z" fill="none" stroke="#5B6472" stroke-width="3"></path>
+  </g>
+  <g id="iconPerson">
+    <circle cx="20" cy="15" r="13" fill="none" stroke="#5B6472" stroke-width="3"></circle>
+    <path d="M0,50 C0,34 8,27 20,27 C32,27 40,34 40,50" fill="none" stroke="#5B6472" stroke-width="3"></path>
+  </g>
+  <g id="iconDb">
+    <ellipse cx="24" cy="11" rx="24" ry="9" fill="none" stroke="#5B6472" stroke-width="3"></ellipse>
+    <path d="M0,11 L0,43 C0,48 11,52 24,52 C37,52 48,48 48,43 L48,11" fill="none" stroke="#5B6472" stroke-width="3"></path>
+    <path d="M0,27 C0,32 11,36 24,36 C37,36 48,32 48,27" fill="none" stroke="#5B6472" stroke-width="3"></path>
+  </g>
+  <g id="iconPlug">
+    <rect x="10" y="16" width="26" height="26" rx="6" fill="none" stroke="#5B6472" stroke-width="3"></rect>
+    <line x1="17" y1="16" x2="17" y2="4" stroke="#5B6472" stroke-width="3"></line>
+    <line x1="29" y1="16" x2="29" y2="4" stroke="#5B6472" stroke-width="3"></line>
+    <line x1="23" y1="42" x2="23" y2="54" stroke="#5B6472" stroke-width="3"></line>
+  </g>
+</defs>
+
+
+<text x="1280" y="50" text-anchor="middle" font-family="&#39;Space Grotesk&#39;, sans-serif" font-weight="700" font-size="32" letter-spacing="1.2" fill="#16233B">OWASP Top 10 for LLM Applications and Generative AI — 2026 Version</text>
+<text x="1280" y="82" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="500" font-size="20" letter-spacing="0.5" fill="#5B6472">Example LLM Application and Basic Threat Modeling</text>
+<line x1="1080" y1="98" x2="1480" y2="98" stroke="#17A2B8" stroke-width="4"></line>
+<text x="1280" y="122" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="400" font-size="14" fill="#5B6472">Original Source: Ads Dawson (GreenTemperTantrum)</text>
+
+
+<rect x="2216" y="150" width="314" height="195" rx="14" fill="none" stroke="#5B6472" stroke-width="2"></rect>
+<text x="2236" y="178" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#5B6472" font-weight="600">ABOUT THIS DIAGRAM</text>
+<text font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#5B6472">
+  <tspan x="2236" y="202">This diagram illustrates how the</tspan>
+  <tspan x="2236" y="220">OWASP Top 10 for LLM Applications</tspan>
+  <tspan x="2236" y="238">and GenAI (2026) map onto</tspan>
+  <tspan x="2236" y="256">components of a typical logical</tspan>
+  <tspan x="2236" y="274">LLM application architecture.</tspan>
+  <tspan x="2236" y="300">It is not intended as a comprehensive</tspan>
+  <tspan x="2236" y="318">threat model or full architecture.</tspan>
+</text>
+
+
+<text x="345" y="200" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="21" letter-spacing="1" fill="#16233B">INFERENCE</text>
+<line x1="330" y1="150" x2="330" y2="1560" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="2 6"></line>
+
+<rect x="30" y="520" width="620" height="980" rx="14" fill="none" stroke="#5B6472" stroke-width="2" stroke-dasharray="9 6"></rect>
+<use href="#iconCloud" x="308" y="548" transform="scale(1.1)" style="transform-origin: 308px 548px;"></use>
+<text x="340" y="650" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="21" fill="#16233B">Client / Malicious actor</text>
+<text x="340" y="685" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="16" fill="#5B6472">inputs (prompt + context)</text>
+<text x="340" y="710" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="15" fill="#5B6472">CRUD operations</text>
+
+<line x1="90" y1="800" x2="590" y2="800" stroke="#5B6472" stroke-width="1.5"></line>
+<text x="340" y="850" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="19" fill="#16233B">Untrusted medium (Internet)</text>
+<text font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472" text-anchor="middle" font-style="italic">
+  <tspan x="340" y="890">Our external prompt sources are most commonly untrusted,</tspan>
+  <tspan x="340" y="912">hard to validate, and largely outside the application&#39;s</tspan>
+  <tspan x="340" y="934">control.</tspan>
+</text>
+
+
+<path d="M600,570 C700,570 720,590 778,610" fill="none" stroke="#5B6472" stroke-width="3" marker-end="url(#ah)"></path>
+
+
+<rect x="740" y="360" width="800" height="580" rx="14" fill="none" stroke="#5B6472" stroke-width="2" stroke-dasharray="9 6"></rect>
+<text x="1500" y="925" text-anchor="end" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="15" font-weight="600" fill="#5B6472">TB01</text>
+
+<rect x="780" y="590" width="170" height="90" rx="14" fill="none" stroke="#5B6472" stroke-width="2.5"></rect>
+<text x="865" y="642" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="18" fill="#16233B">Ingress</text>
+
+<line x1="950" y1="625" x2="1028" y2="625" stroke="#5B6472" stroke-width="2.5" marker-end="url(#ah)"></line>
+<line x1="1028" y1="655" x2="950" y2="655" stroke="#5B6472" stroke-width="2.5" marker-end="url(#ah)"></line>
+
+<rect x="1030" y="560" width="230" height="150" rx="14" fill="none" stroke="#5B6472" stroke-width="2.5"></rect>
+<text x="1145" y="625" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="18" fill="#16233B">Application Services</text>
+<text x="1145" y="650" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">(Core / Greenfield)</text>
+
+<line x1="1260" y1="625" x2="1338" y2="625" stroke="#5B6472" stroke-width="2.5" marker-end="url(#ah)"></line>
+<line x1="1338" y1="655" x2="1260" y2="655" stroke="#5B6472" stroke-width="2.5" marker-end="url(#ah)"></line>
+
+
+<rect x="970" y="740" width="110" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="1025" y="760" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#2D6CDF">CWE-113</text>
+<rect x="970" y="778" width="330" height="44" rx="9" fill="#16233B"></rect>
+<text x="990" y="806" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="18" fill="#F5F7FA"><tspan font-weight="700">LLM10</tspan><tspan dx="10" font-weight="400">Improper Output Handling</tspan></text>
+<rect x="970" y="828" width="230" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="1085" y="848" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0067 · AML.T0040</text>
+
+<rect x="970" y="868" width="320" height="44" rx="9" fill="#16233B"></rect>
+<text x="990" y="896" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="18" fill="#F5F7FA"><tspan font-weight="700">LLM08</tspan><tspan dx="10" font-weight="400">Hidden Context Exposure</tspan></text>
+
+
+<rect x="1340" y="440" width="380" height="330" rx="14" fill="none" stroke="#5B6472" stroke-width="2.5"></rect>
+<text x="1530" y="472" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="18" fill="#16233B">LLM Production Services</text>
+<rect x="1362" y="500" width="160" height="245" rx="10" fill="none" stroke="#5B6472" stroke-width="2"></rect>
+<text x="1442" y="615" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="15" fill="#16233B">LLM Automation</text>
+<text x="1442" y="636" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#5B6472">(Agents)</text>
+<rect x="1538" y="500" width="160" height="245" rx="10" fill="none" stroke="#5B6472" stroke-width="2"></rect>
+<text x="1618" y="530" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="15" fill="#16233B">LLM Model</text>
+<use href="#iconDb" x="1594" y="560" transform="scale(1)"></use>
+
+
+
+<rect x="70" y="200" width="110" height="30" rx="7" fill="#D98A00" fill-opacity="0.08" stroke="#D98A00" stroke-width="1.5"></rect>
+<text x="125" y="220" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D98A00">API04 · API08</text>
+<rect x="190" y="200" width="140" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="260" y="220" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#2D6CDF">CWE-400 · CWE-770</text>
+<rect x="70" y="244" width="320" height="46" rx="9" fill="#16233B"></rect>
+<text x="90" y="273" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM06</tspan><tspan dx="12" font-weight="400">Unbounded Consumption</tspan></text>
+<rect x="70" y="304" width="270" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="205" y="324" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0029 · AML.T0034</text>
+<path d="M300,334 C420,334 500,480 590,570" fill="none" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></path>
+
+
+<rect x="760" y="170" width="360" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="940" y="190" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0051.000 · AML.T0051.001 · AML.T0054</text>
+<rect x="760" y="214" width="300" height="46" rx="9" fill="#16233B"></rect>
+<text x="780" y="243" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM01</tspan><tspan dx="12" font-weight="400">Prompt Injection</tspan></text>
+<rect x="760" y="274" width="150" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="835" y="294" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#2D6CDF">CWE-20 · CWE-77</text>
+<line x1="865" y1="304" x2="865" y2="590" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></line>
+
+
+<rect x="1120" y="170" width="260" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="1250" y="190" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0029 · AML.T0034</text>
+<rect x="1120" y="214" width="320" height="46" rx="9" fill="#16233B"></rect>
+<text x="1140" y="243" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM06</tspan><tspan dx="12" font-weight="400">Unbounded Consumption</tspan></text>
+<rect x="1120" y="274" width="90" height="30" rx="7" fill="#D98A00" fill-opacity="0.08" stroke="#D98A00" stroke-width="1.5"></rect>
+<text x="1165" y="294" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D98A00">API04</text>
+<rect x="1220" y="274" width="140" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="1290" y="294" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#2D6CDF">CWE-400 · CWE-770</text>
+<line x1="1220" y1="304" x2="1220" y2="560" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></line>
+
+
+<rect x="1480" y="170" width="140" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="1550" y="190" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#2D6CDF">CWE-285 · 306</text>
+<rect x="1630" y="170" width="140" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="1700" y="190" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#2D6CDF">CWE-732 · 755</text>
+<rect x="1480" y="214" width="300" height="46" rx="9" fill="#16233B"></rect>
+<text x="1500" y="243" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM03</tspan><tspan dx="12" font-weight="400">Excessive Agency</tspan></text>
+<rect x="1480" y="274" width="230" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="1595" y="294" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0015 · AML.T0053</text>
+<line x1="1595" y1="304" x2="1530" y2="440" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></line>
+
+
+<rect x="1800" y="360" width="700" height="330" rx="14" fill="none" stroke="#5B6472" stroke-width="2" stroke-dasharray="9 6"></rect>
+<text x="2470" y="715" text-anchor="end" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="15" font-weight="600" fill="#5B6472">TB02</text>
+
+<rect x="1830" y="400" width="340" height="250" rx="14" fill="none" stroke="#5B6472" stroke-width="2.5"></rect>
+<use href="#iconPlug" x="1850" y="410"></use>
+<text x="2000" y="470" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="18" fill="#16233B">Server-side functions</text>
+<text font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">
+  <tspan x="1855" y="505">•  Core application services</tspan>
+  <tspan x="1855" y="532">•  Cloud and serverless functions</tspan>
+  <tspan x="1855" y="559">•  Virtual environments and emulators</tspan>
+  <tspan x="1855" y="586">•  Plugins and API integrations</tspan>
+</text>
+
+<line x1="2170" y1="475" x2="2210" y2="475" stroke="#5B6472" stroke-width="2"></line>
+<line x1="2210" y1="410" x2="2210" y2="580" stroke="#5B6472" stroke-width="2"></line>
+<line x1="2210" y1="410" x2="2225" y2="410" stroke="#5B6472" stroke-width="2"></line>
+<line x1="2210" y1="540" x2="2225" y2="540" stroke="#5B6472" stroke-width="2"></line>
+<line x1="2210" y1="580" x2="2225" y2="580" stroke="#5B6472" stroke-width="2"></line>
+<line x1="2210" y1="452" x2="2225" y2="452" stroke="#5B6472" stroke-width="2"></line>
+
+<rect x="2230" y="392" width="240" height="42" rx="10" fill="none" stroke="#5B6472" stroke-width="2"></rect>
+<text x="2350" y="418" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#5B6472">Other production environments</text>
+<rect x="2230" y="434" width="240" height="42" rx="10" fill="none" stroke="#5B6472" stroke-width="2"></rect>
+<text x="2350" y="460" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#5B6472">MLE / training environments</text>
+<rect x="2230" y="518" width="240" height="42" rx="10" fill="none" stroke="#5B6472" stroke-width="2"></rect>
+<text x="2350" y="544" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#5B6472">CI/CD environments</text>
+<rect x="2230" y="560" width="240" height="42" rx="10" fill="none" stroke="#5B6472" stroke-width="2"></rect>
+<text x="2350" y="586" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#5B6472">Artifacts environments</text>
+
+
+<rect x="1900" y="180" width="220" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="2010" y="200" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0015 · AML.T0053</text>
+<rect x="1900" y="224" width="290" height="46" rx="9" fill="#16233B"></rect>
+<text x="1920" y="253" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM03</tspan><tspan dx="12" font-weight="400">Excessive Agency</tspan></text>
+<rect x="1900" y="284" width="80" height="30" rx="7" fill="#D98A00" fill-opacity="0.08" stroke="#D98A00" stroke-width="1.5"></rect>
+<text x="1940" y="304" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D98A00">API10</text>
+<rect x="1990" y="284" width="110" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="2045" y="304" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#2D6CDF">CWE-79 · 89</text>
+<line x1="2000" y1="314" x2="2000" y2="400" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></line>
+
+
+<line x1="1698" y1="530" x2="1822" y2="500" stroke="#5B6472" stroke-width="2.5" marker-end="url(#ah)"></line>
+<rect x="1710" y="490" width="100" height="28" rx="7" fill="none" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="4 3"></rect>
+<text x="1760" y="509" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12" fill="#5B6472">Execute/Store</text>
+
+
+<rect x="2060" y="700" width="430" height="46" rx="9" fill="#16233B"></rect>
+<text x="2080" y="729" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM09</tspan><tspan dx="12" font-weight="400">Vector and Embedding Weaknesses</tspan></text>
+<rect x="2060" y="752" width="300" height="28" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="2210" y="771" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12" fill="#D1362F">AML.T0071 · T0025 · T0070 · T0066</text>
+<rect x="2370" y="752" width="90" height="28" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="2415" y="771" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12" fill="#2D6CDF">CWE-327</text>
+
+
+<rect x="1800" y="830" width="700" height="420" rx="14" fill="none" stroke="#5B6472" stroke-width="2" stroke-dasharray="9 6"></rect>
+<text x="2470" y="1225" text-anchor="end" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="15" font-weight="600" fill="#5B6472">TB03</text>
+<text x="1830" y="1225" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">Storage environments</text>
+
+<text x="2390" y="878" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="17" fill="#16233B">Vector DB</text>
+<use href="#iconDb" x="2330" y="895" transform="scale(1.3)" style="transform-origin: 2330px 895px;"></use>
+<use href="#iconDb" x="2390" y="905" transform="scale(1.3)" style="transform-origin: 2390px 905px;"></use>
+
+<rect x="1830" y="960" width="650" height="250" rx="14" fill="none" stroke="#5B6472" stroke-width="2.5"></rect>
+<text x="2155" y="995" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="18" fill="#16233B">(RAG) private data stores</text>
+<rect x="1900" y="1030" width="90" height="90" rx="10" fill="none" stroke="#5B6472" stroke-width="2" transform="rotate(45 1945 1075)"></rect>
+<text x="1945" y="1160" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">Embeddings</text>
+<rect x="2110" y="1030" width="90" height="90" rx="10" fill="none" stroke="#5B6472" stroke-width="2" transform="rotate(45 2155 1075)"></rect>
+<text x="2155" y="1160" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">Databases</text>
+<rect x="2320" y="1030" width="90" height="90" rx="10" fill="none" stroke="#5B6472" stroke-width="2" transform="rotate(45 2365 1075)"></rect>
+<text x="2365" y="1160" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">Documents</text>
+
+
+<line x1="1700" y1="870" x2="2320" y2="895" stroke="#5B6472" stroke-width="2" marker-end="url(#ah)"></line>
+<text x="1980" y="865" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#5B6472">Semantic Query</text>
+<line x1="2320" y1="925" x2="1700" y2="900" stroke="#5B6472" stroke-width="2" marker-end="url(#ah)"></line>
+<text x="1980" y="945" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#5B6472">Matching Vectors</text>
+<line x1="1650" y1="746" x2="1900" y2="958" stroke="#5B6472" stroke-width="2" marker-end="url(#ah)"></line>
+<rect x="1730" y="820" width="95" height="26" rx="7" fill="none" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="4 3"></rect>
+<text x="1777" y="838" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12" fill="#5B6472">Read/Write</text>
+
+
+<use href="#iconPerson" x="810" y="1200"></use>
+<text x="830" y="1275" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="16" fill="#16233B">ML Engineer</text>
+<use href="#iconPerson" x="810" y="1340"></use>
+<text x="830" y="1415" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="16" fill="#16233B">Data Scientist</text>
+
+<rect x="1030" y="1180" width="180" height="150" rx="14" fill="none" stroke="#5B6472" stroke-width="2.5"></rect>
+<text x="1120" y="1210" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="15" fill="#16233B">Fine-tuning Data</text>
+<use href="#iconDb" x="1096" y="1235" transform="scale(1)"></use>
+
+<rect x="1230" y="1180" width="180" height="150" rx="14" fill="none" stroke="#5B6472" stroke-width="2.5"></rect>
+<text x="1320" y="1210" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="15" fill="#16233B">Training Data</text>
+<use href="#iconDb" x="1296" y="1235" transform="scale(1)"></use>
+
+<text x="1120" y="1358" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13.5" font-style="italic" fill="#5B6472">Training Dataset and Processing (cleansing, anonymizing, etc.)</text>
+
+<line x1="1150" y1="912" x2="1120" y2="1178" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></line>
+<line x1="850" y1="1220" x2="1028" y2="1235" stroke="#5B6472" stroke-width="2" marker-end="url(#ah)"></line>
+<line x1="850" y1="1350" x2="1400" y2="1470" stroke="#5B6472" stroke-width="2" marker-end="url(#ah)"></line>
+
+
+<rect x="900" y="1030" width="140" height="30" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="970" y="1050" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#2D6CDF">CWE-200 · 209</text>
+<rect x="900" y="1064" width="440" height="46" rx="9" fill="#16233B"></rect>
+<text x="920" y="1093" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM02</tspan><tspan dx="12" font-weight="400">Sensitive Information Disclosure</tspan></text>
+<rect x="900" y="1114" width="440" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="1120" y="1134" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#D1362F">AML.T0057 · AML.T0024.000 · AML.T0024.001</text>
+
+
+<rect x="1030" y="1440" width="420" height="140" rx="14" fill="none" stroke="#5B6472" stroke-width="2" stroke-dasharray="9 6"></rect>
+<use href="#iconCloud" x="1210" y="1450" transform="scale(0.9)" style="transform-origin: 1210px 1450px;"></use>
+<text x="1240" y="1540" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="18" fill="#16233B">External Data Sources</text>
+<line x1="1120" y1="1330" x2="1180" y2="1438" stroke="#5B6472" stroke-width="2" marker-end="url(#ah)"></line>
+
+
+<rect x="660" y="1445" width="150" height="28" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="735" y="1464" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#2D6CDF">CWE-20 · CWE-506</text>
+<rect x="660" y="1478" width="340" height="46" rx="9" fill="#16233B"></rect>
+<text x="680" y="1507" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM05</tspan><tspan dx="12" font-weight="400">Data and Model Poisoning</tspan></text>
+<rect x="660" y="1528" width="290" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="805" y="1548" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0043 · AML.T0031 · AML.T0020</text>
+<line x1="905" y1="1500" x2="1028" y2="1495" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></line>
+
+
+<rect x="1080" y="1610" width="150" height="28" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="1155" y="1629" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#2D6CDF">CWE-937 · 1104</text>
+<rect x="1080" y="1642" width="280" height="44" rx="9" fill="#16233B"></rect>
+<text x="1100" y="1670" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="19" fill="#F5F7FA"><tspan font-weight="700">LLM04</tspan><tspan dx="12" font-weight="400">Supply Chain</tspan></text>
+<rect x="1080" y="1690" width="280" height="30" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="1220" y="1710" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="13" fill="#D1362F">AML.T0056 · T0048 · T0010</text>
+<line x1="1220" y1="1610" x2="1220" y2="1580" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="3 4"></line>
+
+
+<rect x="1950" y="1230" width="560" height="420" rx="14" fill="none" stroke="#5B6472" stroke-width="2" stroke-dasharray="9 6"></rect>
+<use href="#iconCloud" x="2198" y="1250" transform="scale(1.1)" style="transform-origin: 2198px 1250px;"></use>
+<text x="2230" y="1350" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="600" font-size="19" fill="#16233B">Untrusted medium (Internet)</text>
+
+<text x="2230" y="1385" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">Grounding / URL Scraping</text>
+<path d="M2140,1240 C1950,1050 1780,850 1660,750" fill="none" stroke="#5B6472" stroke-width="2.5" marker-end="url(#ah)"></path>
+<line x1="1955" y1="1470" x2="1460" y2="1500" stroke="#5B6472" stroke-width="2.5" marker-end="url(#ah)"></line>
+
+
+<rect x="2290" y="1258" width="210" height="40" rx="9" fill="#16233B"></rect>
+<text x="2308" y="1284" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="15" fill="#F5F7FA"><tspan font-weight="700">LLM06</tspan><tspan dx="8" font-weight="400">Unbounded Consump.</tspan></text>
+<rect x="2290" y="1302" width="210" height="26" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="2395" y="1320" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="11.5" fill="#D1362F">AML.T0029 · T0034</text>
+
+
+<rect x="1580" y="1430" width="150" height="26" rx="7" fill="#2D6CDF" fill-opacity="0.08" stroke="#2D6CDF" stroke-width="1.5"></rect>
+<text x="1655" y="1448" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#2D6CDF">CWE-20 · CWE-506</text>
+<rect x="1580" y="1460" width="340" height="42" rx="9" fill="#16233B"></rect>
+<text x="1598" y="1487" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="17" fill="#F5F7FA"><tspan font-weight="700">LLM05</tspan><tspan dx="10" font-weight="400">Data and Model Poisoning</tspan></text>
+<rect x="1580" y="1506" width="300" height="28" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="1730" y="1525" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12" fill="#D1362F">AML.T0043 · T0031 · T0020</text>
+
+
+<rect x="640" y="600" width="300" height="44" rx="9" fill="#16233B"></rect>
+<text x="660" y="628" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="18" fill="#F5F7FA"><tspan font-weight="700">LLM07</tspan><tspan dx="10" font-weight="400">Misinformation</tspan></text>
+<rect x="640" y="650" width="230" height="28" rx="7" fill="#D1362F" fill-opacity="0.08" stroke="#D1362F" stroke-width="1.5"></rect>
+<text x="755" y="669" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="12.5" fill="#D1362F">AML.T0060 · AML.T0047</text>
+
+
+<text x="2530" y="1790" text-anchor="end" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-size="14" fill="#5B6472">TB = Trust Boundary</text>
+<text x="1280" y="1752" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="400" font-size="24" fill="#5B6472">Ten risks mapped to where they surface in a typical LLM application.</text>
+<text x="1280" y="1793" text-anchor="middle" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="400" font-size="16" fill="#5B6472">MITRE ATLAS technique references follow the OWASP LLM Top 10 × ATLAS crosswalk, current as of 2026-Q2.</text>
+
+</svg>
