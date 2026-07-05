@@ -175,6 +175,10 @@ An attacker compromises the CI/CD pipeline an organization uses to fine-tune and
 
 ### Related Frameworks and Taxonomies
 
-Refer to this section for comprehensive information, scenarios, and strategies relating to infrastructure deployment, applied environment controls, and other best practices.
-
-* [AI Supply Chain Compromise (AML.T0010)](https://atlas.mitre.org/techniques/AML.T0010): **MITRE ATLAS** — including sub-techniques for Hardware (.000), AI Software (.001), Data (.002), Model (.003), Container Registry (.004), and AI Agent Tool (.005)
+| Framework | Reference | Relevance |
+|---|---|---|
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI04 — Agentic Supply Chain Vulnerabilities | This entry's own scope note defers agentic-specific supply-chain risk to ASI04, leaving this entry to cover the non-agentic model, dataset, and artifact supply chain |
+| **MITRE ATLAS** | [AI Supply Chain Compromise (AML.T0010)](https://atlas.mitre.org/techniques/AML.T0010) | Sub-techniques for Hardware (.000), AI Software (.001), Data (.002), Model (.003), Container Registry (.004), and AI Agent Tool (.005) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI04 — Data, Model & Artifact Poisoning | States it "extends LLM03:2025 (LLM Supply Chain) and ASI04 with a data-integrity lens, focusing on the training corpus and artifact pipeline attack surface"; its DBOM and full-chain artifact-signing controls mirror this entry's AIBOM/ML-SBOM (mitigation #4) and cryptographic model-signing (mitigation #6) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI05 — Data Integrity & Validation Failures | Covers snapshot-import path traversal against "vector databases, model registries, and feature stores" and requires signed, checksum-verified artifacts "on every import and promotion event" — the same promotion-boundary trust failure as this entry's unsigned/replaceable-artifact risk (#10) and root-of-trust mitigation (#11) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI08 — Non-Compliance & Regulatory Violations | Its "unlawful basis and consent failure" pattern — training data ingested "without a documented lawful basis" or on undisclosed processing purposes — matches this entry's risk #9 (unclear model-operator T&Cs and privacy policies) and Scenario #13 |

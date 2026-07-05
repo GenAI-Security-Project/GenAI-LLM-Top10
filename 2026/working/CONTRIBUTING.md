@@ -59,6 +59,8 @@ Complete these once, before your first PR:
     └── LLM01_PromptInjection.md ... LLM10_ImproperOutputHandling.md
 ```
 
+`2026/final/` is the canonical release surface — it holds the renumbered entries and is the authoritative version for readers. `2026/working/` holds the frozen old-numbered originals plus cycle tooling; treat its `LLMXX_*.md` files as historical, not the current release.
+
 Other directories you may touch indirectly:
 
 - [`.github/CODEOWNERS`](../../.github/CODEOWNERS) — required reviewers (see [Review process](#review-process)).

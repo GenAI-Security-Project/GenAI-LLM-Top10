@@ -156,20 +156,19 @@ An attacker interacts with an AI agent and injects malicious instructions into i
 
 ### Related Frameworks and Taxonomies
 
-* **MITRE ATLAS™** — ATT&CK-style matrix of AI/ML tactics and techniques, including poisoning-related techniques and case studies. [MITRE ATLAS](https://atlas.mitre.org)
-
-* **MITRE ATLAS case study: Web-scale Split-View poisoning** — demonstrates dataset poisoning risks in URL-based datasets. [ATLAS split-view poisoning case study](https://atlas.mitre.org/studies)
-
-* **NIST CSRC overview referencing ATLAS** — useful for governance and security audiences linking ATLAS to assurance concepts. [NIST CSRC ATLAS overview](https://csrc.nist.gov)
-
-* **NIST AI Risk Management Framework (AI RMF 1.0)** — lifecycle risk management functions (Govern/Map/Measure/Manage) that can be mapped to poisoning controls. [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-
-* **NIST AI RMF publication (NIST.AI.100-1 PDF)** — authoritative document for formal citations. [NIST AI RMF PDF](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf)
-
-* **CSA AI Controls Matrix (AICM)** — vendor-agnostic control objectives framework for cloud AI systems, including mappings to ISO 42001 and NIST AI RMF. [CSA AICM](https://cloudsecurityalliance.org)
-
-* **ISO/IEC 42001 (AI Management System / AIMS)** — certifiable management system standard for governing AI responsibly across lifecycle. [ISO/IEC 42001](https://www.iso.org/standard/81230.html)
-
-* **CycloneDX (ECMA-424) Bill of Materials standard** — supports SBOMs and AI/ML-BOM for model and dataset transparency and provenance tracking. [CycloneDX ML-BOM](https://cyclonedx.org/capabilities/mlbom/)
-
-* **OWASP Top 10 for Agentic Applications — ASI04 (Supply Chain) and ASI06 (Memory and Context Poisoning)** — for practitioners extending LLM05 controls to agentic deployment contexts. [OWASP Agentic Top 10](https://genai.owasp.org)
+| Framework | Reference | Relevance |
+|---|---|---|
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI04 — Agentic Supply Chain Vulnerabilities | Poisoned pre-trained models and malicious deserialization distributed via public repositories (Scenarios #5, #7) and tampered inference-time artifacts such as chat templates/GGUF (Scenario #6; mitigation #13) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI06 — Memory & Context Poisoning | Persistent agent memory and recommendation poisoning (Common Example #5) and long-term manipulation of agent decisions via injected memory (Scenario #9) |
+| **OWASP Top 10 for Agentic Applications (ASI)** | ASI08 — Cascading Failures | Poisoned inputs propagating across multi-agent and enterprise workflows into unintended data exposure (Common Example #7) and cross-tenant contamination via shared embeddings/memory (Scenario #8) |
+| **MITRE ATLAS** | [MITRE ATLAS](https://atlas.mitre.org) | ATT&CK-style knowledge base of adversary tactics and techniques against AI/ML systems, including poisoning techniques and case studies |
+| **MITRE ATLAS** | [Split-View poisoning case study](https://atlas.mitre.org/studies) | Case study demonstrating dataset poisoning risk in web-scale, URL-based training datasets |
+| **NIST CSRC** | [MITRE ATLAS overview](https://csrc.nist.gov) | Links the ATLAS technique taxonomy to NIST assurance concepts for governance and audit audiences |
+| **NIST AI RMF** | [NIST AI Risk Management Framework 1.0](https://www.nist.gov/itl/ai-risk-management-framework) | Govern/Map/Measure/Manage lifecycle functions mappable to data and model poisoning controls |
+| **NIST AI RMF** | [NIST.AI.100-1 (PDF)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf) | Authoritative publication for formal citation of the AI RMF |
+| **CSA AI Controls Matrix (AICM)** | [CSA AICM](https://cloudsecurityalliance.org) | Vendor-agnostic cloud AI control objectives, mapped to ISO 42001 and NIST AI RMF, applicable to dataset and model integrity controls |
+| **ISO/IEC 42001 (AIMS)** | [ISO/IEC 42001](https://www.iso.org/standard/81230.html) | Certifiable AI management system standard for governing dataset and model integrity across the lifecycle |
+| **CycloneDX (ECMA-424)** | [ML-BOM](https://cyclonedx.org/capabilities/mlbom/) | Bill-of-materials standard for dataset/model lineage and provenance tracking, aligned with this entry's SBOM/ML-BOM mitigation (Prevention #1) |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI04 — Data, Model & Artifact Poisoning | Closest peer entry — covers the same supply-chain compromise, artifact tampering, and training/retrieval poisoning lifecycle stages this entry addresses |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI05 — Data Integrity & Validation Failures | Schema/semantic validation bypass and snapshot-import path traversal that corrupt training or retrieval data without tripping ingestion alerts — a related but distinct failure mode from overt poisoning |
+| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI21 — Disinformation & Integrity Attacks via Data Poisoning | RAG knowledge-base poisoning that surfaces adversary-controlled content as authoritative, mirroring this entry's Common Example #6 and Scenarios #1–#2 |
