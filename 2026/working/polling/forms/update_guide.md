@@ -13,13 +13,13 @@ git pull                                 # not strictly required (script reads r
 export GH_TOKEN=$(gh auth token)
 
 # Preview what would change
-python3 2026/polling/scripts/sync_sprint2.py --dry-run
+python3 2026/working/polling/scripts/sync_sprint2.py --dry-run
 
 # Apply: updates issues.json, fires only missing GitHub issues
-python3 2026/polling/scripts/sync_sprint2.py
+python3 2026/working/polling/scripts/sync_sprint2.py
 
 # Push the updated registry so Apps Script can fetch it
-git add 2026/polling/scripts/issues.json
+git add 2026/working/polling/scripts/issues.json
 git commit -m "Sprint 2: sync entry registry"
 git push
 ```
@@ -36,8 +36,8 @@ That's it. Two commands, one click in Apps Script.
 
 Reads from the **remote repo on `main`** (not your local clone, which may be stale):
 
-1. Lists `2026/` and detects existing entries (LLM01 through LLM10). Excludes `LLM00_Preface.md`.
-2. Lists `2026/new_entry_candidates/` and detects Track A candidates.
+1. Lists `2026/working/` and detects existing entries (LLM01 through LLM10). Excludes `LLM00_Preface.md`.
+2. Lists `2026/working/new_entry_candidates/` and detects Track A candidates.
 3. Pulls each markdown file's first heading and parses out the human title.
 4. For new candidates, auto-generates a stable `TA-XXXX` ID from the filename slug (first letter of up to 4 words). For renamed candidates, reuses the existing ID from the registry.
 5. Diffs against the local `issues.json` registry. Reports what's new, changed (file rename or title edit), or removed.

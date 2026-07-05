@@ -24,10 +24,10 @@ When the doc says "**Browser**", switch to your browser tab and do exactly what'
 | Thing | Where |
 | --- | --- |
 | Local repo | `/Users/klambros/github_projects/GenAI-LLM-Top10` |
-| Sync script | `2026/polling/scripts/sync_sprint2.py` |
-| Issue creation script (fallback) | `2026/polling/scripts/create_issues.py` |
-| Form Apps Script source | `2026/polling/forms/create_form.gs` |
-| Live registry (write target) | `2026/polling/scripts/issues.json` |
+| Sync script | `2026/working/polling/scripts/sync_sprint2.py` |
+| Issue creation script (fallback) | `2026/working/polling/scripts/create_issues.py` |
+| Form Apps Script source | `2026/working/polling/forms/create_form.gs` |
+| Live registry (write target) | `2026/working/polling/scripts/issues.json` |
 | Pinned Discussion | https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/discussions/54 |
 | Form Edit URL | https://docs.google.com/forms/d/1lNZHaqUQC_A9DJeSy9JJ1FQkzE1T-lA92vbJLoE6K_k/edit |
 | Form Published URL | https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform |
@@ -68,7 +68,7 @@ Pre-flight check for the OWASP Sprint 2 sync. Do all of these and STOP. Do NOT r
 3. Show the current Track B and Track A entry counts in the LOCAL registry:
    python3 -c "
    import json
-   d = json.load(open('2026/polling/scripts/issues.json'))
+   d = json.load(open('2026/working/polling/scripts/issues.json'))
    print('Track B:', len(d['track_b']))
    print('Track A:', len(d['track_a']))
    for e in d['track_b']: print(' ', e['id'], e['title'])
@@ -96,7 +96,7 @@ Steps:
    export GH_TOKEN=$(gh auth token)
 
 2. Run the sync in dry-run mode:
-   python3 2026/polling/scripts/sync_sprint2.py --dry-run
+   python3 2026/working/polling/scripts/sync_sprint2.py --dry-run
 
 3. After it finishes, summarize for me:
    - How many entries are NEW in Track B and Track A (from the [+] NEW sections)
@@ -137,7 +137,7 @@ Steps:
    export GH_TOKEN=$(gh auth token)
 
 2. Run the sync for real:
-   python3 2026/polling/scripts/sync_sprint2.py
+   python3 2026/working/polling/scripts/sync_sprint2.py
 
 3. Show me the output, especially the SUMMARY block at the end. Tell me:
    - How many existing issues were updated (PATCHed)
@@ -145,10 +145,10 @@ Steps:
    - The list of entry IDs in each category
 
 4. Show the git diff of issues.json (just the file list and stat, not the full contents):
-   git diff --stat 2026/polling/scripts/issues.json
+   git diff --stat 2026/working/polling/scripts/issues.json
 
 5. Commit and push the registry:
-   git add 2026/polling/scripts/issues.json
+   git add 2026/working/polling/scripts/issues.json
    git commit -m "Sprint 2: sync entry registry against remote state"
    git push origin main
 
@@ -182,12 +182,12 @@ You should see your existing project (probably named "OWASP LLM Top 10 — Sprin
 
 ### 4.2 — Make sure the script is current
 
-Open `2026/polling/forms/create_form.gs` from your local repo in any text editor (or open it in the GitHub web view). Compare against what's in Apps Script's `Code.gs`.
+Open `2026/working/polling/forms/create_form.gs` from your local repo in any text editor (or open it in the GitHub web view). Compare against what's in Apps Script's `Code.gs`.
 
 Quick check: scroll to the bottom of `Code.gs` in Apps Script. Look for a function named `rebuildSprintTwoFormDynamic`.
 
 - If it's there, your Apps Script is current. Skip to step 4.3.
-- If it's NOT there, your Apps Script is stale. Copy the entire contents of `2026/polling/forms/create_form.gs` from your local repo and paste it into `Code.gs`, replacing everything. Save (Ctrl/Cmd + S).
+- If it's NOT there, your Apps Script is stale. Copy the entire contents of `2026/working/polling/forms/create_form.gs` from your local repo and paste it into `Code.gs`, replacing everything. Save (Ctrl/Cmd + S).
 
 ### 4.3 — Run the dynamic rebuild
 
@@ -261,7 +261,7 @@ Steps:
    - Specifically: confirm LLM07's title reflects the current entry name (not the old one if it was renamed)
 
 3. Print the live registry's entry counts from main:
-   curl -s https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/polling/scripts/issues.json | python3 -c "
+   curl -s https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/working/polling/scripts/issues.json | python3 -c "
    import json, sys
    d = json.load(sys.stdin)
    print('Registry on main:')
@@ -304,7 +304,7 @@ Steps:
    "
 
 2. Fetch the live Track A candidate count from main:
-   curl -s https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/polling/scripts/issues.json | python3 -c "
+   curl -s https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/working/polling/scripts/issues.json | python3 -c "
    import json, sys
    d = json.load(sys.stdin)
    print(f'Live Track A count: {len(d[\"track_a\"])}')
@@ -366,17 +366,17 @@ If everything looks right, you're cleared to post comms.
 
 # Phase 8: Post the launch comms
 
-The drafts are in `2026/polling/comms/`. Order matters. About 5 minutes total.
+The drafts are in `2026/working/polling/comms/`. Order matters. About 5 minutes total.
 
 ### 8.1 — Slack working group
 
 **Browser:** Open Slack, navigate to the OWASP Top 10 LLM working group channel.
 
-Open `2026/polling/comms/slack_workgroup.md` in your editor. Copy the body (everything after the `---` divider). Paste into the Slack channel. Send.
+Open `2026/working/polling/comms/slack_workgroup.md` in your editor. Copy the body (everything after the `---` divider). Paste into the Slack channel. Send.
 
 ### 8.2 — Steve's LinkedIn draft
 
-**Browser:** Email or DM Steve with the contents of `2026/polling/comms/linkedin_post_steve.md`.
+**Browser:** Email or DM Steve with the contents of `2026/working/polling/comms/linkedin_post_steve.md`.
 
 Tell him: "Draft for review. Post when ready, ideally 12-24 hours offset from mine for stagger." He'll rewrite to his voice.
 
@@ -384,7 +384,7 @@ Tell him: "Draft for review. Post when ready, ideally 12-24 hours offset from mi
 
 **Browser:** Open LinkedIn, click "Start a post."
 
-Open `2026/polling/comms/linkedin_post_rock.md`. Copy the body (everything after the `---` divider, NOT including the Notes section at the bottom).
+Open `2026/working/polling/comms/linkedin_post_rock.md`. Copy the body (everything after the `---` divider, NOT including the Notes section at the bottom).
 
 Paste into LinkedIn. Add hashtags at the bottom of the post:
 
@@ -400,11 +400,11 @@ Click Post.
 
 **Browser:** Open Slack, navigate to broader OWASP project channels (`#project-llm-top10`, `#ai-security`, etc.).
 
-Open `2026/polling/comms/slack_broader.md`. Copy the body. Cross-post to each relevant channel.
+Open `2026/working/polling/comms/slack_broader.md`. Copy the body. Cross-post to each relevant channel.
 
 ### 8.5 — Mailing list
 
-**Email:** Open `2026/polling/comms/mailing_list_launch.md`.
+**Email:** Open `2026/working/polling/comms/mailing_list_launch.md`.
 
 Copy the subject line and body. Send to whoever owns the OWASP Top 10 LLM mailing list. Or, if you have access, send directly via the mailing list platform.
 
@@ -419,7 +419,7 @@ Final post-launch sanity check for OWASP Sprint 2.
 
 Steps:
 1. Print the live registry counts from main:
-   curl -s https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/polling/scripts/issues.json | python3 -c "
+   curl -s https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/working/polling/scripts/issues.json | python3 -c "
    import json, sys
    d = json.load(sys.stdin)
    print(f'Track B: {len(d[\"track_b\"])}')

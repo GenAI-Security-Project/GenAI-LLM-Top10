@@ -49,7 +49,7 @@ The first version of this list was contributed by Steve Wilson of Contrast Secur
 > [!IMPORTANT]
 > **All changes to this repository must be made through a pull request.** There are no exceptions for contributors — direct pushes to `main` are blocked by branch protection. This applies to every change: new entries, entry upgrades, typo fixes, link repairs, artifact additions, style-guide edits, and README tweaks. If you are unsure whether your change qualifies, open a PR.
 
-For contributors working on the **2026 cycle**, see the track-specific guide in [`2026/CONTRIBUTING.md`](./2026/CONTRIBUTING.md).
+For contributors working on the **2026 cycle**, see the track-specific guide in [`2026/working/CONTRIBUTING.md`](./2026/working/CONTRIBUTING.md).
 
 We have a working group channel on the [OWASP Slack](https://owasp.org/slack/invite), so please sign up and then join us on the #team-genai-top-10-llm channel.
 

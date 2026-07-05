@@ -43,10 +43,10 @@ const FORM_TITLE =
   'OWASP Top 10 for LLM Applications 2026 — Sprint 2 Community Vote';
 
 const REPO_ENTRY_BASE =
-  'https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/blob/main/2026/';
+  'https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/blob/main/2026/working/';
 
 const REPO_CANDIDATE_BASE =
-  'https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/blob/main/2026/new_entry_candidates/';
+  'https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/blob/main/2026/working/new_entry_candidates/';
 
 const REPO_ISSUE_BASE_A =
   'https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/issues?q=is%3Aissue+label%3Atrack-b+label%3A';
@@ -209,7 +209,7 @@ function rebuildSprintTwoForm() {
  * within seconds.
  */
 const REGISTRY_URL =
-  'https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/polling/scripts/issues.json';
+  'https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/working/polling/scripts/issues.json';
 
 function rebuildSprintTwoFormDynamic() {
   // Fetch the registry from the remote repo

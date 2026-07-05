@@ -128,7 +128,7 @@ This issue collects **qualitative feedback** on the refreshed **{entry_id} {entr
 Submit your **Importance** and **Clarity** scores via the Sprint 2 Google Form (single ballot covering both tracks).
 
 - **Vote**: {form_url} — page through to the **{entry_id}** section
-- **Read the draft**: https://github.com/{repo}/blob/main/2026/{file}
+- **Read the draft**: https://github.com/{repo}/blob/main/2026/working/{file}
 - **Voting closes**: May 18, 2026 at 23:59 UTC
 - **Code of Conduct**: https://owasp.org/www-policy/operational/code-of-conduct
 
@@ -170,7 +170,7 @@ This issue collects **qualitative feedback** on the **{entry_title}** new candid
 Submit your **Importance**, **Clarity**, and **Distinctness** scores via the Sprint 2 Google Form (single ballot covering both tracks).
 
 - **Vote**: {form_url} — page through to the Track A section, then to **{entry_title}**
-- **Read the draft**: https://github.com/{repo}/blob/main/2026/new_entry_candidates/{file}
+- **Read the draft**: https://github.com/{repo}/blob/main/2026/working/new_entry_candidates/{file}
 - **Voting closes**: May 18, 2026 at 23:59 UTC
 - **Code of Conduct**: https://owasp.org/www-policy/operational/code-of-conduct
 
