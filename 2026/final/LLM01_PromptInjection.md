@@ -8,8 +8,6 @@ Prompt injection vulnerabilities exist in how models process input and how that 
 
 A given prompt injection anatomy can be characterized along three axes: **Delivery surface** or how it reaches the model (direct input, retrieved content, tool output, tool connection channel, persistent memory, or, indirectly, a fine-tuning interface used to craft the payload); **propagation behavior** or how it spreads across time and boundaries (single-shot, multi-step kill-chain, cross-session through memory or RAG, or self-replicating across agents); and **encoding** or how the malicious instructions are represented in tokens or pixels (plain text, base64 or other obfuscation, invisible Unicode, multimodal or steganographic, low-resource language). Decomposing a scenario along these axes is a useful threat-modeling step before selecting which mitigations apply.
 
-A single attack typically combines one item from each axis. *Example:* the August 2024 M365 Copilot ASCII-smuggling PoC (Embrace The Red) was (a) document-file delivery, (b) single-shot in the targeted session but multi-step in its tool-invocation chain, (c) Tag-block invisible Unicode encoding. Decomposing each scenario along these axes is the first step of any threat model and the framework against which each control below is evaluated.
-
 The severity and nature of a successful prompt injection vary with the business context the model operates in and the agency with which it is architected. Generally, prompt injection can lead to outcomes that include but are not limited to:
 
 * Disclosure of sensitive information, system-prompt content, retrieved private documents, or infrastructure details.
@@ -46,21 +44,21 @@ Indirect prompt injection is increasingly used to turn the user's own LLM instan
 
 ### Common Examples of Risk
 
-1. **Direct prompt-input override.** A user-supplied message bypasses the system prompt's role and capability constraints, causing the model to disclose, generate, or act outside its intended scope. The input can be intentional or unintentional; both should be handled.
+1. **Direct prompt-input override** — a user message overrides the system prompt's role and capability limits, making the model disclose, generate, or act outside its intended scope; intentional and unintentional inputs both count.
 
-2. **Indirect injection through retrieved content.** A RAG passage, retrieved web page, document, or email contains attacker-supplied instructions that the model follows when the content reaches the context window. CVE-2024-5184 (EmailGPT, 2024) is an example against a deployed Gmail extension.
+2. **Indirect injection through retrieved content** — attacker instructions ride in a RAG passage, web page, document, or email and run when the content reaches the context window (e.g., CVE-2024-5184, EmailGPT).
 
-3. **Trusted-surface indirect injection.** An attacker submits text through a low-privilege channel (issue tracker, feedback form, support ticket) into a location the user's LLM treats as trusted; the LLM then performs privileged actions under the user's credentials — exfiltrating repositories, dumping databases, or modifying IDE configuration — that the attacker could not perform directly (GitHub MCP, Supabase MCP, CVE-2025-53773).
+3. **Trusted-surface indirect injection** — text planted in a low-privilege but trusted channel (issue tracker, feedback form, support ticket) makes the user's LLM act under its own elevated credentials — exfiltrating repositories, dumping databases, or modifying IDE config — that the attacker could not do directly (GitHub MCP, Supabase MCP, CVE-2025-53773).
 
-4. **Multimodal and steganographic injection.** Adversarial perturbations invisible to humans are embedded in images, audio, or video frames; vision and audio encoders extract the payload. All four frontier vision-language models tested in a 2024 oncology-imaging study (Clusmann et al., *Nature Communications*) were susceptible.
+4. **Multimodal and steganographic injection** — sub-perceptual perturbations in images, audio, or video are extracted by the encoder; all four frontier vision-language models in a 2024 oncology-imaging study were susceptible (Clusmann et al., *Nature Communications*).
 
-5. **Invisible-character injection and exfiltration.** Tag-block (U+E0000–U+E007F), variation-selector (U+FE00–U+FE0F), and zero-width (U+200B/C/D, U+2060) characters carry instructions or exfiltrate bytes through text that appears benign in standard rendering. The August 2024 ASCII-smuggling PoC against Microsoft 365 Copilot demonstrated MFA-code exfiltration.
+5. **Invisible-character injection and exfiltration** — Tag-block, variation-selector, and zero-width Unicode carry instructions or exfiltrate bytes inside benign-looking text; the August 2024 M365 Copilot ASCII-smuggling PoC exfiltrated an MFA code.
 
-6. **Cross-session memory and RAG corpus poisoning.** An adversarial document written into persistent memory or a RAG corpus influences every future session that reads the tainted entry. As few as five injected documents achieved 97% attack success on Natural Questions (PoisonedRAG, USENIX Security 2025).
+6. **Cross-session memory and RAG corpus poisoning** — one tainted entry in persistent memory or a RAG corpus reaches every future session that reads it; as few as five documents reached 97% attack success on Natural Questions (PoisonedRAG, USENIX Security 2025).
 
-7. **Fine-tuning interface as gradient oracle ("fun-tuning").** An attacker abuses a vendor's fine-tuning API — pairing candidate inputs with a target output and reading the returned per-example loss as a gradient surrogate — to optimize a payload that reliably produces attacker-chosen output (65–82% ASR on Gemini in the original paper), bringing white-box-style optimization to closed-weight deployments.
+7. **Fine-tuning interface as gradient oracle ("fun-tuning")** — an attacker reads per-example loss from a vendor's fine-tuning API to optimize a payload (65–82% ASR on Gemini), bringing white-box-style optimization to closed-weight models.
 
-8. **Multilingual, encoded, or low-resource-language payloads.** Translation to low-resource or code-mixed languages sharply reduces classifier accuracy — refusal rates can fall from ~79% (English) to ~23% on identical content — and encodings (Base64, ROT13) or emoji substitution evade classifiers not trained on the scheme.
+8. **Multilingual, encoded, or low-resource-language payloads** — low-resource or code-mixed translation drops refusal rates from ~79% to ~23% on identical content, and Base64/ROT13/emoji encodings evade classifiers not trained on the scheme.
 
 ---
 
