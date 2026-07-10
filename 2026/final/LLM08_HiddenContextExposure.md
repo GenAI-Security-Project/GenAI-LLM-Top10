@@ -14,7 +14,7 @@ While Hidden Context Exposure introduces risks on its own, it also frequently am
 
 In summary, LLM08 covers the foundational risk that hidden LLM control context is exposed, inferred, or reconstructed in a way that materially increases attacker capability. LLM08 does not cover:
 
-* The leakage of regulated user or training data (LLM02:2025 Sensitive Information Disclosure).
+* The leakage of regulated user or training data (LLM02 Sensitive Information Disclosure).
 * The agentic amplifications of this risk, e.g., persistent memory, inter-agent channels, tool configuration persistence, and multi-step agent compromise (the OWASP Top 10 for Agentic Applications).
 * Generic application-security concerns inherited by LLM-integrated systems, e.g., server-side log leakage, client-side bundle inspection, and infrastructure-layer side channels.
 
