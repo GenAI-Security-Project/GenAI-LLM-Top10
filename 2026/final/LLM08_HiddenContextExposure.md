@@ -8,8 +8,6 @@ In an LLM application, hidden context typically includes the system prompt, deve
 
 Practitioners should design under the assumption that hidden context is discoverable and that any contents of the context should not be considered a secret. Application developers should ensure that its full disclosure would have no or minimal direct security impact. Sensitive data such as credentials, connection strings, and tokens should not be embedded in it, nor should hidden context be solely relied upon as a security boundary for authorization, privilege separation, policy enforcement, or content filtering.
 
-Severity tracks what is placed in hidden context and how the application relies on it. Findings range from **informational** (no secrets, no security-relevant logic, no reliance on confidentiality) through **medium** (internal rules, filtering criteria, role descriptions, or workflow logic that meaningfully aids an attacker but does not gate critical decisions) to **high** (embedded credentials or tokens, or reliance on hidden-context secrecy for authorization or content policy) and **critical** (where disclosure chains to remote code execution, broad data exfiltration, or privilege escalation in a connected system).
-
 While Hidden Context Exposure introduces risks on its own, it also frequently amplifies risks in adjacent categories: disclosed rules or logic enable more targeted prompt injection (LLM01); embedded credentials constitute sensitive information disclosure (LLM02); revealed tool permissions and schemas expand the surface for excessive agency (LLM03); leaked output-formatting rules can facilitate improper output handling (LLM10).
 
 In summary, LLM08 covers the foundational risk that hidden LLM control context is exposed, inferred, or reconstructed in a way that materially increases attacker capability. LLM08 does not cover:
@@ -22,7 +20,7 @@ In summary, LLM08 covers the foundational risk that hidden LLM control context i
 
 #### 1. Exposure of Sensitive Functionality, Tool and Function Schemas
 
-The system prompt or hidden context of the application may reveal sensitive information or functionality that is intended to be kept confidential, such as sensitive system architecture, available tools and functions, API keys, database credentials, or user tokens. While exposure of these would likely cause harm, the real risk is that sensitive credentials are placed in the hidden context in the first place. Since the hidden context should be considered discoverable, any information that could be used for further attacks should be removed.
+The system prompt or hidden context of the application may reveal sensitive information or functionality that is intended to be kept confidential. This may include sensitive system architecture, available tools and functions, API keys, database credentials, or user tokens. While exposure of these would likely cause harm, the real risk is that sensitive credentials are placed in the hidden context in the first place.
 
 #### 2. Exposure of Behavioral Control Logic
 
@@ -46,19 +44,15 @@ System prompts frequently define how responses should be structured, including r
 
 Do not embed any sensitive information (e.g., API keys, auth keys, database names, user roles, permission structure of the application) directly in the system prompts or hidden context. Assume all context available to the LLM could also be available to users. Instead, externalize such information to the systems that the model does not directly access and avoid letting the model handle sensitive data itself.
 
-#### 2. Use Deterministic Methods for Behavior Control
+#### 2. Use Dermininistic Methods and Guardrails for Validation and Behavior Control
 
-Because LLMs can be vulnerable to attacks such as prompt injection, hidden context should not be relied on as the primary mechanism for controlling model behavior. Instead, enforce critical behaviors through deterministic systems outside the model. For example, harmful content detection and prevention should be handled by external safeguards rather than by instructions embedded in hidden context.
+Because LLMs can be vulnerable to attacks such as prompt injection, hidden context should not be relied on as the primary mechanism for controlling model behavior. Specialized fine tuning or further training of a model may decrease the risk of disclosure, but it is not a consistent guarantee and may have other unintended consequences. Instead, enforce critical behaviors through independent and deterministic systems outside the model. For example, harmful content detection and prevention should be handled by external safeguards rather than by instructions embedded in hidden context.
 
-#### 3. Validate Model Inputs and Outputs with External Guardrails
-
-Implement external guardrails that inspect user inputs, model outputs, and tool calls for policy violations or unexpected behavior. While training particular behavior into a model can be effective, such as training it not to reveal its system prompt, it does not guarantee consistent compliance. An independent system that can inspect the output to determine if the model is in compliance with expectations is preferable to system prompt instructions.
-
-#### 4. Enforce Authorization and Access Control Independently from the LLM
+#### 3. Enforce Authorization and Access Control Independently from the LLM
 
 Critical controls such as privilege separation, authorization bounds checks, and similar must not be delegated to the LLM, whether through the system prompt or another mechanism. These controls should be enforced in a deterministic and auditable manner, which LLMs are not well suited to provide. In cases where an agent is performing tasks, if those tasks require different levels of access, then multiple agents should be used, each configured with the least privileges needed to perform the desired tasks.
 
-#### 5. Adopt Context Obfuscation
+#### 4. Adopt Context Obfuscation
 
 For context the application must process, avoid relying on common system prompt templates, section names, or predictable instruction structures. Varying how instructions are named, written and structured so that they are less directly identifiable or reusable could provide an additional layer of complexity for attackers. Mitigations such as these should only be used as a minor supporting measure, not a primary defense. The best defense is to avoid extraneous and sensitive context and assume all context is discoverable.
 
