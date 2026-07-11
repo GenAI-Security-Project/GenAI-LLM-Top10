@@ -32,11 +32,11 @@ detection models, labeling fraud as legitimate. The model learns to ignore real 
 
 3. **Open-Source Dataset Supply Chain Poisoning:** Attackers contribute malicious data to widely used datasets. A 2024 case showed trigger phrases inserted across dozens of downstream models, requiring costly retraining.
 
-4. **Low-Volume High-Impact Backdoor Poisoning:** As few as 250 poisoned documents compromise models from 600M to 13B parameters regardless of dataset size (Souly et al., arXiv:2510.07192, 2025). Strategic minimal manipulation is sufficient for significant impact.
+4. **Low-Volume High-Impact Backdoor Poisoning:** As few as 250 poisoned documents compromise models from 600M to 13B parameters regardless of dataset size (Souly et al., 2025). Strategic minimal manipulation is sufficient for significant impact.
 
 5. **AI Recommendation / Memory Poisoning:** Attackers embed hidden instructions in web content to manipulate AI memory or recommendations without detection, demonstrating risks in agent-based systems and persistent memory.
 
-6. **RAG Knowledge Base Poisoning:** Injecting as few as 3-10 semantically optimized adversarial documents overrides accurate content across a retrieval pipeline. Standard defenses including perplexity-based filtering fail (CorruptRAG, Zhang et al., 2025).
+6. **RAG Knowledge Base Poisoning:** Injecting as few as 3-10 semantically optimized adversarial documents overrides accurate content across a retrieval pipeline. Standard defenses including perplexity-based filtering fail (Zhang et al., 2025).
 
 7. **Agent / Multi-System Poisoning:** Poisoned inputs in multi-agent workflows influence behavior and data access across entire AI-driven ecosystems, not just individual models.
 
@@ -68,7 +68,7 @@ detection models, labeling fraud as legitimate. The model learns to ignore real 
 
 9. Control automated retraining and feedback loops by validating incoming data, requiring human oversight, and applying rate limits against gradual poisoning through manipulated preference signals.
 
-10. Continuously red team models with adversarial inputs and trigger-based prompts to identify hidden backdoors. Do not assume safety alignment removes backdoors — dedicated trigger-probing is required after every alignment cycle (Hubinger et al., arXiv:2401.05566, 2024).
+10. Continuously red team models with adversarial inputs and trigger-based prompts to identify hidden backdoors. Do not assume safety alignment removes backdoors — dedicated trigger-probing is required after every alignment cycle (Hubinger et al., 2024).
 
 11. Monitor outputs, training loss, and behavioral patterns for drift or anomalies using defined 
 thresholds to detect subtle poisoning effects over time.
@@ -100,13 +100,13 @@ detect fraud, resulting in financial losses, compliance violations, and regulato
 
 **Scenario #5**
 
-An attacker uploads poisoned pre-trained weights to a public repository. Standard safety training fails to remove embedded backdoors (Hubinger et al., arXiv:2401.05566, 2024). Organizations face system compromise, data leakage, or targeted manipulation at scale.
+An attacker uploads poisoned pre-trained weights to a public repository. Standard safety training fails to remove embedded backdoors (Hubinger et al., 2024). Organizations face system compromise, data leakage, or targeted manipulation at scale.
 
 **Scenario #6**
 
 An attacker modifies a chat template in a GGUF package with trigger-activated conditional 
 instructions. Redistributed via a public hub, the model behaves normally under benign inputs. 
-Validated across 18 models and 4 inference runtimes — factual accuracy drops from 90% to 15% under trigger conditions and URL emission exceeds 80% success rate (Fogel et al., arXiv:2602.04653, 2026).
+Validated across 18 models and 4 inference runtimes — factual accuracy drops from 90% to 15% under trigger conditions and URL emission exceeds 80% success rate (Fogel et al., 2026).
 
 **Scenario #7**
 
@@ -119,18 +119,3 @@ In a shared AI environment, one tenant injects adversarial data into shared embe
 **Scenario #9**
 
 An attacker injects malicious instructions into an AI agent's persistent memory over multiple sessions. The agent begins prioritizing attacker-controlled logic, resulting in long-term workflow manipulation and hidden persistence.
-
----
-
-### Reference Links
-
-1. [CycloneDX — Machine Learning Bill of Materials (AI/ML-BOM)](https://cyclonedx.org/capabilities/mlbom/)
-2. [DVC — Data Version Control](https://dvc.org/doc)
-3. [MITRE ATLAS — Adversarial Threat Landscape for AI Systems](https://atlas.mitre.org)
-4. [NIST AI Risk Management Framework (AI RMF 1.0)](https://www.nist.gov/itl/ai-risk-management-framework)
-5. [JFrog Security Research — GGUF-SSTI (Jinja2 template injection)](https://jfrog.com/blog/)
-6. [GitHub Security Advisory — Giskard Jinja2 SSTI (GHSA-frv4-x25r-588m)](https://github.com/advisories/GHSA-frv4-x25r-588m)
-7. [Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates — Fogel et al., arXiv:2602.04653](https://arxiv.org/abs/2602.04653)
-8. [Sleeper Agents: Training Deceptive LLMs — Hubinger et al., arXiv:2401.05566](https://arxiv.org/abs/2401.05566)
-9. [Near-Constant Poisoning Threshold — Souly et al., arXiv:2510.07192](https://arxiv.org/abs/2510.07192)
-10. [F5 Operations Guide — Data and Model Poisoning](https://f5.com)

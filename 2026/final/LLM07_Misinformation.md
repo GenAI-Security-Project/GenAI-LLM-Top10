@@ -16,7 +16,7 @@ Overreliance remains a key factor. Humans and systems often treat fluent, confid
 
 1. Unsupported or False Decision Support: Incorrect or unsupported information influences business, legal, healthcare, financial, or operational decisions.
 2. Incorrect State Inference in Workflows: An LLM infers that a condition has been met when it has not, triggering unintended actions.
-3. Unsafe Code and Dependency Generation: The model generates insecure code, hallucinated packages, or invalid configurations.
+3. Unsafe Code and Dependency Generation: The model generates insecure code, hallucinated packages, or invalid configurations (Spracklen et al., 2025).
 4. Misleading Summaries and Critical Omissions: Summaries omit key constraints, exceptions, timestamps, or risks.
 5. Adversarially Induced Misinformation: Attackers craft inputs that cause false claims or omission of critical facts.
 6. Cross-Agent Misinformation Propagation: Incorrect outputs propagate across agents and workflows.
@@ -38,7 +38,7 @@ Overreliance remains a key factor. Humans and systems often treat fluent, confid
 ### Example Attack Scenarios
 
 Scenario #1: Hallucinated Dependency Supply Chain Attack  
-Attackers publish malicious packages under hallucinated names used by coding assistants, leading to compromise.
+Attackers publish malicious packages under hallucinated names used by coding assistants, leading to compromise (Spracklen et al., 2025).
 
 Scenario #2: Incorrect Policy Decision by Agent  
 An agent incorrectly approves a refund or exception, resulting in financial loss.
@@ -57,12 +57,3 @@ One agent passes incorrect state that another trusts, leading to high-impact fai
 
 Scenario #7: Fabricated Task Completion  
 An agent falsely reports task completion, leading to downstream failure.
-
-### Reference Links
-
-1. [LLM09: Misinformation](https://genai.owasp.org/llmrisk/llm092025-misinformation/): **OWASP GenAI Project**
-2. [Hallucination Risks in Language Models](https://www.usenix.org/system/files/usenixsecurity25-spracklen.pdf): **USENIX Security Symposium**
-3. [PoisonedRAG: Data Poisoning Attacks](https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf): **USENIX Security Symposium**
-4. [Why Language Models Hallucinate](https://openai.com/index/why-language-models-hallucinate/): **OpenAI**
-5. [Artificial Intelligence Risk Management Framework (AI RMF 1.0)](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf): **National Institute of Standards and Technology (NIST)**
-6. [AI Hallucinations in the Real World](https://www.bbc.com/news/world-us-canada-68569397): **BBC News**

@@ -71,15 +71,3 @@ An attacker extracts the hidden context that contains the tool list and paramete
 #### Scenario #3
 
 An LLM has a system prompt prohibiting the generation of offensive content, external links, and code execution. An attacker extracts this system prompt and then uses a prompt injection attack to bypass these instructions, facilitating a remote code execution attack.
-
-### Reference Links
-
-1. [System Prompt Poisoning: Persistent Attacks on Large Language Models Beyond User Injection](https://arxiv.org/abs/2505.06493): Li, Guo, & Cai, **arXiv:2505.06493** (2025).
-2. [You Can't Steal Nothing: Mitigating Prompt Leakages in LLMs via System Vectors](https://arxiv.org/abs/2509.21884): Cao, Li, Cao, Ge, Wang, & Chen, **arXiv:2509.21884**.
-3. [PLeak: Prompt Leaking Attacks against Large Language Model Applications](https://arxiv.org/abs/2405.06823): Hui, Yuan, Gong, Burlina, & Cao, **arXiv:2405.06823** (2025).
-4. [LeakAgent: RL-based Red-teaming Agent for LLM Privacy Leakage](https://arxiv.org/abs/2412.05734): Nie, Wang, Yu, Wu, Zhao, Guo, & Song, **arXiv:2412.05734** (2025).
-5. [Proof of Concept: Dangers of System Prompt Leakage](https://resk.fr/pdf/resk-enterprise-ai-security-guide.pdf): Jeremy Goffin, **Resk.fr**, July 2025.
-6. [Just Ask: Curious Code Agents Reveal System Prompts in Frontier LLMs](https://doi.org/10.48550/arXiv.2601.21233): Zheng, Wu, Huang, Li, Ma, Li, Jiang, & Wang, **arXiv:2601.21233** (2026).
-7. [System Prompt Extraction Attacks and Defenses in Large Language Models](https://arxiv.org/abs/2505.23817): Das, Amini, & Wu, **arXiv:2505.23817** (2025).
-8. [Leaked System Prompts (GitHub repository)](https://github.com/jujumilk3/leaked-system-prompts): **jujumilk3** (2025).
-9. [LeakHub](https://leakhub.ai/): **LeakHub**.

@@ -100,14 +100,3 @@ An LLM-based personal assistant app is granted access to an individual’s mailb
 * eliminating excessive autonomy by requiring the user to manually review and hit 'send' on every mail drafted by the LLM extension.
 
 Alternatively, the damage caused could be reduced by implementing rate limiting on the mail-sending interface.
-
-### Reference Links
-
-1. [Excessive permissions allow GCP Vertex agents to be weaponised](https://www.securityweek.com/google-addresses-vertex-security-issues-after-researchers-weaponize-ai-agent/): **Security Week**
-2. [OpenClaw deleted emails – despite being told not to](https://techcrunch.com/2026/02/23/a-meta-ai-security-researcher-said-an-openclaw-agent-ran-amok-on-her-inbox/): **Tech Crunch**
-3. [Excessive autonomy + excessive permissions let a coding agent destroy production infrastructure](https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-code-deletes-developers-production-setup-including-its-database-and-snapshots-2-5-years-of-records-were-nuked-in-an-instant): **Tom's Hardware**
-4. [Rogue Agents: Stop AI From Misusing Your APIs](https://www.twilio.com/en-us/blog/rogue-ai-agents-secure-your-apis): **Twilio**
-5. [Embrace the Red: Confused Deputy Problem](https://embracethered.com/blog/posts/2023/chatgpt-cross-plugin-request-forgery-and-prompt-injection./): **Embrace The Red**
-6. [NeMo-Guardrails: Interface guidelines](https://github.com/NVIDIA/NeMo-Guardrails/blob/main/docs/security/guidelines.md): **NVIDIA Github**
-7. [Sandboxing Agentic AI Workflows with WebAssembly](https://developer.nvidia.com/blog/sandboxing-agentic-ai-workflows-with-webassembly/): **NVIDIA, Joe Lucas**
-8. [Agents Rule of Two: A Practical Approach to AI Agent Security](https://ai.meta.com/blog/practical-ai-agent-security/): **Meta**

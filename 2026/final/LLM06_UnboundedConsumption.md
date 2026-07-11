@@ -12,7 +12,7 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
 ### Common Examples of Risk
 
 #### 1. Variable-Length Input Flood and Output Explosion
-  Attackers can overload the LLM with numerous inputs of varying lengths, exploiting processing inefficiencies. This can deplete resources and potentially render the system unresponsive, significantly impacting service availability. This also includes output explosion via fine-tuning poisoning where a single malicious training sample breaks the model’s end-of-sequence behavior, pushing output to maximum tokens on every request.
+  Attackers can overload the LLM with numerous inputs of varying lengths, exploiting processing inefficiencies. This can deplete resources and potentially render the system unresponsive, significantly impacting service availability. This also includes output explosion via fine-tuning poisoning where a single malicious training sample breaks the model’s end-of-sequence behavior, pushing output to maximum tokens on every request (Gao et al., 2024).
 
 #### 2. Denial of Wallet (DoW)
   By initiating a high volume of operations, attackers exploit the cost-per-use model of cloud-based AI services, leading to unsustainable financial burdens on the provider and risking financial ruin.
@@ -21,16 +21,16 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
   Continuously sending inputs that exceed the LLM’s context window can lead to excessive computational resource use, resulting in service degradation and operational disruptions.
 
 #### 4. Reasoning-Loop and Thinking-Token Exhaustion
-  Attackers craft short, benign-looking prompts that result in resource exhaustion by forcing extended-thinking models into prolonged or non-terminating reasoning loops, consuming massive thinking-token budgets while bypassing input-size filters. Because these prompts are small and appear legitimate, standard input validation provides no protection.
+  Attackers craft short, benign-looking prompts that result in resource exhaustion by forcing extended-thinking models into prolonged or non-terminating reasoning loops, consuming massive thinking-token budgets while bypassing input-size filters (Li et al., 2025). Because these prompts are small and appear legitimate, standard input validation provides no protection.
 
 #### 5. Adversarial Inputs Optimized for Resource Overconsumption
-  Attackers use optimization techniques to craft inputs that maximize computational cost. This is distinct from simply asking the model to perform a resource-intensive task and includes sponge examples and adversarial visual perturbations. This includes optimization of adversarial input with gradient-based and gradient-free techniques. Unlike reasoning-loop attacks these require explicit optimization over the input space rather than prompt design alone. 
+  Attackers use optimization techniques to craft inputs that maximize computational cost. This is distinct from simply asking the model to perform a resource-intensive task and includes sponge examples (Shumailov et al., 2020) and adversarial visual perturbations. This includes optimization of adversarial input with gradient-based and gradient-free techniques. Unlike reasoning-loop attacks these require explicit optimization over the input space rather than prompt design alone. 
 
 #### 6. Multimodal Inputs and Outputs
   For multi-modal models that are more cost-intensive than the text-only services, the extent of the computation cost is exacerbated. In many cases, this can result in 10 to 100 times the cost of text-based models.
 
 #### 7. Model Extraction and Distillation Theft
-  Attackers query the model API with crafted inputs to collect sufficient outputs to replicate a partial model or fine-tune a functional equivalent. Exposure of logits and log-probabilities significantly accelerates extraction.
+  Attackers query the model API with crafted inputs to collect sufficient outputs to replicate a partial model or fine-tune a functional equivalent. Exposure of logits and log-probabilities significantly accelerates extraction (Carlini et al., 2024).
 
 #### 8. Side-Channel Attacks
   Malicious attackers may exploit input filtering techniques of the LLM to execute side-channel attacks, harvesting model weights and architectural information. This could compromise the model’s security and lead to further exploitation.
@@ -93,7 +93,7 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
   An attacker uses the LLM's API to generate synthetic training data and fine-tunes another model, creating a functional equivalent and bypassing traditional model extraction limitations.
 
 #### Scenario #6: Perturbations in LVLM Image Input
-  An attacker crafts adversarial image inputs that include perturbations optimized to cause an LVLM to overconsume tokens in its output.
+  An attacker crafts adversarial image inputs that include perturbations optimized to cause an LVLM to overconsume tokens in its output (Gao et al., 2025).
 
 #### Scenario #7: Multi-turn Tool Calling Loops and Tool Call Fan-Out
   The attacker can publish a malicious tool (e.g. via a Claude Skill on an open-source repository) that instructs an agent to perform recursive cyclical tasks, or tasks that require a large number of tool calls. Developers incorporating that tool into their agents then risk causing excessive token consumption and service instability.
@@ -103,23 +103,3 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
 
 #### Scenario #9: Growing LLM Context in Agentic Sessions
   An attacker or a benign user maintains an open agentic session, gradually injecting content. After some 100 turns, each inference re-processes full context. Turn 1: $0.001. Turn 100: $0.50. In aggregate, this results in hundreds of dollars of spend. No single request triggers rate limits because each is individually within budget.
-
-
-### Reference Links
-
-1. [Proof Pudding (CVE-2019-20634)](https://avidml.org/database/avid-2023-v009/): **AVID** (`moohax` & `monoxgas`)
-2. [Stealing Part of a Production Language Model](https://arxiv.org/abs/2403.06634): **arXiv**
-3. [Runaway LLaMA | How Meta's LLaMA NLP model leaked](https://www.deeplearning.ai/the-batch/how-metas-llama-nlp-model-leaked/): **Deep Learning Blog**
-4. [You wouldn't download an AI, Extracting AI models from mobile apps](https://altayakkus.substack.com/p/you-wouldnt-download-an-ai): **Substack blog**
-5. [A Comprehensive Defense Framework Against Model Extraction Attacks](https://ieeexplore.ieee.org/document/10080996): **IEEE**
-6. [Alpaca: A Strong, Replicable Instruction-Following Model](https://crfm.stanford.edu/2023/03/13/alpaca.html): **Stanford Center on Research for Foundation Models (CRFM)**
-7. [How Watermarking Can Help Mitigate The Potential Risks Of LLMs?](https://www.kdnuggets.com/2023/03/watermarking-help-mitigate-potential-risks-llms.html): **KD Nuggets**
-8. [Securing AI Model Weights: Preventing Theft and Misuse of Frontier Models](https://www.rand.org/content/dam/rand/pubs/research_reports/RRA2800/RRA2849-1/RAND_RRA2849-1.pdf): **RAND Corporation**
-9. [Sponge Examples: Energy-Latency Attacks on Neural Networks](https://arxiv.org/abs/2006.03463): **arXiv**
-10. [Sourcegraph Security Incident on API Limits Manipulation and DoS Attack](https://about.sourcegraph.com/blog/security-update-august-2023): **Sourcegraph**
-11. [Clawdrain: Exploiting Tool-Calling Chains for Stealthy Token Exhaustion in OpenClaw Agents](https://arxiv.org/abs/2603.00902): **arXiv**
-12. [Resource Consumption Red-Teaming for Large Vision-Language Models](https://arxiv.org/abs/2507.18053): **arXiv**
-13. [ThinkTrap: Denial-of-Service Attacks against Black-box LLM Services via Infinite Thinking](https://arxiv.org/abs/2512.07086): **arXiv**
-14. [Denial-of-Service Poisoning Attacks against Large Language Models](https://arxiv.org/abs/2410.10760): **arXiv**
-15. [Vision — Build with Claude documentation](https://docs.anthropic.com/en/docs/build-with-claude/vision): **Anthropic**
-16. [MCP Safety Audit: LLMs with the Model Context Protocol Allow Major Security Exploits](https://arxiv.org/abs/2504.03767): **arXiv**

@@ -23,13 +23,13 @@ The following conditions can increase the impact of this vulnerability:
 3. LLM-generated SQL queries are executed without proper parameterization, leading to SQL injection.
 4. LLM output is used to construct file paths without proper sanitization, potentially resulting in path traversal vulnerabilities.
 5. LLM-generated content is used in email templates without proper escaping, potentially leading to phishing attacks.
-6. LLM output containing ANSI escape sequences or other control characters is written to a terminal, log viewer, or IDE pane that interprets them, enabling visual spoofing, clipboard hijacking (e.g., OSC 52), or chained exploitation of terminal emulator vulnerabilities.
+6. LLM output containing ANSI escape sequences or other control characters is written to a terminal, log viewer, or IDE pane that interprets them, enabling visual spoofing, clipboard hijacking (e.g., OSC 52), or chained exploitation of terminal emulator vulnerabilities (Rehberger, 2024b).
 7. The chat UI auto-renders Markdown images or link previews referenced in model output, allowing an attacker who controls part of the model context to exfiltrate conversation data via the image URL's hostname or query string.
 
 ### Prevention and Mitigation Strategies
 
 1. Treat the model as any other user, adopting a zero-trust approach, and apply proper input validation on responses coming from the model to backend functions.
-2. Follow the OWASP ASVS (Application Security Verification Standard) guidelines to ensure effective input validation and sanitization.
+2. Follow the OWASP ASVS (Application Security Verification Standard) guidelines to ensure effective input validation and sanitization (OWASP, n.d.).
 3. Encode model output back to users to mitigate undesired code execution by JavaScript or Markdown. OWASP ASVS provides detailed guidance on output encoding.
 4. Implement context-aware output encoding based on where the LLM output will be used (e.g., HTML encoding for web content, SQL escaping for database queries).
 5. Use parameterized queries or prepared statements for all database operations involving LLM output.
@@ -63,17 +63,3 @@ The following conditions can increase the impact of this vulnerability:
 #### Scenario #6
 
   An LLM is used to generate code from natural language inputs in a software company, aiming to streamline development tasks. While efficient, this approach risks exposing sensitive information, creating insecure data handling methods, or introducing vulnerabilities like SQL injection. The AI may also hallucinate non-existent software packages, potentially leading developers to download malware-infected resources. Thorough code review and verification of suggested packages are crucial to prevent security breaches, unauthorized access, and system compromises.
-
-### Reference Links
-
-1. [EchoLeak (CVE-2025-32711): Zero-Click Prompt Injection in Microsoft 365 Copilot](https://www.hackthebox.com/blog/cve-2025-32711-echoleak-copilot-vulnerability): **HackTheBox**
-2. [CVE-2025-68664 (LangGrinch): Critical LangChain Core Serialization Vulnerability](https://cyata.ai/blog/langgrinch-langchain-core-cve-2025-68664/): **Cyata Security**
-3. [Lab: Exploiting Insecure Output Handling in LLMs](https://portswigger.net/web-security/llm-attacks/lab-exploiting-insecure-output-handling-in-llms): **PortSwigger Web Security Academy**
-4. [GitHub Copilot: Remote Code Execution via Prompt Injection](https://embracethered.com/blog/posts/2025/github-copilot-remote-code-execution-via-prompt-injection/): **Embrace The Red**
-5. [Threat Modeling LLM Applications](https://aivillage.org/large%20language%20models/threat-modeling-llm/): **AI Village**
-6. [OWASP ASVS - 5 Validation, Sanitization and Encoding](https://owasp-aasvs4.readthedocs.io/en/latest/V5.html#validation-sanitization-and-encoding): **OWASP ASVS**
-7. [OWASP AISVS - C7 Model Behavior, Output Control and Safety Assurance](https://github.com/OWASP/AISVS/blob/main/1.0/en/0x10-C07-Model-Behavior.md): **OWASP AISVS**
-8. [CWE-116: Improper Encoding or Escaping of Output](https://cwe.mitre.org/data/definitions/116.html): **MITRE**
-9. [Terminal DiLLMa: LLM-powered Apps Can Hijack Your Terminal Via Prompt Injection](https://embracethered.com/blog/posts/2024/terminal-dillmas-prompt-injection-ansi-sequences/): **Embrace The Red**
-10. [GitHub Copilot Chat: From Prompt Injection to Data Exfiltration](https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/): **Embrace The Red**
-11. [Markdown exfiltration tracker](https://simonwillison.net/tags/markdown-exfiltration/): **Simon Willison**
