@@ -23,15 +23,14 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
 
   Continuously sending inputs that exceed the LLM’s context window can lead to excessive computational resource use, resulting in service degradation and operational disruptions.
 
-#### 4. Resource-Intensive Queries
-
-  Submitting unusually demanding queries involving complex sequences or intricate language patterns can drain system resources, leading to prolonged processing times and potential system failures.
+#### 4. Reasoning-Loop and Thinking-Token Exhaustion
+  Attackers craft short, benign-looking prompts that result in resource exhaustion by forcing extended-thinking models into prolonged or non-terminating reasoning loops, consuming massive thinking-token budgets while bypassing input-size filters. Because these prompts are small and appear legitimate, standard input validation provides no protection.
 
 #### 5. Adversarial Inputs Optimized for Resource Overconsumption
   Attackers use optimization techniques to craft inputs that maximize computational cost. This is distinct from simply asking the model to perform a resource-intensive task and includes sponge examples and adversarial visual perturbations. This includes optimization of adversarial input with gradient-based and gradient-free techniques. Unlike reasoning-loop attacks these require explicit optimization over the input space rather than prompt design alone. 
 
 #### 6. Multimodal Inputs and Outputs
-  For multi-modal models that are more cost-intensive than the text-only services, the extent of the computation cost is exacerbated. In many cases, this can result in 10 to 100 times the cost of text-based models. This not only applies to models that take in image or audio input, but also models that can generate multi-modal outputs like images and video, where the extent of cost exploitation risk is even larger.
+  For multi-modal models that are more cost-intensive than the text-only services, the extent of the computation cost is exacerbated. In many cases, this can result in 10 to 100 times the cost of text-based models.
 
 #### 7. Model Extraction and Distillation Theft
   Attackers query the model API with crafted inputs to collect sufficient outputs to replicate a partial model or fine-tune a functional equivalent. Exposure of logits and log-probabilities significantly accelerates extraction.
@@ -42,84 +41,49 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
 #### 9. Agent-Tool Interactions Flooding Model Resources
   Attackers can publish tools that overuse LLM resources by forcing an LLM-based application into recursive or infinite tool calling loops. This could cause seemingly legitimate tool actions to result in financial burdens or compromise quality of service. Furthermore, when one tool-call fans out into a much larger quantity of actions, this can result in token overuse if the LLM needs to manage hundreds of tool calls spawned from one task.
 
-#### 10. Reasoning-Loop and Thinking-Token Exhaustion
-  Attackers craft short, benign-looking prompts that force extended-thinking models into prolonged or non-terminating reasoning loops, consuming massive thinking-token budgets while bypassing input-size filters. Because these prompts are small and appear legitimate, standard input validation provides no protection.
-
-#### 11. Inference Infrastructure Exploitation
+#### 10. Inference Infrastructure Exploitation
   Attackers target vulnerabilities in LLM serving frameworks (vLLM, TensorRT-LLM, SGLang, Triton, Ollama) to crash services or exhaust model resources through unsafe deserialization flaws, special-token injection, injected chat templates. 
 
 
 ### Prevention and Mitigation Strategies
 
-#### 1. Input Validation
+#### 1. Rate Limiting & Input Size Validation
 
-  Implement strict input validation to ensure that inputs do not exceed reasonable size limits.
+  Apply rate limiting and user quotas to restrict the number of requests a single source entity can make in a given time period. Move beyond requests per second to enforce limits on tokens-per-minute, tokens-per-day and estimated cost per request. Use pre-flight token estimation to reject requests before inference begins. This includes validation to ensure inputs do not exceed reasonable size limits.
 
-#### 2. Limit Exposure of Logits and Logprobs
-
-  Restrict or obfuscate the exposure of logit_bias and logprobs in API responses. Provide only the necessary information without revealing detailed probabilities.
-
-#### 3. Rate Limiting
-
-  Apply rate limiting and user quotas to restrict the number of requests a single source entity can make in a given time period. Move beyond requests per second to enforce limits on tokens-per-minute, tokens-per-day and estimated cost per request. Use pre-flight token estimation to reject requests before inference begins. 
-
-#### 4. Hard Spending Caps
+#### 2. Hard Spending Caps
 
   Set non-overridable budget ceilings per API key, user, team, and cloud account. These must be enforcement mechanisms that halt inference when exceeded, not merely alerting thresholds that can be outpaced by fast-accumulating workloads. Furthermore, spending caps need to factor in cost differences between different modalities and tool protocols.
 
-#### 5. Resource Allocation Management
+#### 4. Resource Allocation Management
 
   Monitor and manage resource allocation dynamically to prevent any single user or request from consuming excessive resources.
 
-#### 6. Timeouts and Throttling
-
-  Set timeouts and throttle processing for resource-intensive operations to prevent prolonged resource consumption.
-
-#### 7. Sandbox Techniques
+#### 5. Sandbox Techniques
 
   Restrict the LLM’s access to network resources, internal services, and APIs. This is particularly significant for all common scenarios as it encompasses insider risks and threats. Furthermore, it governs the extent of access the LLM application has to data and resources, thereby serving as a crucial control mechanism to mitigate or prevent side-channel attacks.
 
-#### 8. Comprehensive Logging, Monitoring and Anomaly Detection
-
-  Continuously monitor resource usage and implement logging to detect and respond to unusual patterns of resource consumption.
-
-#### 9. Watermarking
-
-  Implement watermarking frameworks to embed and detect unauthorized use of LLM outputs.
-
-#### 10. Graceful Degradation
+#### 6. Graceful Degradation
 
   Design the system to degrade gracefully under heavy load, maintaining partial functionality rather than complete failure.
 
-#### 11. Limit Queued Actions and Scale Robustly
+#### 7. Limit Queued Actions and Scale Robustly
 
   Implement restrictions on the number of queued actions and total actions, while incorporating dynamic scaling and load balancing to handle varying demands and ensure consistent system performance.
 
-#### 12. Adversarial Robustness Training
-
-  Train models to detect and mitigate adversarial queries and extraction attempts.
-
-#### 13. Glitch Token Filtering
-
-  Build lists of known glitch tokens and scan output before adding it to the model’s context window.
-
-#### 14. Access Controls
-
-  Implement strong access controls, including role-based access control (RBAC) and the principle of least privilege, to limit unauthorized access to LLM model repositories and training environments.
-
-#### 15. Scan for Adversarial Perturbations
+#### 8. Scan for Adversarial Perturbations
   
   Scan model inputs, particularly visual inputs to LVLMs (large visual language models) for evidence of adversarial perturbations that could cause model resource overconsumption.
 
-#### 16. Detect Resource-Intensive Tool Interactions
+#### 9. Detect Resource-Intensive Tool Interactions
 
   Monitor agent-tool interactions to identify if a particular session appears to be causing a recursive or resource-intensive action without a clear end state. Establish baselines of normal tool behavior in order to detect if a particular tool is deviating from standard token consumption patterns.
   
-#### 17. Agentic Circuit Breakers
+#### 10. Agentic Circuit Breakers
   
   Enforce step limits, recursion depth limits, time limits, and per-run cost ceilings on all agent executions. Use state hashing to detect recursive loops.
   
-#### 18. Inference Infrastructure Hardening
+#### 11. Inference Infrastructure Hardening
 
   Keep serving frameworks updated. Disable unsafe deserialization, restrict special-token passthrough, and enforce authentication on all inference endpoints. 
   
@@ -150,23 +114,15 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
 
   An attacker crafts adversarial image inputs that include perturbations optimized to cause an LVLM to overconsume tokens in its output.
 
-#### Scenario #7: Token Overconsumption Due to Multi-turn Tool Calling Loops
+#### Scenario #7: Multi-turn Tool Calling Loops and Tool Call Fan-Out
 
-  The attacker can publish a malicious tool (e.g. via a Claude Skill on an open-source repository) that instructs an agent to perform recursive cyclical tasks. Developers incorporating that tool into their agents then risk causing excessive token consumption and service instability.
+  The attacker can publish a malicious tool (e.g. via a Claude Skill on an open-source repository) that instructs an agent to perform recursive cyclical tasks, or tasks that require a large number of tool calls. Developers incorporating that tool into their agents then risk causing excessive token consumption and service instability.
 
-#### Scenario #8: Token Overconsumption from MCP Tool Call Fan-Out
-  
-  An attacker publishes a seemingly useful MCP tool (e.g., document analyzer) that, when invoked, makes 50 internal API calls per request. Each of these tool calls then require LLM inference to manage each step. While the agent only ingests one task, the LLM billing system sees 50 inference requests.
-
-#### Scenario #9: Bypassing System Input Filtering
+#### Scenario #8: Bypassing System Input Filtering
 
   A malicious attacker bypasses input filtering techniques and preambles of the LLM to perform a side-channel attack and retrieve model information to a remote controlled resource under their control.
 
-#### Scenario #10: Low and slow volume attacks
-
-  An attacker systematically queries a proprietary model API over weeks, staying within rate limits, and uses collected outputs to fine-tune an open-source model into a functional equivalent.
-
-#### Scenario #11: Growing LLM Context in Agentic Sessions
+#### Scenario #9: Growing LLM Context in Agentic Sessions
 
   An attacker or a benign user maintains an open agentic session, gradually injecting content. After some 100 turns, each inference re-processes full context. Turn 1: $0.001. Turn 100: $0.50. In aggregate, this results in hundreds of dollars of spend. No single request triggers rate limits because each is individually within budget.
 
