@@ -1,0 +1,84 @@
+{
+  "framework": "CSA AI Controls Matrix (AICM)",
+  "version": "v1.1 (2026-06-22)",
+  "source_url": "https://cloudsecurityalliance.org/artifacts/ai-controls-matrix-v1-1",
+  "accessed": "2026-07-11",
+  "element_type": "control",
+  "coarse_level": "domains",
+  "elements": [
+    {
+      "id": "A&A",
+      "title": "Audit & Assurance"
+    },
+    {
+      "id": "AIS",
+      "title": "Application & Interface Security"
+    },
+    {
+      "id": "BCR",
+      "title": "Business Continuity Management and Operational Resilience"
+    },
+    {
+      "id": "CCC",
+      "title": "Change Control and Configuration Management"
+    },
+    {
+      "id": "CEK",
+      "title": "Cryptography, Encryption & Key Management"
+    },
+    {
+      "id": "DCS",
+      "title": "Datacenter Security"
+    },
+    {
+      "id": "DSP",
+      "title": "Data Security and Privacy Lifecycle Management"
+    },
+    {
+      "id": "GRC",
+      "title": "Governance, Risk and Compliance"
+    },
+    {
+      "id": "HRS",
+      "title": "Human Resources"
+    },
+    {
+      "id": "IAM",
+      "title": "Identity & Access Management"
+    },
+    {
+      "id": "IPY",
+      "title": "Interoperability & Portability"
+    },
+    {
+      "id": "IVS",
+      "title": "Infrastructure & Virtualization Security"
+    },
+    {
+      "id": "LOG",
+      "title": "Logging and Monitoring"
+    },
+    {
+      "id": "MDS",
+      "title": "Model Development Security"
+    },
+    {
+      "id": "SEF",
+      "title": "Security Incident Management, E-Discovery, & Cloud Forensics"
+    },
+    {
+      "id": "STA",
+      "title": "Supply Chain Management, Transparency, and Accountability"
+    },
+    {
+      "id": "TVM",
+      "title": "Threat & Vulnerability Management"
+    },
+    {
+      "id": "UEM",
+      "title": "Universal Endpoint Management"
+    }
+  ],
+  "verification": "verified",
+  "notes": "18 control domains. The 17 CCM-inherited domain titles (all except MDS) confirmed VERBATIM against the official CSA Cloud Controls Matrix v4.0.12 machine-readable dataset (primary-dataset.json, domains array) — AICM v1.1 inherits CCM v4's domain structure unchanged, and all 17 matched exactly. MDS = 'Model Development Security' is the AICM-specific 18th domain (not present in CCM), confirmed from CSA AICM v1.1 coverage. Domain abbreviations (IDs) cross-checked. Version/date (v1.1, 2026-06-22) and count (18 domains, 247 controls) confirmed from the CSA AICM v1.1 artifact page. Residual note: titles verified against CCM v4.0.12; AICM v1.1 builds on CCM v4.1, but domain names are stable between CCM 4.0.x and 4.1. Coarse mapping targets the domain, not individual control IDs."
+}

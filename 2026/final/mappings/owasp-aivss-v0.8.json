@@ -1,0 +1,52 @@
+{
+  "framework": "OWASP AIVSS (AI Vulnerability Scoring System)",
+  "version": "v0.8",
+  "source_url": "https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.8.pdf",
+  "accessed": "2026-07-11",
+  "element_type": "scoring-system",
+  "coarse_level": "core-risks",
+  "elements": [
+    {
+      "id": "1",
+      "title": "Agentic AI Tool Misuse"
+    },
+    {
+      "id": "2",
+      "title": "Agent Access Control Violation"
+    },
+    {
+      "id": "3",
+      "title": "Agent Cascading Failures"
+    },
+    {
+      "id": "4",
+      "title": "Agent Orchestration and Multi-Agent Exploitation"
+    },
+    {
+      "id": "5",
+      "title": "Agent Identity Impersonation"
+    },
+    {
+      "id": "6",
+      "title": "Agent Memory and Context Manipulation"
+    },
+    {
+      "id": "7",
+      "title": "Insecure Agent Critical Systems Interaction"
+    },
+    {
+      "id": "8",
+      "title": "Agent Supply Chain and Dependency Risk"
+    },
+    {
+      "id": "9",
+      "title": "Agent Untraceability"
+    },
+    {
+      "id": "10",
+      "title": "Agent Goal and Instruction Manipulation"
+    }
+  ],
+  "verification": "all-verified",
+  "notes": "All 10 names confirmed against the v0.8 PDF (downloaded from the authoritative source, 4.4MB, PDF metadata title \"AIVSS Scoring System For OWASP Agentic AI Core Security Risks v0.8\"; document body line 3239 states \"This document represents version 0.8\"). Each risk name was cross-checked in three independent places in the extracted text: the summary table of contents (p.contents), the detailed section 3.6.1-3.6.10 contents, and the numbered body section headers. AIVSS has NO alphanumeric element IDs; the ordinal 1-10 is used as id per the extraction spec. WORDING CAVEAT: item 4's authoritative title spells the conjunction as \"and\" -> \"Agent Orchestration and Multi-Agent Exploitation\". The task brief supplied it with an ampersand (\"&\"); the source wording (\"and\") is used here. All other titles match the task-supplied list verbatim. The homepage (https://aivss.owasp.org/) confirms v0.8 as current but does not enumerate the risks; the enumerated list lives only in the linked PDF, which is the recorded source_url."
+}

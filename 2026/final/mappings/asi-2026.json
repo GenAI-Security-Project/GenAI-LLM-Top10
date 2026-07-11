@@ -1,0 +1,52 @@
+{
+  "framework": "OWASP Top 10 for Agentic Applications (ASI)",
+  "version": "2026 (announced 2025-12-09)",
+  "source_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+  "accessed": "2026-07-11",
+  "element_type": "risk-category",
+  "coarse_level": "risk-categories",
+  "elements": [
+    {
+      "id": "ASI01",
+      "title": "Agent Goal Hijack"
+    },
+    {
+      "id": "ASI02",
+      "title": "Tool Misuse & Exploitation"
+    },
+    {
+      "id": "ASI03",
+      "title": "Identity & Privilege Abuse"
+    },
+    {
+      "id": "ASI04",
+      "title": "Agentic Supply Chain Vulnerabilities"
+    },
+    {
+      "id": "ASI05",
+      "title": "Unexpected Code Execution (RCE)"
+    },
+    {
+      "id": "ASI06",
+      "title": "Memory & Context Poisoning"
+    },
+    {
+      "id": "ASI07",
+      "title": "Insecure Inter-Agent Communication"
+    },
+    {
+      "id": "ASI08",
+      "title": "Cascading Failures"
+    },
+    {
+      "id": "ASI09",
+      "title": "Human-Agent Trust Exploitation"
+    },
+    {
+      "id": "ASI10",
+      "title": "Rogue Agents"
+    }
+  ],
+  "verification": "all-verified",
+  "notes": "All ten ASI01-ASI10 confirmed. Titles verified against the authoritative OWASP GenAI Security Project announcement page (https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/), which listed ASI01, ASI03, ASI04, ASI06, ASI07, ASI08, ASI09, ASI10 verbatim, and cross-validated against the repo's Appendix A ASI-to-LLM crosswalk (read directly from the Agentic Top 10 PDF) which is consistent across 2026/ entries. ASI10 = \"Rogue Agents\" (the item the task asked to supply) is triple-confirmed: repo crosswalk, the announcement page, and web search.\n\nTitle-variant caveats (recorded fuller Appendix A / repo-canonical forms):\n- ASI02: recorded \"Tool Misuse & Exploitation\" (repo Appendix A form, matches task known-so-far). The announcement blog uses the shortened \"Tool Misuse\". Both denote the same risk.\n- ASI05: recorded \"Unexpected Code Execution (RCE)\" (repo Appendix A form, matches task known-so-far). The announcement blog uses \"Unexpected Code Execution\" without the \"(RCE)\" suffix.\n- ASI06: canonical form is \"Memory & Context Poisoning\" (confirmed by the announcement page); some 2026 repo prose shortens it to \"Memory Poisoning\" - not an alternate title, just abbreviation.\n\nSecondary sources (DeepTeam, NeuralTrust, Auth0, Teleport) use minor rewordings for several titles (e.g., \"Agent Identity & Privilege Abuse\", \"Agentic Supply Chain Compromise\", \"Cascading Agent Failures\"); these were NOT used - the recorded titles follow the OWASP GenAI authoritative page and the repo's Appendix A crosswalk.\n\nSource_url is the framework's official resource landing page; the resource page itself gates the risk list behind a PDF download, so titles were confirmed from the linked announcement page (URL above) rather than the landing page body. No element could not be confirmed. No IDs or titles invented."
+}
