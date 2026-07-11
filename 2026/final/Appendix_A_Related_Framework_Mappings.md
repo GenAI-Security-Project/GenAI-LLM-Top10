@@ -1,4 +1,4 @@
-# Appendix 1: Related Framework Mappings
+# Appendix A: Related Framework Mappings
 
 This appendix consolidates the mappings from the ten OWASP Top 10 for LLM Applications (2026) risk entries to nine external security frameworks and taxonomies. It replaces the per-entry *Related Frameworks and Taxonomies* sections, which have been removed in favor of this single, version-pinned reference.
 
