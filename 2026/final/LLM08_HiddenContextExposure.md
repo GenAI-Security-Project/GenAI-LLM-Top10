@@ -44,7 +44,7 @@ System prompts frequently define how responses should be structured, including r
 
 Do not embed any sensitive information (e.g., API keys, auth keys, database names, user roles, permission structure of the application) directly in the system prompts or hidden context. Assume all context available to the LLM could also be available to users. Instead, externalize such information to the systems that the model does not directly access and avoid letting the model handle sensitive data itself.
 
-#### 2. Use Dermininistic Methods and Guardrails for Validation and Behavior Control
+#### 2. Use Deterministic Methods and Guardrails for Validation and Behavior Control
 
 Because LLMs can be vulnerable to attacks such as prompt injection, hidden context should not be relied on as the primary mechanism for controlling model behavior. Specialized fine tuning or further training of a model may decrease the risk of disclosure, but it is not a consistent guarantee and may have other unintended consequences. Instead, enforce critical behaviors through independent and deterministic systems outside the model. For example, harmful content detection and prevention should be handled by external safeguards rather than by instructions embedded in hidden context.
 
