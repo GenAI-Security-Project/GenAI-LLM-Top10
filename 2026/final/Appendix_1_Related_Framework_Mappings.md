@@ -419,14 +419,14 @@ The **coverage matrix** shows, at a glance, which frameworks map to each risk. T
 
 ## Framework Sources & Versions
 
-| Framework | Version | Accessed | Source |
-|---|---|---|---|
-| OWASP Top 10 for Agentic Applications (ASI) | 2026 (announced 2025-12-09) | 2026-07-11 | https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/ |
-| OWASP GenAI Data Security 2026 (DSGAI) | v1.0 (2026-03-17) | 2026-07-11 | https://genai.owasp.org/resource/owasp-genai-data-security-risks-mitigations-2026/ |
-| MITRE ATLAS | content v2026.06 (format-version 6.0.0) | 2026-07-11 | https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/v6/ATLAS-2026.06.yaml |
-| MITRE ATT&CK | v19.1 | 2026-07-11 | https://attack.mitre.org/versions/v19/tactics/enterprise/ |
-| MITRE CWE (Common Weakness Enumeration) | 4.20 | 2026-07-11 | https://cwe.mitre.org/ |
-| NIST AI 600-1 (Generative AI Profile) | v1.0 (July 2024) | 2026-07-11 | https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf |
-| NIST AI RMF (AI 100-1) | v1.0 (2023) | 2026-07-11 | https://airc.nist.gov/airmf-resources/airmf/5-sec-core/ |
-| CSA AI Controls Matrix (AICM) | v1.1 (2026-06-22) | 2026-07-11 | https://cloudsecurityalliance.org/artifacts/ai-controls-matrix-v1-1 |
-| OWASP AIVSS (AI Vulnerability Scoring System) | v0.8 | 2026-07-11 | https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.8.pdf |
+| Framework | Version | Source |
+| --- | --- | --- |
+| OWASP Top 10 for Agentic Applications (ASI) | 2026 (announced 2025-12-09) | https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/ |
+| OWASP GenAI Data Security 2026 (DSGAI) | v1.0 (2026-03-17) | https://genai.owasp.org/resource/owasp-genai-data-security-risks-mitigations-2026/ |
+| MITRE ATLAS | content v2026.06 (format-version 6.0.0) | https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/v6/ATLAS-2026.06.yaml |
+| MITRE ATT&CK | v19.1 | https://attack.mitre.org/versions/v19/tactics/enterprise/ |
+| MITRE CWE (Common Weakness Enumeration) | 4.20 | https://cwe.mitre.org/ |
+| NIST AI 600-1 (Generative AI Profile) | v1.0 (July 2024) | https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf |
+| NIST AI RMF (AI 100-1) | v1.0 (2023) | https://airc.nist.gov/airmf-resources/airmf/5-sec-core/ |
+| CSA AI Controls Matrix (AICM) | v1.1 (2026-06-22) | https://cloudsecurityalliance.org/artifacts/ai-controls-matrix-v1-1 |
+| OWASP AIVSS (AI Vulnerability Scoring System) | v0.8 | https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.8.pdf |
