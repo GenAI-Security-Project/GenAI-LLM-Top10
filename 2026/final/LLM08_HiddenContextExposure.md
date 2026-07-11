@@ -83,13 +83,3 @@ An LLM has a system prompt prohibiting the generation of offensive content, exte
 7. [System Prompt Extraction Attacks and Defenses in Large Language Models](https://arxiv.org/abs/2505.23817): Das, Amini, & Wu, **arXiv:2505.23817** (2025).
 8. [Leaked System Prompts (GitHub repository)](https://github.com/jujumilk3/leaked-system-prompts): **jujumilk3** (2025).
 9. [LeakHub](https://leakhub.ai/): **LeakHub**.
-
-### Related Frameworks and Taxonomies
-
-| Framework | Reference | Relevance |
-|---|---|---|
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI06 — Memory & Context Poisoning | LLM08's scope explicitly defers "the agentic amplifications of this risk, e.g., persistent memory, inter-agent channels, tool configuration persistence, and multi-step agent compromise" to the OWASP Top 10 for Agentic Applications; ASI06 is the pointer for persistent-memory poisoning building on exposed hidden context, not an equivalent risk. |
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI07 — Insecure Inter-Agent Communication | Same scope carve-out names "inter-agent channels" as an out-of-scope amplification; ASI07 is the pointer for hidden-context material propagating across agent-to-agent messaging, not an equivalent risk. |
-| **MITRE ATLAS** | [AML.T0051.000 — LLM Prompt Injection: Direct (Meta Prompt Extraction)](https://atlas.mitre.org/techniques/AML.T0051.000) | Direct prompt-injection technique used to extract hidden system-prompt content. |
-| **MITRE ATLAS** | [AML.T0057 — LLM Data Leakage](https://atlas.mitre.org/techniques/AML.T0057) | Technique covering disclosure of hidden context and other model-accessible sensitive data. |
-| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI02 — Agent Identity & Credential Exposure | Narrow overlap only: DSGAI02's secret-hygiene mitigation ("no secrets... embedded in prompts, memory contexts, or logs") addresses the same credentials-in-hidden-context failure as LLM08's Common Example #1 and Scenario #1; DSGAI02's primary scope (multi-agent OAuth/NHI sprawl) is not equivalent to LLM08. |

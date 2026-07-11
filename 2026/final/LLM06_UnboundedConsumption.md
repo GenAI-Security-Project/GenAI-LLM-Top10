@@ -123,22 +123,3 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
 14. [Denial-of-Service Poisoning Attacks against Large Language Models](https://arxiv.org/abs/2410.10760): **arXiv**
 15. [Vision — Build with Claude documentation](https://docs.anthropic.com/en/docs/build-with-claude/vision): **Anthropic**
 16. [MCP Safety Audit: LLMs with the Model Context Protocol Allow Major Security Exploits](https://arxiv.org/abs/2504.03767): **arXiv**
-
-
-### Related Frameworks and Taxonomies
-
-| Framework | Reference | Relevance |
-|---|---|---|
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI02 — Tool Misuse & Exploitation | Agent-tool interaction loops (Common Example #9) and MCP tool-call fan-out (Scenario #8) let a single request drive recursive or high-volume tool calls that exhaust budget and availability |
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI08 — Cascading Failures | Agentic architectures and tool-use protocols such as MCP "amplify a single request into cascading downstream operations" (Description), illustrated by Scenario #8's fan-out of one task into 50 calls |
-| **MITRE CWE** | [CWE-400 — Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html) | Foundational weakness underlying every resource-exhaustion pattern in this entry |
-| **MITRE ATLAS** | [AML.TA0000 — ML Model Access](https://atlas.mitre.org/tactics/AML.TA0000) | Tactic covering adversary access to the model, a prerequisite for extraction and resource-exhaustion techniques |
-| **MITRE ATLAS** | [AML.T0024 — Exfiltration via ML Inference API](https://atlas.mitre.org/techniques/AML.T0024) | Technique matching Model Extraction and Distillation Theft (Common Example #7) |
-| **MITRE ATLAS** | [AML.T0029 — Denial of ML Service](https://atlas.mitre.org/techniques/AML.T0029) | Technique matching input-flood and repeated-request denial-of-service patterns (Common Examples #1, #3, #4; Scenarios #1-#3) |
-| **MITRE ATLAS** | [AML.T0034 — Cost Harvesting](https://atlas.mitre.org/techniques/AML.T0034) | Technique matching Denial of Wallet (Common Example #2; Scenario #4) |
-| **MITRE ATLAS** | [AML.T0025 — Exfiltration via Cyber Means](https://atlas.mitre.org/techniques/AML.T0025) | Technique matching side-channel harvesting of model weights and architecture (Common Example #8; Scenario #9) |
-| **OWASP ML Top 10** | [ML05:2023 — Model Theft](https://owasp.org/www-project-machine-learning-security-top-10/docs/ML05_2023-Model_Theft.html) | Closest peer risk for model extraction and functional replication |
-| **OWASP API Security Top 10** | [API4:2023 — Unrestricted Resource Consumption](https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/) | API-layer control peer for rate limiting and resource-consumption caps |
-| **OWASP Secure Coding Practices** | [OWASP Resource Management](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/) | General secure-coding guidance on resource-management controls |
-| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI17 — Data Availability & Resilience Failures in AI Pipelines | Anchored to its "vector DB saturation under adversarial or high-cardinality query load" clause, which parallels this entry's resource-exhaustion and availability-disruption risk |
-| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI20 — Model Exfiltration & IP Replication | Matches Functional Model Replication (Common Example #7; Scenario #5) and low-and-slow distillation extraction (Scenario #10) |

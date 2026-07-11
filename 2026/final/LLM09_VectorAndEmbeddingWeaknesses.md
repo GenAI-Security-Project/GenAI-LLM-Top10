@@ -101,29 +101,3 @@ A cloud misconfiguration exposes a backup of a production vector database. The u
 18. [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](https://arxiv.org/abs/2410.07176): **arXiv:2410.07176**.
 19. [GHSA-mhjq-8c7m-3f7p — Milvus Proxy Authentication Bypass (CVE-2025-64513)](https://github.com/milvus-io/milvus/security/advisories/GHSA-mhjq-8c7m-3f7p): **CVSS 9.3**, affects Milvus < 2.4.24, < 2.5.21, < 2.6.5.
 20. [GHSA-9j5g-g4xm-57w7 — RAGFlow Predictable Token Generation (CVE-2025-69286)](https://github.com/infiniflow/ragflow/security/advisories/GHSA-9j5g-g4xm-57w7): **CVSS 9.3**, affects RAGFlow < 0.22.0.
-
-### Related Frameworks and Taxonomies
-
-| Framework | Reference | Relevance |
-|---|---|---|
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI04 — Agentic Supply Chain Vulnerabilities | Embedding-model supply chain: Prevention and Mitigation Strategies #2 directs vetting the embedding model itself, since "a backdoored embedding model corrupts the geometry of everything ingested" |
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI06 — Memory & Context Poisoning | Agent-memory poisoning that does not rely on embedding geometry is out of scope here and referred to ASI06 (Description, final scope-boundary sentence) |
-| **MITRE ATLAS** | [AML.T0020 — Poison Training Data](https://atlas.mitre.org/techniques/AML.T0020) | Training-time poisoning of the embedding model, distinguished from this entry's retrieval-time poisoning scope |
-| **MITRE ATLAS** | [AML.T0024 — Exfiltration via AI Inference API](https://atlas.mitre.org/techniques/AML.T0024) | Exfiltration channel for cross-tenant inference or inverted-embedding recovery |
-| **MITRE ATLAS** | [AML.T0024.001 — Invert AI Model](https://atlas.mitre.org/techniques/AML.T0024.001) | Model-inversion technique underlying Risk #2 Embedding Inversion |
-| **MITRE ATLAS** | [AML.T0036 — Data from Information Repositories](https://atlas.mitre.org/techniques/AML.T0036) | Vector-store and RAG corpus access as an information-repository target |
-| **MITRE ATLAS** | [AML.T0057 — LLM Data Leakage](https://atlas.mitre.org/techniques/AML.T0057) | General data-leakage technique applicable to embedding inversion and cross-tenant retrieval |
-| **MITRE ATLAS** | [AML.T0070 — RAG Poisoning](https://atlas.mitre.org/techniques/AML.T0070) | Persistence tactic; primary mapping for Risk #3 Retrieval-Time Data Poisoning |
-| **MITRE ATLAS** | [AML.T0086 — Exfiltration via AI Agent Tool Invocation](https://atlas.mitre.org/techniques/AML.T0086) | Relevant when agent tools become the exfiltration channel for cross-tenant inference or inverted embeddings |
-| **MITRE ATLAS** | [AML.T0099 — AI Agent Tool Data Poisoning](https://atlas.mitre.org/techniques/AML.T0099) | Added in the January 2026 ATLAS update (atlas-data v5.2.0); agent-tool framing of the retrieval-time poisoning phenomenon captured by AML.T0070, applicable when the agent's "tool" is a vector-store retriever |
-| **MITRE ATLAS** | [AML.M0005 — Control Access to AI Models and Data at Rest](https://atlas.mitre.org/mitigations/AML.M0005) | Storage-lifecycle and encryption-at-rest controls for embeddings and vector-store backups |
-| **MITRE ATLAS** | [AML.M0019 — Control Access to AI Models and Data in Production](https://atlas.mitre.org/mitigations/AML.M0019) | Production access controls underlying the Permission and Access Control mitigations |
-| **MITRE CWE** | [CWE-200 — Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html) | General sensitive-information exposure via embedding inversion or cross-tenant leakage |
-| **MITRE CWE** | [CWE-285 — Improper Authorization](https://cwe.mitre.org/data/definitions/285.html) | Cross-tenant retrieval where authorization is applied after, rather than inside, the index query |
-| **MITRE CWE** | [CWE-340 — Generation of Predictable Numbers or Identifiers](https://cwe.mitre.org/data/definitions/340.html) | Predictable-token vector-store auth bypass (e.g., CVE-2025-69286 RAGFlow) |
-| **MITRE CWE** | [CWE-732 — Incorrect Permission Assignment for Critical Resource](https://cwe.mitre.org/data/definitions/732.html) | Vector-store access-control misconfiguration |
-| **NIST AI 100-2** | Adversarial Machine Learning — Privacy Attacks (Membership Inference, Model Inversion) | Privacy-attack taxonomy underlying Risk #2 Embedding Inversion and Risk #5 Membership Inference via Similarity Search |
-| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI11 — Cross-Context & Multi-User Conversation Bleed | Illustrative scenario (shared vector store, missing tenant scoping in the retrieval filter) parallels Risk #1 Cross-Tenant Leakage via Shared Similarity Search |
-| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI13 — Vector Store Platform Data Security | Closest peer entry. Its illustrative scenario (mis-scoped ACLs, k-NN reconstruction of proprietary documents from a leaked index) mirrors Risks #1 and #2 together |
-| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI18 — Inference & Data Reconstruction | Describes embedding inversion via nearest-neighbor approximation and membership inference against vector stores, mapping to Risk #2 and Risk #5 |
-
