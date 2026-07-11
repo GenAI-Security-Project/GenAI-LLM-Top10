@@ -50,28 +50,28 @@ This risk is compounded by the growing adoption of extended-thinking and reasoni
 #### 2. Hard Spending Caps
   Set non-overridable budget ceilings per API key, user, team, and cloud account. These must be enforcement mechanisms that halt inference when exceeded, not merely alerting thresholds that can be outpaced by fast-accumulating workloads. Furthermore, spending caps need to factor in cost differences between different modalities and tool protocols.
 
-#### 4. Resource Allocation Management
+#### 3. Resource Allocation Management
   Monitor and manage resource allocation dynamically to prevent any single user or request from consuming excessive resources.
 
-#### 5. Sandbox Techniques
+#### 4. Sandbox Techniques
   Restrict the LLM’s access to network resources, internal services, and APIs. This is particularly significant for all common scenarios as it encompasses insider risks and threats. Furthermore, it governs the extent of access the LLM application has to data and resources, thereby serving as a crucial control mechanism to mitigate or prevent side-channel attacks.
 
-#### 6. Graceful Degradation
+#### 5. Graceful Degradation
   Design the system to degrade gracefully under heavy load, maintaining partial functionality rather than complete failure.
 
-#### 7. Limit Queued Actions and Scale Robustly
+#### 6. Limit Queued Actions and Scale Robustly
   Implement restrictions on the number of queued actions and total actions, while incorporating dynamic scaling and load balancing to handle varying demands and ensure consistent system performance.
 
-#### 8. Scan for Adversarial Perturbations
+#### 7. Scan for Adversarial Perturbations
   Scan model inputs, particularly visual inputs to LVLMs (large visual language models) for evidence of adversarial perturbations that could cause model resource overconsumption.
 
-#### 9. Detect Resource-Intensive Tool Interactions
+#### 8. Detect Resource-Intensive Tool Interactions
   Monitor agent-tool interactions to identify if a particular session appears to be causing a recursive or resource-intensive action without a clear end state. Establish baselines of normal tool behavior in order to detect if a particular tool is deviating from standard token consumption patterns.
   
-#### 10. Agentic Circuit Breakers
+#### 9. Agentic Circuit Breakers
   Enforce step limits, recursion depth limits, time limits, and per-run cost ceilings on all agent executions. Use state hashing to detect recursive loops.
   
-#### 11. Inference Infrastructure Hardening
+#### 10. Inference Infrastructure Hardening
   Keep serving frameworks updated. Disable unsafe deserialization, restrict special-token passthrough, and enforce authentication on all inference endpoints. 
   
 
