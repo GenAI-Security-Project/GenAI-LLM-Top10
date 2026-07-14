@@ -21,10 +21,10 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - Invariant Labs. (2025, May). *GitHub MCP server vulnerability* [Blog post]. https://invariantlabs.ai/blog/mcp-github-vulnerability
 - Koi Security. (2025, September). *Postmark-MCP npm malicious backdoor: Email theft* [Blog post]. https://www.koi.ai/blog/postmark-mcp-npm-malicious-backdoor-email-theft
 - Labunets, A., Pandya, N. V., Hooda, A., Fu, X., & Fernandes, E. (2025). *Fun-tuning: Characterizing the vulnerability of proprietary LLMs to optimization-based prompt injection attacks via the fine-tuning interface*. arXiv. https://arxiv.org/abs/2501.09798
-- Meta AI. (2025, October). *Practical AI agent security: Agents Rule of Two* [Blog post]. https://ai.meta.com/blog/practical-ai-agent-security/  `[also cited in LLM03]`
+- Meta AI. (2025, October 31). *Agents rule of two: A practical approach to AI agent security* [Blog post]. https://ai.meta.com/blog/practical-ai-agent-security/  `[also cited in LLM03]`
 - Microsoft Research. (2025). *Defending against indirect prompt injection attacks with spotlighting*. https://www.microsoft.com/en-us/research/publication/defending-against-indirect-prompt-injection-attacks-with-spotlighting/
 - Microsoft Security Response Center. (2025, March). *Announcing the winners of the Adaptive Prompt Injection Challenge — LLMail-Inject* [Blog post]. https://www.microsoft.com/en-us/msrc/blog/2025/03/announcing-the-winners-of-the-adaptive-prompt-injection-challenge-llmail-inject/
-- MITRE. (n.d.). *AI agent context poisoning: Memory* (AML.T0080.001) [ATLAS technique]. MITRE ATLAS. Retrieved July 11, 2026, from https://atlas.mitre.org/techniques/AML.T0080.001
+- MITRE. (n.d.). *AI agent context poisoning: Memory* (AML.T0080.000) [ATLAS technique]. MITRE ATLAS. Retrieved July 11, 2026, from https://atlas.mitre.org/techniques/AML.T0080.000
 - Nasr, M., Carlini, N., Sitawarin, C., Schulhoff, S. V., Hayes, J., Ilie, M., Pluto, J., Song, S., Chaudhari, H., Shumailov, I., Thakurta, A., Xiao, K. Y., Terzis, A., & Tramèr, F. (2025). *The attacker moves second: Stronger adaptive attacks bypass defenses against LLM jailbreaks and prompt injections*. arXiv. https://arxiv.org/abs/2510.09023
 - National Cyber Security Centre. (2025, December). *Prompt injection is not SQL injection* [Blog post]. https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection
 - National Institute of Standards and Technology. (2025). *Adversarial machine learning: A taxonomy and terminology of attacks and mitigations* (NIST AI 100-2e2025). https://csrc.nist.gov/pubs/ai/100/2/e2025/final
@@ -33,13 +33,13 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - OWASP GenAI Security Project. (2025). *OWASP Top 10 for LLM Applications — LLM01:2025 Prompt injection*. https://genai.owasp.org/llmrisk/llm01-prompt-injection/
 - Reddy, P., & Gujral, A. S. (2025). *EchoLeak: The first real-world zero-click prompt injection exploit in a production LLM system*. arXiv. https://arxiv.org/abs/2509.10540
 - Rehberger, J. (2024, August). *M365 Copilot prompt injection, tool invocation and data exfil using ASCII smuggling* [Blog post]. Embrace The Red. https://embracethered.com/blog/posts/2024/m365-copilot-prompt-injection-tool-invocation-and-data-exfil-using-ascii-smuggling/
-- Rehberger, J. (2025a, August). *GitHub Copilot remote code execution via prompt injection (CVE-2025-53773)* [Blog post]. Embrace The Red. https://embracethered.com/blog/posts/2025/github-copilot-remote-code-execution-via-prompt-injection/  `[also cited in LLM10]`
+- Rehberger, J. (2025a, August). *GitHub Copilot: Remote code execution via prompt injection (CVE-2025-53773)* [Blog post]. Embrace The Red. https://embracethered.com/blog/posts/2025/github-copilot-remote-code-execution-via-prompt-injection/  `[also cited in LLM10]`
 - Rehberger, J. (2025b, February). *Hacking Gemini's memory with prompt injection and delayed tool invocation* [Blog post]. Embrace The Red. https://embracethered.com/blog/posts/2025/google-gemini-memory-persistence-prompt-injection/
 - Rehberger, J. (2025c). *Sneaky bits & ASCII smuggler updates* [Blog post]. Embrace The Red. https://embracethered.com/blog/posts/2025/sneaky-bits-and-ascii-smuggler/
 - Toulas, B. (2025, September 25). *Unofficial Postmark MCP npm package silently stole users' emails*. BleepingComputer. https://www.bleepingcomputer.com/news/security/unofficial-postmark-mcp-npm-silently-stole-users-emails/
 - Willison, S. (2025, June 16). *The lethal trifecta for AI agents: Private data, untrusted content, and external communication* [Blog post]. https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
 - Zou, A., Wang, Z., Carlini, N., Nasr, M., Kolter, J. Z., & Fredrikson, M. (2023). *Universal and transferable adversarial attacks on aligned language models*. arXiv. https://arxiv.org/abs/2307.15043
-- Zou, W., Geng, R., Wang, B., & Jia, J. (2025). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. In *Proceedings of the 34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf  `[also cited in LLM07]`
+- Zou, W., Geng, R., Wang, B., & Jia, J. (2025). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. In *Proceedings of the 34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf  `[also cited in LLM07, LLM09]`
 
 ## LLM02: Sensitive Information Disclosure
 
@@ -58,9 +58,7 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - Nasr, M., Carlini, N., Hayase, J., Jagielski, M., Cooper, A. F., Ippolito, D., Choquette-Choo, C. A., Wallace, E., Tramèr, F., & Lee, K. (2023). *Scalable extraction of training data from (production) language models*. arXiv. https://arxiv.org/abs/2311.17035
 - OWASP GenAI Security Project. (2026). *OWASP GenAI data security 2026* (Version 1.0). https://genai.owasp.org/
 - Panda, A., Choquette-Choo, C. A., Zhang, Z., Yang, Y., & Mittal, P. (2024). *Teach LLMs to phish: Stealing private information from language models*. arXiv. https://arxiv.org/abs/2403.00871
-- RAG About It. (2026, June). *73% of enterprise RAG fails audit*. https://ragaboutit.com/73-of-enterprise-rag-fails-audit-nists-4-step-fix/
 - Unit 42. (2026, March). *Gemini Live in Chrome hijacking (CVE-2026-0628)*. Palo Alto Networks. https://unit42.paloaltonetworks.com/gemini-live-in-chrome-hijacking
-- Wang, Y., Teng, Y., Wang, Y., & Ma, X. (2025). *StolenLoRA: Exploring LoRA extraction attacks via synthetic data*. arXiv. https://arxiv.org/abs/2509.23594
 - Weiss, R., Ayzenshteyn, D., Amit, G., & Mirsky, Y. (2024). *What was your prompt? A remote keylogging attack on AI assistants*. arXiv. https://arxiv.org/abs/2403.09751
 - Wiz. (2025, January). *Wiz Research uncovers exposed DeepSeek database leak*. https://www.wiz.io/blog/wiz-research-uncovers-exposed-deepseek-database-leak
 - Wu, G., Zhang, Z., Zhang, Y., Wang, W., Niu, J., Wu, Y., & Zhang, Y. (2025). *I know what you asked: Prompt leakage via KV-cache sharing in multi-tenant LLM serving* [Conference paper]. Network and Distributed System Security Symposium (NDSS 2025). https://www.ndss-symposium.org/ndss-paper/i-know-what-you-asked-prompt-leakage-via-kv-cache-sharing-in-multi-tenant-llm-serving/
@@ -72,7 +70,7 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - Kovacs, E. (2026, April 1). *Google addresses Vertex security issues after researchers weaponize AI agents*. SecurityWeek. https://www.securityweek.com/google-addresses-vertex-security-issues-after-researchers-weaponize-ai-agent/
 - Kundel, D. (2024, October 10). *Rogue agents: Stop AI from misusing your APIs*. Twilio. https://www.twilio.com/en-us/blog/rogue-ai-agents-secure-your-apis
 - Lucas, J. (2024, December 16). *Sandboxing agentic AI workflows with WebAssembly*. NVIDIA Developer Blog. https://developer.nvidia.com/blog/sandboxing-agentic-ai-workflows-with-webassembly/
-- Meta. (2025, October 31). *Agents rule of two: A practical approach to AI agent security*. https://ai.meta.com/blog/practical-ai-agent-security/  `[also cited in LLM01]`
+- Meta AI. (2025, October 31). *Agents rule of two: A practical approach to AI agent security* [Blog post]. https://ai.meta.com/blog/practical-ai-agent-security/  `[also cited in LLM01]`
 - NVIDIA. (n.d.). *NeMo-Guardrails: Interface guidelines*. GitHub. https://github.com/NVIDIA/NeMo-Guardrails/blob/main/docs/security/guidelines.md
 - Rehberger, J. (2023, May 28). *ChatGPT plugin exploit explained: From prompt injection to accessing private data*. Embrace The Red. https://embracethered.com/blog/posts/2023/chatgpt-cross-plugin-request-forgery-and-prompt-injection./
 
@@ -89,13 +87,13 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - OASIS Open. (2025, November 18). *Coalition for Secure AI releases two actionable frameworks for AI model signing and incident response*. https://www.oasis-open.org/2025/11/18/coalition-for-secure-ai-releases-two-actionable-frameworks-for-ai-model-signing-and-incident-response/
 - Open Source Security Foundation. (2025, April 4). *Launch of Model Signing v1.0: OpenSSF AI/ML Working Group secures the machine learning supply chain*. https://openssf.org/blog/2025/04/04/launch-of-model-signing-v1-0-openssf-ai-ml-working-group-secures-the-machine-learning-supply-chain/
 - Open Source Security Foundation. (n.d.). *Supply-chain Levels for Software Artifacts (SLSA)*. Retrieved July 11, 2026, from https://slsa.dev/
-- OWASP CycloneDX. (n.d.). *Machine learning bill of materials (ML-BOM)*. Retrieved July 11, 2026, from https://cyclonedx.org/capabilities/mlbom/  `[also cited in LLM05]`
+- OWASP CycloneDX. (n.d.). *Machine learning bill of materials (AI/ML-BOM)*. Retrieved July 11, 2026, from https://cyclonedx.org/capabilities/mlbom/  `[also cited in LLM05]`
 - OWASP GenAI Security Project. (2025, December 18). *Evolving AI transparency: The journey of the AIBOM Generator and its new home at OWASP*. https://genai.owasp.org/2025/12/18/evolving-ai-transparency-the-journey-of-the-aibom-generator-and-its-new-home-at-owasp/
 - OWASP GenAI Security Project. (2026). *OWASP Top 10 for Agentic Applications (2026)*. https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
 - Python Package Index. (2024, December 11). *Supply-chain attack analysis: Ultralytics*. PyPI Blog. https://blog.pypi.org/posts/2024-12-11-ultralytics-attack-analysis/
 - PyTorch Foundation. (2022, December 31). *Compromised PyTorch-nightly dependency chain between December 25th and December 30th, 2022*. https://pytorch.org/blog/compromised-nightly-dependency/
 - Saraf, I., & Balassiano, O. (2025, September 3). *Model namespace reuse: An AI supply-chain attack exploiting model name trust*. Unit 42, Palo Alto Networks. https://unit42.paloaltonetworks.com/model-namespace-reuse/
-- Spracklen, J., Wijewickrama, R., Sakib, A. H. M. N., Maiti, A., Viswanath, B., & Jadliwala, M. (2024). *We have a package for you! A comprehensive analysis of package hallucinations by code generating LLMs* (arXiv:2406.10279). arXiv. https://arxiv.org/abs/2406.10279
+- Spracklen, J., Wijewickrama, R., Sakib, A. H. M. N., Maiti, A., Viswanath, B., & Jadliwala, M. (2025). We have a package for you! A comprehensive analysis of package hallucinations by code generating LLMs. In *Proceedings of the 34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-spracklen.pdf  `[also cited in LLM07]`
 - Tamari, S., & Tzadik, S. (2024, April 4). *Wiz Research finds architecture risks that may compromise AI-as-a-Service providers*. Wiz. https://www.wiz.io/blog/wiz-and-hugging-face-address-risks-to-ai-infrastructure
 - Wickens, E., Schulz, K., & Bonner, T. (2024, October 10). *ShadowLogic: Persistent no-code backdoors in AI computational graphs*. HiddenLayer. https://hiddenlayer.com/innovation-hub/shadowlogic/
 - Wiz. (2024). *Probllama: Ollama remote code execution vulnerability (CVE-2024-37032)*. https://www.wiz.io/blog/probllama-ollama-vulnerability-cve-2024-37032
@@ -104,7 +102,7 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 
 ## LLM05: Data and Model Poisoning
 
-- CycloneDX. (n.d.). *Machine learning bill of materials (AI/ML-BOM)*. https://cyclonedx.org/capabilities/mlbom/  `[also cited in LLM04]`
+- OWASP CycloneDX. (n.d.). *Machine learning bill of materials (AI/ML-BOM)*. Retrieved July 11, 2026, from https://cyclonedx.org/capabilities/mlbom/  `[also cited in LLM04]`
 - DVC. (n.d.). *DVC: Data version control* [Documentation]. https://dvc.org/doc
 - F5. (2025). *Data and model poisoning* [OWASP Top 10 for LLM applications guide (2025)]. https://my.f5.com/manage/s/article/K000149782
 - Fogel, A., Hofman, O., Cohen, E., & Vainshtein, R. (2026). *Inference-time backdoors via chat templates: From LLM supply chains to agentic system compromise* (arXiv:2602.04653). arXiv. https://arxiv.org/abs/2602.04653
@@ -137,12 +135,11 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 
 ## LLM07: Misinformation
 
-- BBC News. (n.d.). AI hallucinations in the real world. https://www.bbc.com/news/world-us-canada-68569397
 - National Institute of Standards and Technology. (2024). *Artificial intelligence risk management framework: Generative artificial intelligence profile* (NIST AI 600-1). U.S. Department of Commerce. https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
 - OpenAI. (2025, September 5). *Why language models hallucinate*. https://openai.com/index/why-language-models-hallucinate/
 - OWASP Gen AI Security Project. (2025). *LLM09:2025 Misinformation*. https://genai.owasp.org/llmrisk/llm092025-misinformation/
-- Spracklen, J., Wijewickrama, R., Sakib, A. H. M. N., Maiti, A., Viswanath, B., & Jadliwala, M. (2025). We have a package for you! A comprehensive analysis of package hallucinations by code generating LLMs. In *Proceedings of the 34th USENIX Security Symposium*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-spracklen.pdf
-- Zou, W., Geng, R., Wang, B., & Jia, J. (2025). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. In *Proceedings of the 34th USENIX Security Symposium*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf  `[also cited in LLM01]`
+- Spracklen, J., Wijewickrama, R., Sakib, A. H. M. N., Maiti, A., Viswanath, B., & Jadliwala, M. (2025). We have a package for you! A comprehensive analysis of package hallucinations by code generating LLMs. In *Proceedings of the 34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-spracklen.pdf  `[also cited in LLM04]`
+- Zou, W., Geng, R., Wang, B., & Jia, J. (2025). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. In *Proceedings of the 34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf  `[also cited in LLM01, LLM09]`
 
 ## LLM08: Hidden Context Exposure
 
@@ -165,10 +162,8 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - Kim, D., Kang, D., Lee, K., Baek, H., & Kang, B. B. (2026). *Zero2Text: Zero-training cross-domain inversion attacks on textual embeddings* (arXiv:2602.01757). arXiv. https://arxiv.org/abs/2602.01757
 - Li, H., Xu, M., & Song, Y. (2023). *Sentence embedding leaks more information than you expect: Generative embedding inversion attack to recover the whole sentence* (arXiv:2305.03010). arXiv. https://arxiv.org/abs/2305.03010
 - Liu, Y., Yuan, Z., Tie, G., Shi, J., Zhou, P., Sun, L., & Gong, N. Z. (2025). *Poisoned-MRAG: Knowledge poisoning attacks to multimodal retrieval augmented generation* (arXiv:2503.06254). arXiv. https://arxiv.org/abs/2503.06254
-- Milvus. (2025, November 10). *Critical authentication bypass vulnerability in Milvus proxy* (GHSA-mhjq-8c7m-3f7p; CVE-2025-64513) [Security advisory]. GitHub Advisory Database. https://github.com/milvus-io/milvus/security/advisories/GHSA-mhjq-8c7m-3f7p
 - MITRE. (n.d.). *RAG poisoning* (AML.T0070) [Technique]. MITRE ATLAS. https://atlas.mitre.org/techniques/AML.T0070
 - Morris, J. X., Kuleshov, V., Shmatikov, V., & Rush, A. M. (2023). *Text embeddings reveal (almost) as much as text* (arXiv:2310.06816). arXiv. https://arxiv.org/abs/2310.06816
-- RAGFlow. (2025, December 31). *Predictable token generation leading to authentication bypass vulnerability* (GHSA-9j5g-g4xm-57w7; CVE-2025-69286) [Security advisory]. GitHub Advisory Database. https://github.com/infiniflow/ragflow/security/advisories/GHSA-9j5g-g4xm-57w7
 - Shafran, A., Schuster, R., & Shmatikov, V. (2025). Machine against the RAG: Jamming retrieval-augmented generation with blocker documents. In *34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/conference/usenixsecurity25/presentation/shafran
 - Shereen, E., Ristea, D., McFadden, S., Hasircioglu, B., Mavroudis, V., & Hicks, C. (2025). *One pic is all it takes: Poisoning visual document retrieval augmented generation with a single image* (arXiv:2504.02132). arXiv. https://arxiv.org/abs/2504.02132
 - Song, C., & Raghunathan, A. (2020). *Information leakage in embedding models* (arXiv:2004.00053). arXiv. https://arxiv.org/abs/2004.00053
@@ -178,7 +173,7 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - Xue, J., Zheng, M., Hu, Y., Liu, F., Chen, X., & Lou, Q. (2024). *BadRAG: Identifying vulnerabilities in retrieval augmented generation of large language models* (arXiv:2406.00083). arXiv. https://arxiv.org/abs/2406.00083
 - Zhang, C., Morris, J. X., & Shmatikov, V. (2025). *Universal zero-shot embedding inversion* (arXiv:2504.00147). arXiv. https://arxiv.org/abs/2504.00147
 - Zhang, Z., Liu, Z., Xie, Y., Huang, Q., & She, D. (2026). *From similarity to vulnerability: Key collision attack on LLM semantic caching* (arXiv:2601.23088). arXiv. https://arxiv.org/abs/2601.23088
-- Zou, W., Geng, R., Wang, B., & Jia, J. (2025). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. In *34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/conference/usenixsecurity25/presentation/zou-poisonedrag
+- Zou, W., Geng, R., Wang, B., & Jia, J. (2025). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. In *Proceedings of the 34th USENIX Security Symposium (USENIX Security 25)*. USENIX Association. https://www.usenix.org/system/files/usenixsecurity25-zou-poisonedrag.pdf  `[also cited in LLM01, LLM07]`
 
 ## LLM10: Improper Output Handling
 
