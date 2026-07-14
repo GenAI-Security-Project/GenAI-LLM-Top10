@@ -17,7 +17,7 @@ The root cause of Excessive Agency is typically one or more of:
 
 Excessive Agency can lead to a broad range of impacts across the confidentiality, integrity and availability spectrum, and is dependent on which systems an LLM-based app is able to interact with. Within the context of agentic systems, Excessive Agency can manifest as ASI02: Tool Misuse & Exploitation, ASI03: Identity & Privilege Abuse and ASI08: Cascading Failures.
 
-Note: Excessive Agency differs from Improper Output Handling which is concerned with insufficient scrutiny of LLM outputs.
+Note: Excessive Agency differs from Improper Output Handling which is concerned with insufficient scrutiny of LLM outputs. Sanitization of model inputs and outputs is not a root control for Excessive Agency and is covered by LLM01:2026 Prompt Injection for inputs and LLM10:2026 Improper Output Handling for outputs.
 
 ### Common Examples of Risk
 
