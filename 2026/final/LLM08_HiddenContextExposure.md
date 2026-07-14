@@ -10,7 +10,12 @@ Practitioners should design under the assumption that hidden context is discover
 
 Severity tracks what is placed in hidden context and how the application relies on it. Findings range from **informational** (no secrets, no security-relevant logic, no reliance on confidentiality) through **medium** (internal rules, filtering criteria, role descriptions, or workflow logic that meaningfully aids an attacker but does not gate critical decisions) to **high** (embedded credentials or tokens, or reliance on hidden-context secrecy for authorization or content policy) and **critical** (where disclosure chains to remote code execution, broad data exfiltration, or privilege escalation in a connected system).
 
-While Hidden Context Exposure introduces risks on its own, it also frequently amplifies risks in adjacent categories: disclosed rules or logic enable more targeted prompt injection (LLM01:2026); embedded credentials constitute sensitive information disclosure (LLM02:2026); revealed tool permissions and schemas expand the surface for excessive agency (LLM03:2026); leaked output-formatting rules can facilitate improper output handling (LLM10:2026).
+While Hidden Context Exposure introduces risks on its own, it also frequently amplifies risks in adjacent categories:
+
+* Disclosed rules or logic enable more targeted prompt injection (LLM01:2026).
+* Embedded credentials constitute sensitive information disclosure (LLM02:2026).
+* Revealed tool permissions and schemas expand the surface for excessive agency (LLM03:2026).
+* Leaked output-formatting rules can facilitate improper output handling (LLM10:2026).
 
 In summary, LLM08 covers the foundational risk that hidden LLM control context is exposed, inferred, or reconstructed in a way that materially increases attacker capability. LLM08 does not cover:
 
@@ -48,7 +53,7 @@ Do not embed credentials, secrets, or security-critical configuration directly i
 
 #### 2. Use Deterministic Methods and Guardrails for Validation and Behavior Control
 
-Because LLMs can be vulnerable to attacks such as prompt injection, hidden context should not be relied on as the primary mechanism for controlling model behavior. Specialized fine tuning or further training of a model may decrease the risk of disclosure, but it is not a consistent guarantee and may have other unintended consequences. Instead, enforce critical behaviors through independent and deterministic systems outside the model. For example, harmful content detection and prevention should be handled by external safeguards rather than by instructions embedded in hidden context.
+Because LLMs can be vulnerable to attacks such as prompt injection, hidden context should not be relied on as the primary mechanism for controlling model behavior. Specialized fine-tuning or further training of a model may decrease the risk of disclosure, though it provides no consistent guarantee and may have other unintended consequences. Enforce critical behaviors through independent and deterministic systems outside the model. For example, harmful content detection and prevention should be handled by external safeguards rather than by instructions embedded in hidden context.
 
 #### 3. Enforce Authorization and Access Control Independently from the LLM
 
