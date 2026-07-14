@@ -6,13 +6,13 @@ An LLM-based system is often granted a degree of agency by its developer: the ab
 
 Excessive Agency is the vulnerability that enables damaging actions to be performed in response to unexpected, ambiguous or manipulated outputs from an LLM, regardless of what is causing the LLM to malfunction. Common triggers include:
 
-* hallucination/confabulation caused by poorly-engineered benign prompts, or just a poorly-performing/misaligned model;
+* hallucination/confabulation caused by poorly-engineered benign prompts, or just a poorly-performing/misaligned model,
 * direct/indirect prompt injection from a malicious user, an earlier invocation of a malicious/compromised tool, or (in multi-agent/collaborative systems) a malicious/compromised peer agent.
 
 The root cause of Excessive Agency is typically one or more of:
 
-* excessive functionality;
-* excessive permissions;
+* excessive functionality,
+* excessive permissions,
 * excessive autonomy.
 
 Excessive Agency can lead to a broad range of impacts across the confidentiality, integrity and availability spectrum, and is dependent on which systems an LLM-based app is able to interact with. Within the context of agentic systems, Excessive Agency can manifest as ASI02: Tool Misuse & Exploitation, ASI03: Identity & Privilege Abuse and ASI08: Cascading Failures.
