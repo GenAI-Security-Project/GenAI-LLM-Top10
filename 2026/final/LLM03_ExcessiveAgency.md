@@ -2,17 +2,17 @@
 
 ### Description
 
-An LLM-based system is often granted a degree of agency by its developer: the ability to call functions or interface with other systems via **tools** (also called extensions, plugins, or skills by different vendors) to undertake actions in response to a prompt. An LLM agent may also select which tool to invoke dynamically, based on the input prompt or prior LLM output. Agent-based systems will typically make repeated calls to an LLM using output from previous invocations to ground and direct subsequent invocations.
+An LLM-based system is often granted a degree of agency by its developer: the ability to call functions or interface with other systems via tools (also called extensions, plugins, or skills by different vendors) to undertake actions in response to a prompt. An LLM agent may also select which tool to invoke dynamically, based on the input prompt or prior LLM output. Agent-based systems will typically make repeated calls to an LLM using output from previous invocations to ground and direct subsequent invocations.
 
 Excessive Agency is the vulnerability that enables damaging actions to be performed in response to unexpected, ambiguous or manipulated outputs from an LLM, regardless of what is causing the LLM to malfunction. Common triggers include:
 
-* hallucination/confabulation caused by poorly-engineered benign prompts, or just a poorly-performing/misaligned model.
+* hallucination/confabulation caused by poorly-engineered benign prompts, or just a poorly-performing/misaligned model;
 * direct/indirect prompt injection from a malicious user, an earlier invocation of a malicious/compromised tool, or (in multi-agent/collaborative systems) a malicious/compromised peer agent.
 
 The root cause of Excessive Agency is typically one or more of:
 
-* excessive functionality.
-* excessive permissions.
+* excessive functionality;
+* excessive permissions;
 * excessive autonomy.
 
 Excessive Agency can lead to a broad range of impacts across the confidentiality, integrity and availability spectrum, and is dependent on which systems an LLM-based app is able to interact with. Within the context of agentic systems, Excessive Agency can manifest as ASI02: Tool Misuse & Exploitation, ASI03: Identity & Privilege Abuse and ASI08: Cascading Failures.
@@ -35,7 +35,7 @@ Note: Excessive Agency differs from Improper Output Handling which is concerned 
 
 #### 4. Excessive Permissions
 
-  An LLM tool has permissions on downstream systems that are not needed for the intended operation of the application. E.g., a tool intended to read data connects to a database server using an identity that has SELECT permissions as well as UPDATE, INSERT and DELETE permissions.
+  An LLM tool has permissions on downstream systems that are not needed for the intended operation of the application. E.g., a tool intended to read data connects to a database server using an identity that not only has SELECT permissions, but also UPDATE, INSERT and DELETE permissions.
 
 #### 5. Excessive Permissions
 
@@ -75,7 +75,7 @@ The following actions can prevent Excessive Agency:
 
 #### 7. Complete mediation
 
-  Implement authorization in logic rather than relying on an LLM to decide if an action is allowed or not. Enforce the complete mediation principle so that all requests made to downstream systems are validated against security policies by the tool, by an independent pre-execution policy decision point between the tool and the downstream system, or by the downstream system itself. Such policies can help manage cases where an agent's nominally-permitted action is contextually unsafe. A graduated enforcement policy (audit, warn, block, escalate) permits low-consequence actions to auto-approve while high-consequence ones route to human review. For example, consider a customer service chatbot that has a tool to issue refunds. Refunds below a given threshold are automatically processed, whereas those above are routed for human approval.
+  Implement authorization in logic rather than relying on an LLM to decide if an action is allowed or not. Enforce the complete mediation principle so that all requests made to downstream systems are validated against security policies by the tool, by an independent pre-execution policy decision point between the tool and the downstream system, or by the downstream system itself. Such policies can help manage cases where an agent's nominally-permitted action is contextually unsafe. A graduated enforcement policy (audit, warn, block, escalate) permits low-consequence actions to auto-approve while high-consequence ones route to human review. For example, consider a customer service chatbot that has a tool to issue refunds; refunds below a given threshold are automatically processed, whereas those above are routed for human approval.
 
 The following options will not prevent Excessive Agency but can limit the level of damage caused:
 
