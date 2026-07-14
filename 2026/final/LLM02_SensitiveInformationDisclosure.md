@@ -6,26 +6,26 @@ Sensitive information disclosure occurs when an LLM-integrated system exposes co
 
 Disclosure arises across four phases of the LLM lifecycle:
 
-1. **Training-time.** A model, fine-tune, or LoRA adapter memorizes corpus content and later reproduces it verbatim or in recoverable form. Memorization scales log-linearly with capacity, duplication, and context length; narrow adapters memorize rare examples with high fidelity, a targeted extraction surface distinct from the base model.
-2. **Inference-time.** The model discloses live context — system prompt, RAG chunks, files, tool outputs, memory, or another session's data — often because summarization, translation, or extraction surfaces more than was asked, including visually-redacted spans.
+1. **Training-time.** A model, fine-tune, or LoRA adapter memorizes corpus content and later reproduces it verbatim or in recoverable form. Memorization scales log-linearly with capacity, duplication, and context length. Narrow adapters memorize rare examples with high fidelity, a targeted extraction surface distinct from the base model.
+2. **Inference-time.** The model discloses live context (system prompt, RAG chunks, files, tool outputs, memory, or another session's data), often because summarization, translation, or extraction surfaces more than was asked, including visually-redacted spans.
 3. **Pipeline-time.** Fine-tuning, distillation, synthetic-data generation, gradients, SDKs, and observability move sensitive data into derived artifacts.
-4. **Observation-time.** Adversaries infer facts from externally measurable properties — token length under TLS, latency, log-probabilities, confidence, cache-hit signals — without receiving content.
+4. **Observation-time.** Adversaries infer facts from externally measurable properties (token length under TLS, latency, log-probabilities, confidence, cache-hit signals) without receiving content.
 
-Protected information includes PII, PHI, financial data, credentials, API keys, trade secrets, model weights, privileged communications, classified or export-controlled material, and biometric and genomic identifiers. Two structural failures drive most incidents. First, **oversharing upstream**: unscoped drives, legacy permissions, and knowledge bases feed RAG with sensitive data the model then retrieves as designed — the fix is the data surface, not the model (DSGAI01). Second, **persistence**: once data influences weights, embeddings, or adapters it stays extractable after source deletion, straining GDPR Article 17 and CCPA §1798.105 erasure obligations. **Open-weights** deployments cannot rely on rate limits, since extraction, membership inference, and inversion run offline at unbounded rates.
+Protected information includes PII, PHI, financial data, credentials, API keys, trade secrets, model weights, privileged communications, classified or export-controlled material, and biometric and genomic identifiers. Two structural failures drive most incidents. First, **oversharing upstream**: unscoped drives, legacy permissions, and knowledge bases feed RAG with sensitive data the model then retrieves as designed. The fix is the data surface, not the model (DSGAI01). Second, **persistence**: once data influences weights, embeddings, or adapters it stays extractable after source deletion, straining GDPR Article 17 and CCPA §1798.105 erasure obligations. **Open-weights** deployments cannot rely on rate limits, since extraction, membership inference, and inversion run offline at unbounded rates.
 
-Severity should turn on what the recipient can learn, not on whether the leak looked like natural language. Applicable regimes include the EU AI Act (Regulation (EU) 2024/1689, high-risk obligations from August 2026), GDPR, HIPAA, CCPA/CPRA, ISO/IEC 42001, and NIST AI 600-1. This entry covers the LLM as an application *component*; where it acts as an autonomous actor (cross-session memory, tool choice, multi-step exfiltration), amplified risk is owned by ASI, with deeper controls in DSGAI.
+Severity should turn on what the recipient can learn, not on whether the leak looked like natural language. Applicable regimes include the EU AI Act (Regulation (EU) 2024/1689, high-risk obligations from August 2026), GDPR, HIPAA, CCPA/CPRA, ISO/IEC 42001, and NIST AI 600-1. This entry covers the LLM as an application *component*. Where it acts as an autonomous actor (cross-session memory, tool choice, multi-step exfiltration), amplified risk is owned by ASI, with deeper controls in DSGAI.
 
 ### Common Examples of Risk
 
-**1. Training-data memorization and extraction.** The November 2023 "poem" divergence attack drove `gpt-3.5-turbo` to emit more than 10,000 unique memorized examples for roughly USD 200 (Nasr et al., 2023); vendor patches have been bypassed repeatedly. Fine-tuned models and their LoRA adapters are more extractable than base models of the same scale, a targeted extraction surface distinct from the base model. Litigation exhibits in NYT v. OpenAI and Getty v. Stability AI include examples of verbatim reproduction, with the Getty case centered on watermark reproduction.
+**1. Training-data memorization and extraction.** The November 2023 "poem" divergence attack drove `gpt-3.5-turbo` to emit more than 10,000 unique memorized examples for roughly USD 200 (Nasr et al., 2023). Vendor patches have been bypassed repeatedly. Fine-tuned models and their LoRA adapters are more extractable than base models of the same scale, a targeted extraction surface distinct from the base model. Litigation exhibits in NYT v. OpenAI and Getty v. Stability AI include examples of verbatim reproduction, with the Getty case centered on watermark reproduction.
 
-**2. Inference-time context and output disclosure.** The March 2023 ChatGPT Redis bug exposed payment PII for 1.2% of Plus subscribers; more than 4,500 shared conversations were indexed by Google in 2025 through missing `noindex` directives. Clinical-embedding vector stores sit in HIPAA audit-control scope that most teams have not operationalized, and retrieval-layer authorization is widely under-implemented. Treat reasoning traces and tool arguments as outputs, not debugging leftovers; the trace channel also enables reasoning-trace-coercion model extraction. Regex and blocklist filters fall to cross-lingual, base64, and hex encodings. Aggregation across individually-permitted sources (budget + hiring + diligence → a pending M&A target) is a disclosure when policy prohibits the synthesized conclusion.
+**2. Inference-time context and output disclosure.** The March 2023 ChatGPT Redis bug exposed payment PII for 1.2% of Plus subscribers. More than 4,500 shared conversations were indexed by Google in 2025 through missing `noindex` directives. Clinical-embedding vector stores sit in HIPAA audit-control scope that most teams have not operationalized, and retrieval-layer authorization is widely under-implemented. Treat reasoning traces and tool arguments as outputs, not debugging leftovers. The trace channel also enables reasoning-trace-coercion model extraction. Regex and blocklist filters fall to cross-lingual, base64, and hex encodings. Aggregation across individually-permitted sources (budget + hiring + diligence → a pending M&A target) is a disclosure when policy prohibits the synthesized conclusion.
 
-**3. Embedding and representation disclosure.** Modern inversion reconstructs plaintext from leaked or exported vectors, so an "embeddings-only" backup is a source-document breach. Cosine similarity does not respect ACLs; authorize before retrieval, because post-generation filtering cannot undo a chunk already supplied to the model. Mechanisms are owned by LLM09:2026 and DSGAI13; this entry owns the regulatory consequence.
+**3. Embedding and representation disclosure.** Modern inversion reconstructs plaintext from leaked or exported vectors, so an "embeddings-only" backup is a source-document breach. Cosine similarity does not respect ACLs. Authorize before retrieval, because post-generation filtering cannot undo a chunk already supplied to the model. Mechanisms are owned by LLM09:2026 and DSGAI13. This entry owns the regulatory consequence.
 
-**4. Multimodal disclosure.** Vision models OCR credentials and PII from screenshots, notifications, and PDF metadata; generators reproduce watermarks and identifiable faces (the Getty / Stable Diffusion watermark case is canonical). Cross-modal transformation — text rendered as image, image OCR'd to text — bypasses single-modality DLP.
+**4. Multimodal disclosure.** Vision models OCR credentials and PII from screenshots, notifications, and PDF metadata. Generators reproduce watermarks and identifiable faces (the Getty / Stable Diffusion watermark case is canonical). Cross-modal transformation (text rendered as image, image OCR'd to text) bypasses single-modality DLP.
 
-**5. Inference-time side channels.** SPV-MIA raised membership-inference AUC to 0.9 against fine-tuned targets (Fu et al., 2024) — enough for a regulatory breach determination about a named individual. Whisper Leak (McDonald & Bar Or, 2025) classified conversation topics at greater than 98% AUPRC across 28 production models from encrypted traffic; Weiss et al. (2024) reconstructed 29% of response content and inferred topic for 55% via token length. Wu et al. (2025) demonstrated prompt leakage through KV-cache sharing in multi-tenant serving; Dong et al. (2025) inverted a 4,112-token medical prompt from a middle layer at an F1 of 0.8688 (token matching); and Carlini et al. (2024) recovered a production model's projection layer through a logit-bias channel.
+**5. Inference-time side channels.** SPV-MIA raised membership-inference AUC to 0.9 against fine-tuned targets (Fu et al., 2024), enough for a regulatory breach determination about a named individual. Whisper Leak (McDonald & Bar Or, 2025) classified conversation topics at greater than 98% AUPRC across 28 production models from encrypted traffic. Weiss et al. (2024) reconstructed 29% of response content and inferred topic for 55% via token length. Wu et al. (2025) demonstrated prompt leakage through KV-cache sharing in multi-tenant serving. Dong et al. (2025) inverted a 4,112-token medical prompt from a middle layer at an F1 of 0.8688 (token matching). Carlini et al. (2024) recovered a production model's projection layer through a logit-bias channel.
 
 **6. Training-pipeline disclosure.** Gradient inversion by a malicious server (Boenisch et al., 2021), distillation, and synthetic-data carryover move examples into derived models. Iterative query attacks against a DP-protected model refine LLM-generated queries and home in on confidence spikes to re-identify individuals, so fixed-epsilon DP is necessary but not sufficient without rate-limiting, query-pattern detection, and per-user budgets.
 
@@ -35,32 +35,32 @@ Severity should turn on what the recipient can learn, not on whether the leak lo
 
 Mitigations follow the DSGAI tiered structure for a graduated implementation path.
 
-**Tier 1 — Foundational (every deployment).**
+**Tier 1: Foundational (every deployment).**
 
-- Govern corpora: provenance, classification, and deduplication across near-duplicates, transliterations, and format variants; scrub PII at ingest. Deduplication reduces but does not eliminate memorization.
-- Minimize context: send only task-required fields to external providers; disable auto-context (`customer_360`, full-record append) unless justified per template.
-- Authorize before retrieval: enforce document- and chunk-level authorization inside the index query, not at the application layer after retrieval; isolate per-tenant indexes for high-sensitivity workloads.
+- Govern corpora: provenance, classification, and deduplication across near-duplicates, transliterations, and format variants. Scrub PII at ingest. Deduplication reduces but does not eliminate memorization.
+- Minimize context: send only task-required fields to external providers. Disable auto-context (`customer_360`, full-record append) unless justified per template.
+- Authorize before retrieval: enforce document- and chunk-level authorization inside the index query, not at the application layer after retrieval. Isolate per-tenant indexes for high-sensitivity workloads.
 - System-prompt hygiene: never store secrets, credentials, or regulated data in system prompts.
 - Sanitize with classifiers, not regex alone: pattern matching plus NER plus trained classifiers, because regex fails on encoded and cross-lingual output.
 - Budget queries per user and per session on sensitive endpoints to disrupt enumeration and membership probing.
-- Operational hygiene: restrict and scrub logs and traces before APM ingestion; encrypt in transit and at rest; technically enforce no-train/no-retain, not policy text alone.
+- Operational hygiene: restrict and scrub logs and traces before APM ingestion, encrypt in transit and at rest, and technically enforce no-train/no-retain rather than policy text alone.
 
-**Tier 2 — Hardening (regulated / high-sensitivity).**
+**Tier 2: Hardening (regulated / high-sensitivity).**
 
-- DP-SGD calibrated to sensitivity and cardinality with overfitting monitored as a memorization proxy; pair with detection, because fixed budgets degrade under adaptive querying.
+- DP-SGD calibrated to sensitivity and cardinality with overfitting monitored as a memorization proxy. Pair with detection, because fixed budgets degrade under adaptive querying.
 - Vector-store protection: encryption, ACLs separate from document ACLs, restricted export APIs, minimum-scope k-NN, and embedding-space probing detection.
 - Gate log-probabilities, confidence, and explanations on production endpoints.
-- Classify and redact reasoning traces as first-class output; never log raw traces to unrestricted observability.
-- Side-channel defenses: random padding and token batching for streaming; segregate high-sensitivity tenants on dedicated prefix caches; partition KV caches under co-tenancy.
-- Format-preserving encryption for structured identifiers; strict internal-vs-external routing separation with field allowlists on the external path.
-- AI-aware audit logging into SIEM; continuous DLP and AI-SPM; a documented domain inventory and enforced join policy so individually-permitted sources cannot combine into prohibited conclusions.
+- Classify and redact reasoning traces as first-class output. Never log raw traces to unrestricted observability.
+- Side-channel defenses: random padding and token batching for streaming, segregation of high-sensitivity tenants on dedicated prefix caches, and partitioned KV caches under co-tenancy.
+- Format-preserving encryption for structured identifiers, with strict internal-versus-external routing separation and field allowlists on the external path.
+- AI-aware audit logging into SIEM, continuous DLP and AI-SPM, and a documented domain inventory with an enforced join policy so individually-permitted sources cannot combine into prohibited conclusions.
 
-**Tier 3 — Advanced (regulated, classified, high-target).**
+**Tier 3: Advanced (regulated, classified, high-target).**
 
 - Confidential computing (Intel TDX, AMD SEV-SNP, AWS Nitro Enclaves) or emerging privacy-preserving inference (the AloePri covariant-obfuscation framework, Lin et al., 2026) where the threat model justifies the utility and latency cost.
 - Verifiable erasure across raw data, embeddings, checkpoints, and adapters, validated by post-unlearning extraction and membership-inference probes.
 - Disclosure red-teaming as a release gate: extraction, membership inference, embedding inversion, internal-state inversion, side channels, and LoRA extractability, measured quantitatively and aligned to MITRE ATLAS.
-- Audit synthetic data against extractors; resist distillation with probing detection, rate limits, and watermarking; budget aggregate analytics.
+- Audit synthetic data against extractors. Resist distillation with probing detection, rate limits, and watermarking. Budget aggregate analytics.
 - Exercise a disclosure incident-response playbook: scope by data class and affected subject or session, then assess and meet applicable breach and serious-incident notification obligations across relevant regimes (for example GDPR, HIPAA, and EU AI Act Article 73). Follow with unlearning, retraining, or withdrawal, vector and cache cleanup, vendor notice, and a persistent-memory audit.
 
 ### Example Attack Scenarios
@@ -71,7 +71,7 @@ Divergence prompts make a production model emit memorized PII, URLs, and live cr
 
 #### Scenario #2
 
-A shared-inference-state defect leaks one user's medical-letter prompt into another user's reasoning trace; HIPAA 60-day notification applies.
+A shared-inference-state defect leaks one user's medical-letter prompt into another user's reasoning trace. HIPAA 60-day notification applies.
 
 #### Scenario #3
 
@@ -83,7 +83,7 @@ Prompt injection makes a support bot print its system prompt and an embedded ven
 
 #### Scenario #5
 
-A shared legal RAG index crosses firm boundaries, synthesizing one client's privileged strategy into another's answer — an attorney-client waiver event.
+A shared legal RAG index crosses firm boundaries, synthesizing one client's privileged strategy into another's answer, an attorney-client waiver event.
 
 #### Scenario #6
 
