@@ -7,7 +7,7 @@ LLM supply chains are susceptible to vulnerabilities that affect the integrity o
 Creating LLMs is specialized work that depends on third-party models, datasets, and reusable adapters built with fine-tuning methods like LoRA (Low-Rank Adaptation) and PEFT (Parameter-Efficient Fine-Tuning) and shared on platforms like Hugging Face. The supply chain now includes model artifacts, provenance, and conversion/merge workflows as first-class attack surfaces, and on-device LLMs widen it further.
 
 Some of the risks covered here are also discussed in LLM05:2026 Data and Model Poisoning; this entry focuses on their supply-chain aspect. Supply-chain risks specific to agentic applications, including MCP servers and tool registries, are covered by ASI04 Agentic Supply Chain Vulnerabilities in the OWASP Top 10 for Agentic Applications (OWASP GenAI Security Project, 2026), and MITRE ATLAS catalogs the corresponding adversary techniques under AML.T0010 AI Supply Chain Compromise (MITRE, n.d.).
-A [simple LLM supply-chain threat model](https://github.com/jsotiro/ThreatModels/blob/main/LLM%20Threats-LLM%20Supply%20Chain.png) illustrates these surfaces.
+A [simple LLM supply-chain threat model](report/images/LLM%20Supply%20Chain%20Threat%20Model.png) illustrates these surfaces.
 
 ### Common Examples of Risk
 
