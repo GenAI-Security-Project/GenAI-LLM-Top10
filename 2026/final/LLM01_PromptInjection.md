@@ -18,7 +18,7 @@ The severity and nature of a successful prompt injection vary with the business 
 * Arbitrary command execution and destructive actions on the host or connected systems, where the agent has shell, file-system, or cloud-API access.
 * Crafting of high-success-rate adversarial payloads against closed-weight production models by abusing a vendor's fine-tuning API as a gradient oracle (the "fun-tuning" class), which extends earlier white-box optimization techniques to closed-weight deployments.
 
-*Note: prompt injection differs from LLM02:2026 Sensitive Information Disclosure, which addresses what the model leaks through its outputs, including reasoning-channel content, and from LLM03:2026 Excessive Agency, which addresses the consequences of model output reaching privileged actions. This entry concerns the input boundary itself.*
+*Note: prompt injection differs from LLM02:2026 Sensitive Information Disclosure, which addresses what the model leaks through its outputs, including reasoning-channel content, and from LLM03:2026 Excessive Agency, which addresses the consequences of model output reaching privileged actions. This entry concerns the input boundary itself. Sanitization and validation of model outputs before they reach downstream components is covered by LLM10:2026 Improper Output Handling.*
 
 ---
 
