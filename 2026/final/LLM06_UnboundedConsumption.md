@@ -36,7 +36,7 @@ Multimodal models convert images, audio, and video into large numbers of tokens,
 
 #### 7. Model Extraction and Distillation Theft
 
-Attackers query the model API with crafted inputs to collect sufficient outputs to replicate a partial model or fine-tune a functional equivalent. Exposure of logits and log-probabilities significantly accelerates extraction (Carlini et al., 2024).
+Attackers query the model API with crafted inputs to collect sufficient outputs to replicate a partial model or fine-tune a functional equivalent. Exposure of logits and log-probabilities significantly accelerates extraction (Carlini et al., 2024). Side-channel extraction of model weights or architecture through timing or shared-infrastructure observation is covered by LLM02:2026 Sensitive Information Disclosure.
 
 #### 8. Agent-Tool Interactions Flooding Model Resources
 
