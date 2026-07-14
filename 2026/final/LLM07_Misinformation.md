@@ -2,7 +2,7 @@
 
 ### Description
 
-Misinformation occurs when an LLM or LLM-enabled application produces incorrect, incomplete, unsupported, or misleading information that appears credible enough to influence a human decision, an automated workflow, or an agent action. The core risk is not simply that the model is wrong, but that the incorrect output is trusted and acted upon.
+Misinformation occurs when an LLM or LLM-enabled application produces incorrect, incomplete, unsupported, or misleading information that appears credible enough to influence a human decision, an automated workflow, or an agent action. The core risk is that the incorrect output is trusted and acted upon.
 
 In modern systems, model outputs drive tool calls, generate code, infer system state, authorize actions, and coordinate across agents. This makes misinformation a system-level failure that can lead to financial loss, security incidents, safety risks, or operational disruption.
 
@@ -25,13 +25,13 @@ Overreliance remains a key factor. Humans and systems often treat fluent, confid
 ### Prevention and Mitigation Strategies
 
 1. Ground Claims Before Action: Require outputs to be grounded in authoritative and current sources.
-2. Implement Claim–Check–Act Patterns: Separate generation from execution and verify claims before acting.
+2. Implement Claim-Check-Act Patterns: Separate generation from execution and verify claims before acting.
 3. Validate Tool Calls: Check arguments, authorization, preconditions, and current state before execution.
 4. Use Verification Signals (Not Just Confidence): Incorporate groundedness and consistency checks.
 5. Enforce Runtime Verification for High-Impact Actions: Introduce approval workflows and system checks.
 6. Detect and Prevent Omission Failures: Require structured outputs with mandatory fields.
 7. Limit Blast Radius: Apply least privilege, sandboxing, and rate limits.
-8. Monitor and Test for Misinformation: Log claims, evidence, and outcomes; test adversarial scenarios.
+8. Monitor and Test for Misinformation: Log claims, evidence, and outcomes, and test adversarial scenarios.
 9. Calibrate Human and System Trust: Distinguish verified facts from assumptions.
 10. Adversarial Evaluation and Continuous Testing: Regularly test workflows against misleading scenarios.
 
