@@ -16,7 +16,7 @@ Overreliance remains a key factor. Humans and systems often treat fluent, confid
 
 1. Unsupported or False Decision Support: Incorrect or unsupported information influences business, legal, healthcare, financial, or operational decisions.
 2. Incorrect State Inference in Workflows: An LLM infers that a condition has been met when it has not, triggering unintended actions.
-3. Unsafe Code and Dependency Generation: The model generates insecure code, hallucinated packages, or invalid configurations (Spracklen et al., 2025).
+3. Incorrect or Fabricated Code and Dependencies: The model produces incorrect code recommendations or references non-existent (hallucinated) packages (Spracklen et al., 2025).
 4. Misleading Summaries and Critical Omissions: Summaries omit key constraints, exceptions, timestamps, or risks.
 5. Adversarially Induced Misinformation: Attackers craft inputs that cause false claims or omission of critical facts.
 6. Cross-Agent Misinformation Propagation: Incorrect outputs propagate across agents and workflows.
@@ -26,7 +26,7 @@ Overreliance remains a key factor. Humans and systems often treat fluent, confid
 
 1. Ground Claims Before Action: Require outputs to be grounded in authoritative and current sources.
 2. Implement Claim–Check–Act Patterns: Separate generation from execution and verify claims before acting.
-3. Validate Tool Calls Semantically: Ensure alignment with intent, permissions, and real-world state.
+3. Validate Tool Calls: Check arguments, authorization, preconditions, and current state before execution.
 4. Use Verification Signals (Not Just Confidence): Incorporate groundedness and consistency checks.
 5. Enforce Runtime Verification for High-Impact Actions: Introduce approval workflows and system checks.
 6. Detect and Prevent Omission Failures: Require structured outputs with mandatory fields.
@@ -37,23 +37,30 @@ Overreliance remains a key factor. Humans and systems often treat fluent, confid
 
 ### Example Attack Scenarios
 
-Scenario #1: Hallucinated Dependency Supply Chain Attack  
-Attackers publish malicious packages under hallucinated names used by coding assistants, leading to compromise (Spracklen et al., 2025).
+#### Scenario #1: Hallucinated Dependency Recommendation
 
-Scenario #2: Incorrect Policy Decision by Agent  
-An agent incorrectly approves a refund or exception, resulting in financial loss.
+A coding assistant recommends a plausible but non-existent package, which an attacker has pre-registered under the hallucinated name, so a developer who trusts the suggestion installs attacker-controlled code (Spracklen et al., 2025).
 
-Scenario #3: Omission in Safety-Critical Summary  
-A summary omits a critical constraint, leading to harmful action.
+#### Scenario #2: Incorrect Policy Decision by Agent
 
-Scenario #4: Adversarially Induced False Reasoning  
-Misleading inputs cause incorrect recommendations that are accepted.
+A customer-service agent misreads a policy and approves a refund that violates the terms, resulting in financial loss.
 
-Scenario #5: False Alert Triggers Automated Response  
-A system incorrectly detects an attack and disrupts operations.
+#### Scenario #3: Omission in Safety-Critical Summary
 
-Scenario #6: Cross-Agent Trust Failure  
-One agent passes incorrect state that another trusts, leading to high-impact failure.
+A clinical summary omits a drug contraindication, and a clinician acts on the incomplete recommendation.
 
-Scenario #7: Fabricated Task Completion  
-An agent falsely reports task completion, leading to downstream failure.
+#### Scenario #4: Adversarially Induced False Reasoning
+
+An attacker seeds a support forum with false remediation steps that a troubleshooting agent retrieves and repeats as a trusted recommendation.
+
+#### Scenario #5: False Alert Triggers Automated Response
+
+A security agent misclassifies normal traffic as an intrusion and automatically blocks a production network segment, causing an outage.
+
+#### Scenario #6: Cross-Agent Trust Failure
+
+A retrieval agent reports a customer as identity-verified when it is not, and a downstream payment agent trusts that state and releases funds.
+
+#### Scenario #7: Fabricated Task Completion
+
+An agent reports that a nightly database backup completed when it never ran, and a later restore fails because no backup exists.
