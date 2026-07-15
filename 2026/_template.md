@@ -30,8 +30,4 @@ Entries do not carry a per-entry Reference Links section. Cite sources inline in
 
 ### Related Frameworks and Taxonomies
 
-Optional. Maps this entry to related OWASP frameworks (Agentic ASI, GenAI Data Security DSGAI) and external taxonomies (MITRE ATLAS/ATT&CK, CWE, NIST).
-
-| Framework | Reference | Relevance |
-|---|---|---|
-| Framework name | Section or ID | One-line note on how it relates to this entry |
+Entries do not carry a per-entry Related Frameworks and Taxonomies section. Framework and taxonomy mappings (OWASP Agentic ASI, OWASP GenAI Data Security DSGAI, MITRE ATLAS, MITRE ATT&CK, CWE, NIST) are maintained centrally in [Appendix A: Related Framework Mappings](final/Appendix_A_Related_Framework_Mappings.md), keyed by entry. Add or update this entry's mappings there rather than in the entry body.
