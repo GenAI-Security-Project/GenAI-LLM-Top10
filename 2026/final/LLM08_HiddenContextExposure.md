@@ -61,14 +61,14 @@ Critical controls such as privilege separation, authorization bounds checks, and
 
 ### Example Attack Scenarios
 
-#### Scenario #1
+#### Scenario #1: Credential Leakage via System Prompt
 
 An LLM has a system prompt that contains a set of credentials used for a tool that it has been given access to. The system prompt is leaked to an attacker, who is then able to use these credentials for other purposes.
 
-#### Scenario #2
+#### Scenario #2: Tool Schema via Context Extraction
 
 An attacker extracts the hidden context that contains the tool list and parameter schemas through conversational probing and uses the information to craft inputs that steer the application toward specific tool calls. No credential is disclosed and no policy is overtly bypassed, but the attacker now has concrete targets for subsequent prompt injection attempts and reconnaissance for downstream action chaining.
 
-#### Scenario #3
+#### Scenario #3 Bypassing Restrictions via Guardrail Disclosures
 
 An LLM has a system prompt prohibiting the generation of offensive content, external links, and code execution. An attacker extracts this system prompt and uses the disclosed restrictions to craft a prompt injection attack that bypasses them.
