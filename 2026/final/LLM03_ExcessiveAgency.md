@@ -89,7 +89,7 @@ The following options will not prevent Excessive Agency but can limit the level 
 
 ### Example Attack Scenarios
 
-#### Scenario #1
+#### Scenario #1: Hijacked Email Assistant
 
 An LLM-based personal assistant app is granted access to an individual's mailbox via a tool in order to summarize the content of incoming emails. To achieve this functionality, the tool requires the ability to read messages, but the tool the system developer has chosen to use also contains functions for sending messages. The app is also vulnerable to an indirect prompt injection attack, whereby a maliciously-crafted incoming email tricks the LLM into commanding the agent to scan the user's inbox for sensitive information and forward it to the attacker's email address. This could be avoided by:
 
