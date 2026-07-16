@@ -12,11 +12,11 @@ This entry covers attacks that depend on the embedding layer to succeed. Indirec
 
 #### 1. Cross-Tenant Leakage via Shared Similarity Search
 
-In multi-tenant deployments, similarity search frequently runs across the full index before access control is applied at the application layer. An attacker can probe the index with crafted queries and infer the existence, topic, and approximate volume of other tenants' documents from result counts, score distributions, and timing — without ever seeing the documents. The attack succeeds even when every document is correctly tagged and every API call authenticated, because the access-control decision happens after the embedding-space search has run. Conventional auth flaws in vector-DB software — e.g., CVE-2025-64513 (Milvus, forged sourceID header bypassing authentication, CVSS 9.3) and CVE-2025-69286 (RAGFlow, predictable token derivation enabling account takeover, CVSS 9.3) — are out of scope here but compound the geometric risk: because a vector-store leak is recoverable to source documents via inversion (Risk #2), an auth bug in a vector database carries higher consequence than the same bug in a document database or key-value store.
+In multi-tenant deployments, similarity search frequently runs across the full index before access control is applied at the application layer. Where the application exposes result counts, score distributions, or measurable timing differences, an attacker can probe the index with crafted queries and infer the existence, topic, and approximate volume of other tenants' documents — without ever seeing the documents. The attack succeeds even when every document is correctly tagged and every API call authenticated, because the access-control decision happens after the embedding-space search has run. This also raises the stakes of ordinary authentication bugs in vector-store software: because a vector-store leak is recoverable to source documents via inversion (Risk #2), such a bug carries higher consequence than the same bug in a document database or key-value store.
 
 #### 2. Embedding Inversion
 
-Stored embeddings can be inverted to recover source text. Reported recovery rates range from roughly 50–70% of words from sentence embeddings to 92% exact reconstruction of short 32-token inputs (Vec2Text; Morris et al., EMNLP 2023), which trains an inversion model per encoder. ZSInvert (Zhang, Morris, Shmatikov) and Zero2Text (Kim et al.) operate zero-shot with no encoder-specific training, work in cross-domain and black-box settings, and remain effective against differential-privacy noise added at storage. Operationally: vector-database backups, embeddings shipped to third-party services, and embeddings exposed through misconfigured cloud storage should be treated as equivalent to a leak of the underlying documents. Under GDPR and similar regimes, breach notification depends on risk to data subjects — and because modern embeddings can be inverted, that risk is real.
+Stored embeddings can be inverted to recover source text. Reported recovery rates range from roughly 50–70% of words from sentence embeddings to 92% exact reconstruction of short 32-token inputs (Vec2Text; Morris et al., EMNLP 2023), which trains an inversion model per encoder. ZSInvert (Zhang, Morris, Shmatikov) and Zero2Text (Kim et al.) operate zero-shot with no encoder-specific training, work in cross-domain and black-box settings, and remain effective against differential-privacy noise added at storage. Recovery feasibility varies with the encoder, the input length, and the attacker's knowledge, but the trend line is clear. Operationally: vector-database backups, embeddings shipped to third-party services, and embeddings exposed through misconfigured cloud storage should be treated as potentially equivalent to a leak of the underlying documents. Under GDPR and similar regimes, breach notification depends on risk to data subjects — and because modern embeddings can be inverted, that risk is real.
 
 #### 3. Retrieval-Time Data Poisoning
 
@@ -51,11 +51,11 @@ Normalize content before embedding: strip zero-width characters, white-on-white 
 
 #### 3. Data Segregation by Trust Tier
 
-Mixed-trust content — external web data, internal confidential documents, partner data — must not share an index without hard isolation. Index-level segregation beats classification tags on a shared index because it removes the misconfiguration path.
+Mixed-trust content — external web data, internal confidential documents, partner data — must not share an index without hard isolation. For high-sensitivity or high-assurance isolation, use separate indexes rather than classification tags on a shared index: separate indexes remove the misconfiguration path that a shared-index tagging scheme depends on.
 
 #### 4. Anomaly Detection at Ingest and Retrieval
 
-Flag new vectors that sit unusually close to a wide range of common queries — the signature of retrieval-hijacking poisoning. Watch for queries returning too many high-similarity matches, unusual volume on embedding endpoints (a precursor to query-based inversion), and clusters growing faster than expected after ingest. Do not return raw similarity scores to clients, add noise and diversification at the retrieval-ranking layer, and rate-limit endpoints that could be queried as oracles. Cross-encoder re-ranking raises attack cost but does not replace provenance and ingest controls; modern attacks target retrieval and ranking jointly.
+Flag new vectors that sit unusually close to a wide range of common queries — the signature of retrieval-hijacking poisoning. Watch for queries returning too many high-similarity matches, unusual volume on embedding endpoints (a precursor to query-based inversion), and clusters growing faster than expected after ingest. Do not return raw similarity scores to clients, and rate-limit endpoints that could be queried as oracles. Cross-encoder re-ranking raises attack cost but does not replace provenance and ingest controls; modern attacks target retrieval and ranking jointly.
 
 #### 5. Storage Lifecycle Controls
 
@@ -73,7 +73,7 @@ A company's RAG system scrapes public documentation and forum posts on a schedul
 
 #### Scenario #2: Cross-Tenant Inference in a Shared Vector Index
 
-A multi-tenant SaaS product uses one shared vector index with tenant filtering at the application layer. Tenant A submits probing queries; similarity search runs across every embedding, including Tenant B's, before the filter is applied. A never sees B's documents, but timing differences, result counts, and score-distribution gaps reveal the existence and approximate topic of B's content. Over many queries, A builds a useful map of B's data. Real-world incidents in this category include CVE-2025-69286 (RAGFlow), where predictable token generation enabled cross-account compromise in a widely deployed open-source RAG engine.
+A multi-tenant SaaS product uses one shared vector index with tenant filtering at the application layer, and its API returns similarity scores and result counts to callers. Tenant A submits probing queries; similarity search runs across every embedding, including Tenant B's, before the filter is applied. A never sees B's documents, but the exposed scores, result counts, and timing differences reveal the existence and approximate topic of B's content. Over many queries, A builds a useful map of B's data.
 
 #### Scenario #3: Embedding Inversion from a Leaked Vector Store
 
@@ -99,8 +99,6 @@ A cloud misconfiguration exposes a backup of a production vector database. The u
 16. [When Cache Poisoning Meets LLM Systems](https://www.ndss-symposium.org/ndss-paper/when-cache-poisoning-meets-llm-systems-semantic-cache-poisoning-and-its-countermeasures/): Wu et al., **NDSS 2026**.
 17. [From Similarity to Vulnerability: Key Collision Attack on LLM Semantic Caching](https://arxiv.org/abs/2601.23088): Zhang, Liu, Xie, Huang, She, **arXiv:2601.23088**.
 18. [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](https://arxiv.org/abs/2410.07176): **arXiv:2410.07176**.
-19. [GHSA-mhjq-8c7m-3f7p — Milvus Proxy Authentication Bypass (CVE-2025-64513)](https://github.com/milvus-io/milvus/security/advisories/GHSA-mhjq-8c7m-3f7p): **CVSS 9.3**, affects Milvus < 2.4.24, < 2.5.21, < 2.6.5.
-20. [GHSA-9j5g-g4xm-57w7 — RAGFlow Predictable Token Generation (CVE-2025-69286)](https://github.com/infiniflow/ragflow/security/advisories/GHSA-9j5g-g4xm-57w7): **CVSS 9.3**, affects RAGFlow < 0.22.0.
 
 ### Related Frameworks and Taxonomies
 
@@ -120,7 +118,6 @@ A cloud misconfiguration exposes a backup of a production vector database. The u
 | **MITRE ATLAS** | [AML.M0019 — Control Access to AI Models and Data in Production](https://atlas.mitre.org/mitigations/AML.M0019) | Production access controls underlying the Permission and Access Control mitigations |
 | **MITRE CWE** | [CWE-200 — Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html) | General sensitive-information exposure via embedding inversion or cross-tenant leakage |
 | **MITRE CWE** | [CWE-285 — Improper Authorization](https://cwe.mitre.org/data/definitions/285.html) | Cross-tenant retrieval where authorization is applied after, rather than inside, the index query |
-| **MITRE CWE** | [CWE-340 — Generation of Predictable Numbers or Identifiers](https://cwe.mitre.org/data/definitions/340.html) | Predictable-token vector-store auth bypass (e.g., CVE-2025-69286 RAGFlow) |
 | **MITRE CWE** | [CWE-732 — Incorrect Permission Assignment for Critical Resource](https://cwe.mitre.org/data/definitions/732.html) | Vector-store access-control misconfiguration |
 | **NIST AI 100-2** | Adversarial Machine Learning — Privacy Attacks (Membership Inference, Model Inversion) | Privacy-attack taxonomy underlying Risk #2 Embedding Inversion and Risk #5 Membership Inference via Similarity Search |
 | **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI11 — Cross-Context & Multi-User Conversation Bleed | Illustrative scenario (shared vector store, missing tenant scoping in the retrieval filter) parallels Risk #1 Cross-Tenant Leakage via Shared Similarity Search |
