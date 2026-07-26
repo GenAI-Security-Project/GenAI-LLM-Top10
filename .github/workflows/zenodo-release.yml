@@ -41,6 +41,7 @@ jobs:
       - run: pip install --quiet pyyaml
       - run: python .github/scripts/zenodo_release.py --check
       - run: python .github/scripts/zenodo_release.py --dry-run
+      - run: python .github/scripts/test_zenodo_release.py
 
   deposit:
     if: github.event_name != 'pull_request'
