@@ -12,6 +12,9 @@ Companion repository to the OWASP Top 10 for Large Language Model Applications, 
 [![OWASP Flagship Status project](https://img.shields.io/badge/owasp-flagship-blue.svg)](https://owasp.org/projects/)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 [![genai.owasp.org](https://img.shields.io/badge/officialsite-genai.owasp.org-032CFA.svg)](https://genai.owasp.org)
+<!-- TODO(doi): after the first Zenodo publish, uncomment this badge and replace XXXXXXX with the concept DOI. See documentation/ZENODO.md
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+-->
 
 Welcome to the official repository for the OWASP Top 10 for Large Language Model Applications!
 
@@ -54,6 +57,20 @@ For contributors working on the **2026 cycle**, see the track-specific guide in 
 We have a working group channel on the [OWASP Slack](https://owasp.org/slack/invite), so please sign up and then join us on the #team-genai-top-10-llm channel.
 
 **Learn how to contribute:** [https://genai.owasp.org/contribute/](https://genai.owasp.org/contribute/)
+
+## Citation 🎓
+
+If you reference this work in a paper, report, or standard, cite it using the
+metadata in [`CITATION.cff`](./CITATION.cff). GitHub renders that file as
+**"Cite this repository"** in the sidebar, in APA and BibTeX.
+
+We archive each release on Zenodo, which mints a DOI that papers can cite. The
+record holds the finalised entries for that edition, without the repository's
+drafts or earlier editions. Cite the concept DOI, which resolves to the newest
+edition.
+
+[`documentation/ZENODO.md`](./documentation/ZENODO.md) covers the process and the
+maintainer steps for a release.
 
 ## License
 

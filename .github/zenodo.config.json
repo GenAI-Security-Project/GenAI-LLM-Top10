@@ -1,0 +1,48 @@
+{
+  "$comment": [
+    "Zenodo deposit configuration. See documentation/ZENODO.md.",
+    "",
+    "The script replaces `{edition}` with the edition it is releasing, which it",
+    "reads from the release tag. To add the 2027 edition, add 2027/final/ and",
+    "tag v2027.",
+    "",
+    "Each key under `deposits` is a separate Zenodo record with its own concept",
+    "DOI, read from the environment variable named by `concept_env`. Editions of",
+    "one deposit become versions of that record.",
+    "",
+    "Citation metadata comes from CITATION.cff, not from this file."
+  ],
+  "deposits": {
+    "top10": {
+      "concept_env": "ZENODO_CONCEPT_RECID",
+      "bundle": {
+        "name": "owasp-llm-top10-{edition}",
+        "include": [
+          "{edition}/final",
+          "CITATION.cff"
+        ],
+        "exclude": [
+          "*/report/images/screenshots/*",
+          "*/report/images/uploads/*",
+          "*/report/images/support.js",
+          "*/.DS_Store"
+        ]
+      },
+      "metadata": {
+        "upload_type": "publication",
+        "publication_type": "report",
+        "access_right": "open",
+        "language": "eng",
+        "$comment_contributors": [
+          "TODO(contributors): list the people who worked on the 2026 edition",
+          "without being credited as entry authors, such as reviewers and",
+          "editors. Entry authors belong in CITATION.cff, not here.",
+          "Format: { \"name\": \"Family, Given\", \"type\": \"Editor\" }.",
+          "Zenodo types: ContactPerson, DataCurator, Editor, Researcher,",
+          "ProjectLeader, ProjectMember, WorkPackageLeader, Other."
+        ],
+        "contributors": []
+      }
+    }
+  }
+}

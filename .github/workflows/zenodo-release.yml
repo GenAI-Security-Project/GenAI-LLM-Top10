@@ -1,0 +1,78 @@
+name: Zenodo release
+
+on:
+  release:
+    types: [published]
+  pull_request:
+    paths:
+      - CITATION.cff
+      - .github/zenodo.config.json
+      - .github/scripts/zenodo_release.py
+      - .github/workflows/zenodo-release.yml
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: "Edition to deposit (e.g. 2026). Blank = newest in the repo."
+        required: false
+      deposit:
+        description: "Deposit key from zenodo.config.json. Blank = all."
+        required: false
+      sandbox:
+        description: "Deposit to sandbox.zenodo.org"
+        type: boolean
+        default: true
+      publish:
+        description: "Publish (unchecked leaves a reviewable draft)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet pyyaml
+      - run: python .github/scripts/zenodo_release.py --check
+      - run: python .github/scripts/zenodo_release.py --dry-run
+
+  deposit:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet pyyaml requests
+
+      - name: Resolve edition and date
+        id: meta
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            date="${{ github.event.release.published_at }}"
+            echo "edition=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          else
+            date="$(date -u +%Y-%m-%d)"
+            echo "edition=${{ inputs.edition }}" >> "$GITHUB_OUTPUT"
+          fi
+          echo "date=${date%%T*}" >> "$GITHUB_OUTPUT"
+
+      - name: Deposit
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+          # One variable per deposit, named by its `concept_env` in the config.
+          ZENODO_CONCEPT_RECID: ${{ vars.ZENODO_CONCEPT_RECID }}
+        run: |
+          python .github/scripts/zenodo_release.py \
+            ${{ steps.meta.outputs.edition && format('--edition {0}', steps.meta.outputs.edition) || '' }} \
+            ${{ (github.event_name == 'workflow_dispatch' && inputs.deposit) && format('--deposit {0}', inputs.deposit) || '' }} \
+            --publication-date "${{ steps.meta.outputs.date }}" \
+            ${{ (github.event_name == 'workflow_dispatch' && inputs.sandbox) && '--sandbox' || '' }} \
+            ${{ (github.event_name == 'release' || inputs.publish) && '--publish' || '' }}

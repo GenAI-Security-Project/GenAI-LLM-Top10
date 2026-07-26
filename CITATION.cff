@@ -1,0 +1,121 @@
+# Machine-readable citation metadata. GitHub shows it as "Cite this repository",
+# and the release workflow builds the Zenodo record from it.
+# Spec: https://citation-file-format.github.io
+#
+# TODO(orcid): add `orcid:` to any author who has one. The release workflow
+#   passes it through to Zenodo, and it lets indexers tell apart authors with
+#   common names.
+
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "OWASP Top 10 for Large Language Model Applications"
+abstract: >-
+  A standard awareness document describing the ten most critical security risks
+  in applications built on large language models, produced by the OWASP GenAI
+  Security Project.
+type: dataset
+version: "2026"
+date-released: 2026-06-15 # TODO(release-date): sprint plan target, confirm the real date
+license: CC-BY-SA-4.0
+url: "https://genai.owasp.org/llm-top-10/"
+repository-code: "https://github.com/GenAI-Security-Project/GenAI-LLM-Top10"
+# TODO(doi): uncomment and set to the concept DOI after the first publish.
+# doi: 10.5281/zenodo.XXXXXXX
+keywords:
+  - OWASP
+  - LLM security
+  - generative AI
+  - AI security
+  - application security
+  - prompt injection
+  - threat modeling
+authors:
+  - given-names: Steve
+    family-names: Wilson
+  - given-names: Rock
+    family-names: Lambros
+  - given-names: Rachel
+    family-names: James
+  - given-names: Emmanuel
+    family-names: Guilherme
+  - given-names: Ken
+    family-names: Huang
+  - given-names: John
+    family-names: Sotiropoulos
+  - given-names: Stefano
+    family-names: Amorelli
+  - given-names: Sumeet
+    family-names: Jeswani
+  - given-names: Mark
+    family-names: Roxberry
+  - given-names: Rico
+    family-names: Komenda
+  - given-names: Glavin
+    family-names: Klondike
+  - given-names: Andy
+    family-names: Smith
+  - given-names: Alex
+    family-names: Leung
+  - given-names: Sonu
+    family-names: Kumar
+  - given-names: Vinnie
+    family-names: Giarrusso
+  - given-names: Savio
+    family-names: D'souza
+  - given-names: Arshi
+    family-names: Chadha
+  - given-names: Sahil
+    family-names: Mehta
+  - name: "OWASP GenAI Security Project"
+    website: "https://genai.owasp.org"
+
+preferred-citation:
+  type: report
+  title: "OWASP Top 10 for Large Language Model Applications"
+  institution:
+    name: "OWASP Foundation"
+    website: "https://owasp.org"
+  version: "2026"
+  year: 2026
+  month: 6
+  license: CC-BY-SA-4.0
+  url: "https://genai.owasp.org/llm-top-10/"
+  # TODO(doi): uncomment and set to the concept DOI after the first publish.
+  # doi: 10.5281/zenodo.XXXXXXX
+  authors:
+    - given-names: Steve
+      family-names: Wilson
+    - given-names: Rock
+      family-names: Lambros
+    - given-names: Rachel
+      family-names: James
+    - given-names: Emmanuel
+      family-names: Guilherme
+    - given-names: Ken
+      family-names: Huang
+    - given-names: John
+      family-names: Sotiropoulos
+    - given-names: Stefano
+      family-names: Amorelli
+    - given-names: Sumeet
+      family-names: Jeswani
+    - given-names: Mark
+      family-names: Roxberry
+    - given-names: Rico
+      family-names: Komenda
+    - given-names: Glavin
+      family-names: Klondike
+    - given-names: Andy
+      family-names: Smith
+    - given-names: Alex
+      family-names: Leung
+    - given-names: Sonu
+      family-names: Kumar
+    - given-names: Vinnie
+      family-names: Giarrusso
+    - given-names: Savio
+      family-names: D'souza
+    - given-names: Arshi
+      family-names: Chadha
+    - given-names: Sahil
+      family-names: Mehta
