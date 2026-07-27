@@ -31,9 +31,11 @@ Attackers can take a RAG system off the air by inserting a "blocker" document �
 
 The attacker wants to know whether a specific document — a medical record, a legal filing, an HR complaint, exists in the index, not what it says. Two variants exist. If the application returns raw similarity scores or distances to the client, the vector index becomes a direct membership oracle and no LLM is involved. If the application returns only generated answers, the attacker can still infer membership by submitting partial documents or perturbed queries and analyzing the response. Membership information can itself be sensitive even when content remains protected. Defenders should not return raw similarity scores to clients, should add noise and diversification at the retrieval-ranking layer, and should rate-limit endpoints that could be queried as oracles.
 
-#### 6. Semantic Cache and Deduplication Poisoning
+#### 6. Semantic Cache Collisions and Deduplication Poisoning
 
 Semantic caches and near-duplicate detection pipelines use a cosine-similarity threshold to decide that two pieces of content are "the same." An attacker who can craft content that lands just above or just below that threshold can poison a cache entry so it serves attacker text to all semantically equivalent queries, bypass deduplication by injecting many near-duplicates of poisoned content, or force legitimate new content to be silently dropped as a duplicate. Wu et al. (NDSS 2026, "When Cache Poisoning Meets LLM Systems") demonstrate semantic cache poisoning end-to-end across AWS, Azure, and Alibaba deployments. Zhang et al. (arXiv:2601.23088) cover black-box key-collision attacks using surrogate embedding models to engineer threshold-straddling vectors without access to the target encoder. All three failure modes depend on the geometry of the embedding space and are invisible to controls applied at the document level.
+
+Semantic-cache collisions can also cross authorization boundaries. If lookup is not hard-partitioned by tenant and the requester's effective authorization scope, a request can reuse a response generated under another principal's permissions. Adding a user or namespace token to the text before embedding is not an authorization boundary: the token's effect can be diluted by the rest of the query, allowing different scopes to exceed the same cache-hit threshold. Because a cache hit can bypass retrieval and generation, otherwise correct document-level authorization may never execute.
 
 #### 7. Multimodal Embedding Poisoning
 
@@ -44,6 +46,8 @@ Cross-modal encoders such as CLIP and ColPali map images, audio, code, and text 
 #### 1. Permission and Access Control
 
 Enforce tenant scoping inside the index query, not as a post-retrieval filter. Validate the filter server-side; a client-supplied scope is a suggestion, not a control. Authenticate embedding and similarity-search endpoints as first-class APIs with per-tenant rate limits. For high-sensitivity workloads, use physically separated indexes per tenant or per trust zone. Apply access control at the chunk level, not just the document level: a mostly-public document can contain a confidential paragraph that any matching query will surface.
+
+Apply the same isolation to semantic caches. Enforce a server-derived tenant and authorization-scope predicate before a candidate can become a cache hit. For vector-backed caches, push the predicate into the backend search rather than filtering only the returned top-k candidates. Bind each entry to the security context that produced it, including tenant, principal or role, source permissions, model, system policy, guardrail version, tool permissions, and retrieval-corpus version. Reauthorize the requester on every hit, invalidate entries when the bound context changes, and disable shared semantic caching where authorization equivalence cannot be established.
 
 #### 2. Data Validation, Source Authentication, and Provenance
 
@@ -63,7 +67,7 @@ When a source document is deleted, its embeddings must be deleted within a bound
 
 #### 6. Monitoring, Logging, and Incident Response
 
-Maintain immutable logs of retrieval activity, including tenant scope, query, returned IDs, and similarity scores. Monitor for tenant-filter bypass attempts, cross-tenant retrieval anomalies, and abnormal embedding-API consumption. Update incident-response playbooks so that "embeddings only" leaks are treated as equivalent to source-data leaks for the purpose of breach assessment and notification under GDPR Article 33 and analogous regimes.
+Maintain immutable logs of retrieval activity, including tenant scope, query, returned IDs, and similarity scores. Monitor for tenant-filter bypass attempts, cross-tenant retrieval anomalies, and abnormal embedding-API consumption. Update incident-response playbooks so that "embeddings only" leaks are treated as equivalent to source-data leaks for the purpose of breach assessment and notification under GDPR Article 33 and analogous regimes. For semantic-cache hits, log the producer and consumer scopes, cache-entry identifier, similarity score, scope-check result, and relevant policy and model versions. Alert on rejected cross-scope candidates and repeated near-threshold probes.
 
 ### Example Attack Scenarios
 
@@ -87,6 +91,10 @@ A vendor operates a customer-support assistant grounded in a public knowledge ba
 
 An e-commerce assistant uses a shared multimodal index that stores both product photos and customer-uploaded images. An attacker uploads images whose embeddings sit close to the text query "is this product safe for children." The assistant retrieves the attacker's images and incorporates them into its response, leading the model to recommend products the attacker chose to promote. The attack succeeds without text payloads, hidden Unicode, or instructions of any kind — the geometry of the cross-modal embedding space is the entire attack surface. Mitigations include keeping externally contributed images out of indexes that serve sensitive queries, applying provenance and trust-tier controls to non-text assets, and treating cross-modal retrieval as a privileged operation.
 
+#### Scenario #6: Soft User Scoping Leaks Cached Responses
+
+A multi-user assistant prepends a Hash-based Message Authentication Code (HMAC)-derived user namespace to each query before embedding and assumes this creates separate semantic-cache domains. Alice's request populates the cache. Bob submits the same long request under a different resolved user scope. Because the namespace prefix contributes little to the complete embedding, Bob's request scores 0.9085 against Alice's entry and exceeds the configured 0.8 threshold. Bob receives Alice's byte-identical cached response without retrieval or authorization running again. The fix is an exact server-side scope predicate that rejects cross-scope candidates independently of embedding similarity.
+
 ### Reference Links
 
 1. [Universal Zero-shot Embedding Inversion](https://arxiv.org/abs/2504.00147): Zhang, Morris, Shmatikov, **arXiv:2504.00147**.
@@ -109,6 +117,8 @@ An e-commerce assistant uses a shared multimodal index that stores both product 
 18. [Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](https://arxiv.org/abs/2410.07176): **arXiv:2410.07176**.
 19. [GHSA-mhjq-8c7m-3f7p — Milvus Proxy Authentication Bypass (CVE-2025-64513)](https://github.com/milvus-io/milvus/security/advisories/GHSA-mhjq-8c7m-3f7p): **CVSS 9.3**, affects Milvus < 2.4.24, < 2.5.21, < 2.6.5.
 20. [GHSA-9j5g-g4xm-57w7 — RAGFlow Predictable Token Generation (CVE-2025-69286)](https://github.com/infiniflow/ragflow/security/advisories/GHSA-9j5g-g4xm-57w7): **CVSS 9.3**, affects RAGFlow < 0.22.0.
+21. [\[Router\] Enforce hard user-scope isolation in semantic cache (cross-tenant leak fix)](https://github.com/vllm-project/semantic-router/pull/2135): **vLLM Semantic Router PR #2135**.
+22. [Azure API Management Policy Reference — llm-semantic-cache-lookup](https://learn.microsoft.com/en-us/azure/api-management/llm-semantic-cache-lookup-policy): **Microsoft Learn**.
 
 ### Related Frameworks and Taxonomies
 
@@ -125,6 +135,7 @@ Refer to this section for comprehensive information, scenarios, strategies, and 
 * [AML.M0005 — Control Access to AI Models and Data at Rest](https://atlas.mitre.org/mitigations/AML.M0005) **MITRE ATLAS**
 * [AML.M0019 — Control Access to AI Models and Data in Production](https://atlas.mitre.org/mitigations/AML.M0019) **MITRE ATLAS**
 * [CWE-200 — Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html) **MITRE CWE**
+* [CWE-524 — Use of Cache Containing Sensitive Information](https://cwe.mitre.org/data/definitions/524.html) **MITRE CWE** (semantic-cache cross-scope reuse)
 * [CWE-285 — Improper Authorization](https://cwe.mitre.org/data/definitions/285.html) **MITRE CWE** (cross-tenant retrieval)
 * [CWE-340 — Generation of Predictable Numbers or Identifiers](https://cwe.mitre.org/data/definitions/340.html) **MITRE CWE** (predictable-token vector-store auth bypass)
 * [CWE-732 — Incorrect Permission Assignment for Critical Resource](https://cwe.mitre.org/data/definitions/732.html) **MITRE CWE** (vector-store access control)
