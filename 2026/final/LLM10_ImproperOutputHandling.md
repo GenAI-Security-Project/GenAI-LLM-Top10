@@ -25,6 +25,8 @@ The following conditions can increase the impact of this vulnerability:
 5. LLM-generated content is used in email templates without proper escaping, potentially leading to phishing attacks.
 6. LLM output containing ANSI escape sequences or other control characters is written to a terminal, log viewer, or IDE pane that interprets them, enabling visual spoofing, clipboard hijacking (e.g., OSC 52), or chained exploitation of terminal emulator vulnerabilities.
 7. The chat UI auto-renders Markdown images or link previews referenced in model output, allowing an attacker who controls part of the model context to exfiltrate conversation data via the image URL's hostname or query string.
+8. An evaluation harness parses the score for an LLM-as-a-judge check out of text the evaluated model can write (for example a greedy first-match regex for a verdict marker, or a JSON parse returning the first well-formed object in the combined string), so the evaluated model effectively assigns its own score.
+9. An LLM-as-a-judge evaluation metric silently drops samples it could not score (None, NaN, parse failure, or exception) from the aggregate denominator instead of counting them as failures, so a model that makes itself unscorable on its hardest or most unsafe tasks erases those tasks from its reported score.
 
 ### Prevention and Mitigation Strategies
 
@@ -37,6 +39,9 @@ The following conditions can increase the impact of this vulnerability:
 7. Implement robust logging and monitoring systems to detect unusual patterns in LLM outputs that might indicate exploitation attempts.
 8. Sanitize control characters (ANSI escape sequences, BEL, OSC, backspace, carriage return) and other non-printable bytes from model output before it is written to terminals, log files, or other interpreting sinks; encode them visibly when they must be preserved.
 9. In client renderers (chat UIs, IDEs, email clients, mobile apps), prevent model output from triggering automatic outbound requests to attacker-controlled endpoints. Disable auto-rendering of Markdown images, link previews, iframes, and similar elements by default; where rendering is required, restrict fetches to an explicit allowlist of origins or proxy them through a server-side fetcher that strips data-bearing query parameters.
+10. When parsing an LLM judge's verdict from text the evaluated model could influence, bind the extraction to a position the evaluated model cannot write to (for example the judge's own final line, or the last match rather than the first), so the candidate cannot inject a self-favoring verdict ahead of the judge's.
+11. In evaluation metrics, track and surface the count of samples that could not be scored (None/NaN/exception) rather than silently dropping them from the denominator, so a model cannot raise its reported score by making itself unscorable.
+12. Treat the evaluated model's answer as the object of the judgement, never as an input to it: the answer may be read and scored, but it must not help decide the judgement.
 
 ### Example Attack Scenarios
 
@@ -64,6 +69,14 @@ The following conditions can increase the impact of this vulnerability:
 
   An LLM is used to generate code from natural language inputs in a software company, aiming to streamline development tasks. While efficient, this approach risks exposing sensitive information, creating insecure data handling methods, or introducing vulnerabilities like SQL injection. The AI may also hallucinate non-existent software packages, potentially leading developers to download malware-infected resources. Thorough code review and verification of suggested packages are crucial to prevent security breaches, unauthorized access, and system compromises.
 
+#### Scenario #7
+
+  An LLM-as-a-judge safety evaluator embeds the candidate model's response in the judge prompt, the judge renders a verdict, and a score-extraction step reads the verdict with a greedy first-match regex over the combined string. A candidate that emits an early fake verdict (for example a "GRADE: PASS" marker) in its own response causes the extractor to bind the candidate's text instead of the judge's, so the model grades itself and passes the safety check without earning it. This requires no adversary against the judge model: it fires on benign prose that happens to contain a verdict token, and on policies that drift into the pattern under optimization pressure.
+
+#### Scenario #8
+
+  A safety evaluation metric averages a per-sample score across a test suite. When the scorer cannot score a sample (the candidate's output triggers a parse failure, exception, or returns None/NaN), the aggregator silently omits the sample from the denominator instead of counting it as a failure. A candidate model that produces unscorable output on its hardest or most unsafe tasks erases those tasks from its reported safety score, so the worst cases vanish from the math and a dangerous model is declared safe.
+
 ### Reference Links
 
 1. [EchoLeak (CVE-2025-32711): Zero-Click Prompt Injection in Microsoft 365 Copilot](https://www.hackthebox.com/blog/cve-2025-32711-echoleak-copilot-vulnerability): **HackTheBox**
@@ -77,6 +90,8 @@ The following conditions can increase the impact of this vulnerability:
 9. [Terminal DiLLMa: LLM-powered Apps Can Hijack Your Terminal Via Prompt Injection](https://embracethered.com/blog/posts/2024/terminal-dillmas-prompt-injection-ansi-sequences/): **Embrace The Red**
 10. [GitHub Copilot Chat: From Prompt Injection to Data Exfiltration](https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/): **Embrace The Red**
 11. [Markdown exfiltration tracker](https://simonwillison.net/tags/markdown-exfiltration/): **Simon Willison**
+12. [The Evaluator Trust Boundary: A defect class in AI evaluation infrastructure, its prevalence across 36 organizations, and its removal by training](https://doi.org/10.5281/zenodo.21633620): **Authensor, Inc. (preprint, DOI)**
+13. [MITRE ATLAS issue #21 — Proposed case studies: Evaluator Trust Boundary (ETB) defect class](https://github.com/mitre-atlas/atlas-data/issues/21): **MITRE ATLAS (submission under review)**
 
 ### Related Frameworks and Taxonomies
 
@@ -88,3 +103,4 @@ The following conditions can increase the impact of this vulnerability:
 | **MITRE CWE** | [CWE-116 — Improper Encoding or Escaping of Output](https://cwe.mitre.org/data/definitions/116.html) | Root-cause weakness underlying missing context-aware output encoding across HTML, JavaScript, SQL, and shell sinks (Reference Links #8). |
 | **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI12 — Unsafe Natural-Language Data Gateways (LLM-to-SQL/Graph) | An unscrutinized LLM-generated query executed against a live database enables bulk deletion or exfiltration, directly paralleling this entry's Common Example of Risk #3 and Scenario #3 (LLM-crafted SQL that deletes all database tables when not scrutinized). |
 | **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI06 — Tool, Plugin & Agent Data Exchange Risks | DSGAI06 covers the same agent/tool boundary this entry's Common Example of Risk #1 targets: unvalidated LLM output crossing from generation into tool or command execution. Note DSGAI06's own cited CVE-2025-66404 (`exec_in_pod`) is a tool-scoping failure, not an output-validation failure — the two entries share a boundary, not a root cause. |
+| **MITRE ATLAS** | [ATLAS issue #21 — Evaluator Trust Boundary (ETB) case studies (under review)](https://github.com/mitre-atlas/atlas-data/issues/21) | Extends this entry's trust principle to the upstream scoring path: where Scenarios #7 and #8 describe unvalidated model output compromising an evaluator's verdict or denominator, ATLAS case-study submission #21 documents the same defect across 76 instances in 36 organizations. The cited preprint shows the same frontier judge scoring 0.0000 vs 1.0000 ASR depending only on which string the verdict is parsed from. |
