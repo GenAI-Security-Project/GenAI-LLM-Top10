@@ -1,81 +1,84 @@
 <p align="center">
-  <img src="./assets/owasp_top10_wasp.jpeg" alt="OWASP Top 10 for LLM Applications & Generative AI" width="100%">
+  <img src="./assets/owasp_top10_wasp.jpeg" alt="OWASP Top 10 for LLM Applications and Generative AI" width="100%">
 </p>
-
-# GenAI-LLM-Top10
-
-Companion repository to the OWASP Top 10 for Large Language Model Applications, maintained under the [GenAI Security Project](https://github.com/GenAI-Security-Project) org.
 
 # OWASP Top 10 for Large Language Model Applications
 
-[![Current version in-flight](https://img.shields.io/badge/current_version-v2.0-purple)](https://www.linkedin.com/posts/wilsonsd_announcing-the-version-2-project-its-time-activity-7157734167244378113-s2v2?utm_source=share&utm_medium=member_ios)
+> [!IMPORTANT]
+> **Current release: 2026 — published August 4, 2026.**
+>
+> [Get the 2026 publication](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) · [Read the canonical source](./2026/final/) · [Report a correction](https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/issues/new?template=release-errata.yml)
+
+[![Current release](https://img.shields.io/badge/current_release-2026-purple)](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
 [![OWASP Flagship Status project](https://img.shields.io/badge/owasp-flagship-blue.svg)](https://owasp.org/projects/)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
-[![genai.owasp.org](https://img.shields.io/badge/officialsite-genai.owasp.org-032CFA.svg)](https://genai.owasp.org)
+[![Official site](https://img.shields.io/badge/official_publication-genai.owasp.org-032CFA.svg)](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
 
-Welcome to the official repository for the OWASP Top 10 for Large Language Model Applications!
+This is the official source repository for the **OWASP Top 10 for Large Language Model Applications**, maintained as a core initiative of the [OWASP GenAI Security Project](https://genai.owasp.org/).
 
-## About This Repository
+The Top 10 is a community-developed awareness document for developers, architects, data scientists, security practitioners, and organizations building or operating applications that use large language models.
 
-This repository contains the OWASP Top 10 for Large Language Model Applications, which is now housed under the comprehensive **OWASP GenAI Security Project**. The OWASP GenAI Security Project is a global, open-source initiative dedicated to identifying, mitigating, and documenting security and safety risks associated with generative AI technologies.
+## 2026 Release
 
-**Visit our main project site:** [genai.owasp.org](https://genai.owasp.org)
+The 2026 release is complete. The publication combines community judgment with analysis of real-world incidents and updates the ordering, scope, examples, mitigations, and framework mappings across the list.
 
-## Overview and Audience 🗣️
+| Resource | Location |
+|---|---|
+| Official publication | [Get the OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) |
+| Canonical Markdown source | [`2026/final/`](./2026/final/) |
+| Release overview | [`2026/README.md`](./2026/README.md) |
+| Previous release | [`2025/`](./2025/) |
 
-The OWASP Top 10 for Large Language Model Applications is a standard awareness document for developers and web application security. It represents a broad consensus about the most critical security risks to Large Language Model (LLM) applications. There are other ongoing frameworks both inside and outside of OWASP that are not to be confused with this project and is currently scoped towards only LLM Application Security.
+### OWASP GenAI LLM Top 10 2026
 
-Our primary audience is developers, data scientists, and security experts tasked with designing and building applications and plugins leveraging LLM technologies. We aim to provide practical, actionable, and concise security guidance to help these professionals navigate the complex and evolving terrain of LLM application security.
+1. **LLM01:2026 Prompt Injection**
+2. **LLM02:2026 Sensitive Information Disclosure**
+3. **LLM03:2026 Excessive Agency**
+4. **LLM04:2026 Supply Chain**
+5. **LLM05:2026 Data and Model Poisoning**
+6. **LLM06:2026 Unbounded Consumption**
+7. **LLM07:2026 Misinformation**
+8. **LLM08:2026 Hidden Context Exposure**
+9. **LLM09:2026 Vector and Embedding Weaknesses**
+10. **LLM10:2026 Improper Output Handling**
 
-## Key Focus 📖
+## Repository Layout
 
-The primary aim of this project is to provide a comprehensible and adoptable guide to navigate the potential security risks in LLM applications. Our Top 10 list serves as a starting point for developers and security professionals who are new to this domain, and as a reference for those who are more experienced.
+* [`2026/final/`](./2026/final/) — canonical source for the published 2026 release
+* [`2026/working/`](./2026/working/) — historical working files and release-cycle tooling
+* [`2025/`](./2025/) — source for the previous release
+* [`documentation/style/`](./documentation/style/) — editorial and branding guidance
 
-## Mission Statement 🚀
+The [2026 sprint plan](./Sprint%20Plan%20and%20Project%20Timeline%20OWASP%20Top%2010%20for%20LLM%20%282026%29.md) and [`2026/working/CONTRIBUTING.md`](./2026/working/CONTRIBUTING.md) are retained as records of the completed release process. They are not the current contribution workflow.
 
-Our mission is to make application security visible, so that people and organizations can make informed decisions about application security risks related to LLMs. While our list shares DNA with vulnerability types found in other OWASP Top 10 lists, we do not simply reiterate these vulnerabilities. Instead, we delve into these vulnerabilities' unique implications when encountered in applications utilizing LLMs.
+## Contributing
 
-Our goal is to bridge the divide between general application security principles and the specific challenges posed by LLMs. The group's goals include exploring how conventional vulnerabilities may pose different risks or be exploited in novel ways within LLMs and how developers must adapt traditional remediation strategies for applications utilizing LLMs.
-
-## Project Documents 📄
-
-- [**OWASP Top 10 for LLM Applications Charter**](./OWASP%20Top%2010%20for%20LLM%20Applications%20Charter.md) — mission, scope, governance, and operating principles for the project.
-- [**Sprint Plan and Project Timeline — 2026**](./Sprint%20Plan%20and%20Project%20Timeline%20OWASP%20Top%2010%20for%20LLM%20%282026%29.md) — sprint structure and milestone timeline for the 2026 release cycle.
-
-## Contribution 👋
-
-The first version of this list was contributed by Steve Wilson of Contrast Security. We encourage the community to contribute and help improve the project. If you have any suggestions, feedback or want to help improve the list, feel free to open an issue or send a pull request.
+Post-release corrections and improvements are welcome. Use the [2026 release errata form](https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/issues/new?template=release-errata.yml) for specific errors, broken links, or source/publication mismatches. Use the [release feedback form](https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/issues/new?template=release-feedback.yml) for broader feedback or proposals for a future cycle.
 
 > [!IMPORTANT]
-> **All changes to this repository must be made through a pull request.** There are no exceptions for contributors — direct pushes to `main` are blocked by branch protection. This applies to every change: new entries, entry upgrades, typo fixes, link repairs, artifact additions, style-guide edits, and README tweaks. If you are unsure whether your change qualifies, open a PR.
+> All changes to this repository must be made through a pull request. Direct pushes to `main` are blocked by branch protection.
 
-For contributors working on the **2026 cycle**, see the track-specific guide in [`2026/working/CONTRIBUTING.md`](./2026/working/CONTRIBUTING.md).
+We have a working group channel on [OWASP Slack](https://owasp.org/slack/invite): `#team-genai-top-10-llm`.
 
-We have a working group channel on the [OWASP Slack](https://owasp.org/slack/invite), so please sign up and then join us on the #team-genai-top-10-llm channel.
-
-**Learn how to contribute:** [https://genai.owasp.org/contribute/](https://genai.owasp.org/contribute/)
+For the broader project contribution process, visit [genai.owasp.org/contribute](https://genai.owasp.org/contribute/).
 
 ## License
 
-This project is licensed under the terms of the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
+This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 
-## Support OWASP!
+## Support OWASP
 
 <picture>
   <source
     media="(prefers-color-scheme: dark)"
-    srcset="
-      https://api.star-history.com/svg?repos=OWASP/www-project-top-10-for-large-language-model-applications&type=Date&theme=dark&legend=top-left
-    "
+    srcset="https://api.star-history.com/svg?repos=GenAI-Security-Project/GenAI-LLM-Top10&type=Date&theme=dark&legend=top-left"
   />
   <source
     media="(prefers-color-scheme: light)"
-    srcset="
-      https://api.star-history.com/svg?repos=OWASP/www-project-top-10-for-large-language-model-applications&type=Date&legend=top-left
-    "
+    srcset="https://api.star-history.com/svg?repos=GenAI-Security-Project/GenAI-LLM-Top10&type=Date&legend=top-left"
   />
   <img
     alt="Star History Chart"
-    src="https://api.star-history.com/svg?repos=OWASP/www-project-top-10-for-large-language-model-applications&type=Date&legend=top-left"
+    src="https://api.star-history.com/svg?repos=GenAI-Security-Project/GenAI-LLM-Top10&type=Date&legend=top-left"
   />
 </picture>

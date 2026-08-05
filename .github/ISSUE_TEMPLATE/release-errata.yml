@@ -1,0 +1,72 @@
+name: 2026 Release Errata
+description: Report a specific error, broken link, or mismatch in the published 2026 release.
+title: "[2026 errata] <short description>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the OWASP GenAI LLM Top 10 2026. Use this form for a specific, verifiable correction. For broader proposals, use the release feedback form.
+
+        * [Get the published release](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+        * [Read the canonical source](https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/tree/main/2026/final)
+        * [OWASP Code of Conduct](https://owasp.org/www-policy/operational/code-of-conduct)
+  - type: dropdown
+    id: entry
+    attributes:
+      label: Affected section
+      options:
+        - Preface or release metadata
+        - LLM01 Prompt Injection
+        - LLM02 Sensitive Information Disclosure
+        - LLM03 Excessive Agency
+        - LLM04 Supply Chain
+        - LLM05 Data and Model Poisoning
+        - LLM06 Unbounded Consumption
+        - LLM07 Misinformation
+        - LLM08 Hidden Context Exposure
+        - LLM09 Vector and Embedding Weaknesses
+        - LLM10 Improper Output Handling
+        - Framework mappings or appendix
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where does the issue appear?
+      options:
+        - Published document
+        - GitHub source
+        - Both
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is incorrect?
+      description: Quote or identify the affected text, link, figure, or section.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction
+      description: Provide replacement text or describe the expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Include authoritative links, citations, or reproduction details where applicable.
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgments
+      options:
+        - label: I checked the published release and the canonical GitHub source for an existing correction.
+          required: true
+        - label: I agree to follow the OWASP Code of Conduct.
+          required: true

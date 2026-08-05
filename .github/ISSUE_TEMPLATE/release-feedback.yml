@@ -1,0 +1,49 @@
+name: 2026 Release Feedback
+description: Suggest a broader improvement or topic for a future release cycle.
+title: "[Release feedback] <short description>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The 2026 release is complete. Use this form for broader feedback, future-cycle proposals, or changes that require community consideration. Use the errata form for a specific factual or editorial correction.
+
+        * [Get the published release](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+        * [OWASP Code of Conduct](https://owasp.org/www-policy/operational/code-of-conduct)
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: Feedback type
+      options:
+        - Scope or definition
+        - Example or attack scenario
+        - Prevention or mitigation guidance
+        - Reference or supporting research
+        - Framework mapping
+        - Candidate topic for a future release
+        - Editorial or usability improvement
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Feedback
+      description: Explain the issue or opportunity and the outcome you recommend.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Include incidents, standards, research, or other authoritative references where possible.
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgments
+      options:
+        - label: I searched existing issues and discussions for this topic.
+          required: true
+        - label: I agree to follow the OWASP Code of Conduct.
+          required: true
