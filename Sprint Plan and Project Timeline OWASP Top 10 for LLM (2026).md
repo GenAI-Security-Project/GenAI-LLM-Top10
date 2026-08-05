@@ -1,5 +1,8 @@
 # Sprint Plan and Project Timeline OWASP Top 10 for LLM (2026)
 
+> [!NOTE]
+> **Release complete.** The OWASP Top 10 for LLM Applications 2026 was published on August 4, 2026. This document is retained as a historical record of the completed release process. [Get the publication](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) or [read the canonical source](./2026/final/).
+
 ### **Overview**
 
 The 2026 update to the OWASP Top 10 for Large Language Model Applications builds on several weeks of active community engagement and early project momentum.
@@ -145,4 +148,3 @@ At this point, the list is:
 * Finalized  
 * Community-validated  
 * Ready for layout, design, and formal publication
-

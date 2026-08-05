@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Vote (single ballot, both tracks)
-    url: https://docs.google.com/forms/d/e/1FAIpQLSebmFQyJPOMuw1IorHCJ2FdW98ZT2oLNBuVgYqpPoayW9v6ww/viewform
-    about: Score Importance and Clarity for the 10 existing entries, plus Distinctness for the 8 new candidates. Single submission. Estimated 10 minutes if you score every entry.
-  - name: General discussion (Sprint 2)
+  - name: Get the 2026 publication
+    url: https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/
+    about: Read or get the published OWASP GenAI LLM Top 10 2026.
+  - name: General discussion
     url: https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/discussions
-    about: For comments not tied to a specific entry. Cross-cutting questions, proposed new entries, process feedback.
-  - name: OWASP Top 10 for LLM project page
-    url: https://genai.owasp.org/llm-top-10/
-    about: Project background, charter, and Sprint 2 timeline.
+    about: Ask questions and discuss topics that are not a specific release correction.
+  - name: OWASP GenAI Security Project
+    url: https://genai.owasp.org/
+    about: Visit the home of the broader OWASP GenAI Security Project.
