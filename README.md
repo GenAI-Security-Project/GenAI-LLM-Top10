@@ -48,6 +48,7 @@ The 2026 release is complete. The publication combines community judgment with a
 * [`2026/working/`](./2026/working/) — historical working files and release-cycle tooling
 * [`2025/`](./2025/) — source for the previous release
 * [`documentation/style/`](./documentation/style/) — editorial and branding guidance
+* [Project charter](./OWASP%20Top%2010%20for%20LLM%20Applications%20Charter.md) — mission, scope, governance, and operating principles
 
 The [2026 sprint plan](./Sprint%20Plan%20and%20Project%20Timeline%20OWASP%20Top%2010%20for%20LLM%20%282026%29.md) and [`2026/working/CONTRIBUTING.md`](./2026/working/CONTRIBUTING.md) are retained as records of the completed release process. They are not the current contribution workflow.
 

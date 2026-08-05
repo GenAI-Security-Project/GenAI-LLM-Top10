@@ -21,7 +21,7 @@ The files in [`final/`](./final/) are the canonical Markdown source for the publ
 | LLM09:2026 Vector and Embedding Weaknesses | [`LLM09_VectorAndEmbeddingWeaknesses.md`](./final/LLM09_VectorAndEmbeddingWeaknesses.md) |
 | LLM10:2026 Improper Output Handling | [`LLM10_ImproperOutputHandling.md`](./final/LLM10_ImproperOutputHandling.md) |
 
-The release also includes [framework mappings](./final/LLMZZ_Appendix_AISVS_Mapping.md) and publication figures under [`final/report/images/`](./final/report/images/).
+The release also includes [related framework mappings](./final/Appendix_A_Related_Framework_Mappings.md) (with machine-readable versions under [`final/mappings/`](./final/mappings/)), an [application architecture and threat modeling appendix](./final/Appendix_B_LLM_Application_Architecture_and_Threat_Modeling.md), a [consolidated references file](./final/references.md), and publication figures under [`final/report/images/`](./final/report/images/).
 
 ## Corrections and Feedback
 
