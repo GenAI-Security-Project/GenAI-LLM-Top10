@@ -1,0 +1,76 @@
+{
+  "framework": "MITRE ATLAS",
+  "version": "content v2026.06 (format-version 6.0.0)",
+  "source_url": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/v6/ATLAS-2026.06.yaml",
+  "accessed": "2026-07-11",
+  "element_type": "attack-technique",
+  "coarse_level": "tactics",
+  "elements": [
+    {
+      "id": "AML.TA0000",
+      "title": "AI Model Access"
+    },
+    {
+      "id": "AML.TA0001",
+      "title": "AI Attack Staging"
+    },
+    {
+      "id": "AML.TA0002",
+      "title": "Reconnaissance"
+    },
+    {
+      "id": "AML.TA0003",
+      "title": "Resource Development"
+    },
+    {
+      "id": "AML.TA0004",
+      "title": "Initial Access"
+    },
+    {
+      "id": "AML.TA0005",
+      "title": "Execution"
+    },
+    {
+      "id": "AML.TA0006",
+      "title": "Persistence"
+    },
+    {
+      "id": "AML.TA0007",
+      "title": "Defense Evasion"
+    },
+    {
+      "id": "AML.TA0008",
+      "title": "Discovery"
+    },
+    {
+      "id": "AML.TA0009",
+      "title": "Collection"
+    },
+    {
+      "id": "AML.TA0010",
+      "title": "Exfiltration"
+    },
+    {
+      "id": "AML.TA0011",
+      "title": "Impact"
+    },
+    {
+      "id": "AML.TA0012",
+      "title": "Privilege Escalation"
+    },
+    {
+      "id": "AML.TA0013",
+      "title": "Credential Access"
+    },
+    {
+      "id": "AML.TA0014",
+      "title": "Command and Control"
+    },
+    {
+      "id": "AML.TA0015",
+      "title": "Lateral Movement"
+    }
+  ],
+  "verification": "all-verified",
+  "notes": "All 16 tactic ids and names were read verbatim from the top-level `tactics:` mapping of the pinned raw YAML (HTTP 200, 625,790 bytes); the file self-identifies as format-version 6.0.0, version '2026.06', modified-date 2026-05-27. Coarse level returned is the 16 tactics (the grouping); the finer element_type these tactics organize is attack-technique, per the task. Caveat on source path: the repo's default `dist/ATLAS.yaml` is DEPRECATED and frozen at version 5.6.0 (schema format-version differs and TA0000/TA0001 are still labeled \"ML Model Access\"/\"ML Attack Staging\" there) — do NOT use it. The v2026.06 file used here renames TA0000 to \"AI Model Access\" and TA0001 to \"AI Attack Staging\". Note the non-sequential naming order in the source: AML.TA0000 (AI Model Access) and AML.TA0001 (AI Attack Staging) precede the operational-lifecycle tactics that begin at AML.TA0002 (Reconnaissance); this is the source's own ordering, not a fetch artifact. No elements flagged; nothing fabricated."
+}

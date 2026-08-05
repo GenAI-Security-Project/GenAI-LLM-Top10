@@ -1,0 +1,88 @@
+{
+  "framework": "NIST AI RMF (AI 100-1)",
+  "version": "v1.0 (2023)",
+  "source_url": "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+  "accessed": "2026-07-11",
+  "element_type": "governance-function",
+  "coarse_level": "categories",
+  "elements": [
+    {
+      "id": "GOVERN 1",
+      "title": "Policies, processes, procedures, and practices across the organization related to the mapping, measuring, and managing of AI risks are in place, transparent, and implemented effectively."
+    },
+    {
+      "id": "GOVERN 2",
+      "title": "Accountability structures are in place so that the appropriate teams and individuals are empowered, responsible, and trained for mapping, measuring, and managing AI risks."
+    },
+    {
+      "id": "GOVERN 3",
+      "title": "Workforce diversity, equity, inclusion, and accessibility processes are prioritized in the mapping, measuring, and managing of AI risks throughout the lifecycle."
+    },
+    {
+      "id": "GOVERN 4",
+      "title": "Organizational teams are committed to a culture that considers and communicates AI risk."
+    },
+    {
+      "id": "GOVERN 5",
+      "title": "Processes are in place for robust engagement with relevant AI actors."
+    },
+    {
+      "id": "GOVERN 6",
+      "title": "Policies and procedures are in place to address AI risks and benefits arising from third-party software and data and other supply chain issues."
+    },
+    {
+      "id": "MAP 1",
+      "title": "Context is established and understood."
+    },
+    {
+      "id": "MAP 2",
+      "title": "Categorization of the AI system is performed."
+    },
+    {
+      "id": "MAP 3",
+      "title": "AI capabilities, targeted usage, goals, and expected benefits and costs compared with appropriate benchmarks are understood."
+    },
+    {
+      "id": "MAP 4",
+      "title": "Risks and benefits are mapped for all components of the AI system including third-party software and data."
+    },
+    {
+      "id": "MAP 5",
+      "title": "Impacts to individuals, groups, communities, organizations, and society are characterized."
+    },
+    {
+      "id": "MEASURE 1",
+      "title": "Appropriate methods and metrics are identified and applied."
+    },
+    {
+      "id": "MEASURE 2",
+      "title": "AI systems are evaluated for trustworthy characteristics."
+    },
+    {
+      "id": "MEASURE 3",
+      "title": "Mechanisms for tracking identified AI risks over time are in place."
+    },
+    {
+      "id": "MEASURE 4",
+      "title": "Feedback about efficacy of measurement is gathered and assessed."
+    },
+    {
+      "id": "MANAGE 1",
+      "title": "AI risks based on assessments and other analytical output from the MAP and MEASURE functions are prioritized, responded to, and managed."
+    },
+    {
+      "id": "MANAGE 2",
+      "title": "Strategies to maximize AI benefits and minimize negative impacts are planned, prepared, implemented, documented, and informed by input from relevant AI actors."
+    },
+    {
+      "id": "MANAGE 3",
+      "title": "AI risks and benefits from third-party entities are managed."
+    },
+    {
+      "id": "MANAGE 4",
+      "title": "Risk treatments, including response and recovery, and communication plans for the identified and measured AI risks are documented and monitored regularly."
+    }
+  ],
+  "verification": "all-verified",
+  "notes": "All 19 categories were fetched and confirmed verbatim from the authoritative NIST AIRC source (airc.nist.gov AI RMF Core, section 5). Count confirmed: GOVERN 1-6 (6), MAP 1-5 (5), MEASURE 1-4 (4), MANAGE 1-4 (4) = 19. ID-scheme caveat: NIST labels these as \"Categories\" and formats them as function-name plus integer separated by a space (e.g., \"GOVERN 1\"); the finer level below (e.g., \"GOVERN 1.1\") are \"Subcategories\" and were intentionally not extracted since the requested coarse level is Category. The `title` field carries each category's full official outcome statement verbatim; NIST does not assign a separate short name to categories. This is AI RMF 1.0 (AI 100-1, January 2023); no newer pinned version applies."
+}
