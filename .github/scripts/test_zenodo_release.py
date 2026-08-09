@@ -134,7 +134,11 @@ check("license is the Zenodo vocabulary id", sent["license"] == "cc-by-sa-4.0", 
 check("upload_type/publication_type set", (sent["upload_type"], sent["publication_type"]) == ("publication", "report"))
 check("publication_date is ISO8601", sent["publication_date"] == "2026-06-15")
 check("creators are 'Family, Given'", sent["creators"][0]["name"] == "Wilson, Steve")
-check("18 creators", len(sent["creators"]) == 18, str(len(sent["creators"])))
+# Not a fixed number: the author list changes with each edition. What matters
+# is that every person in CITATION.cff reaches Zenodo, and the order survives.
+people = [a for a in z.load_citation()["authors"] if "name" not in a]
+check("every author is deposited", len(sent["creators"]) == len(people), str(len(sent["creators"])))
+check("author order survives", sent["creators"][-1]["name"] == "Klondike, Gavin")
 check("contributor type is valid", sent["contributors"][0]["type"] == "HostingInstitution")
 check("token passed as access_token", all(k.get("params", {}).get("access_token") == "fake-token" for _, _, k in CALLS))
 

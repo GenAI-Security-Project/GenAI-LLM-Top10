@@ -13,9 +13,7 @@
 [![OWASP Flagship Status project](https://img.shields.io/badge/owasp-flagship-blue.svg)](https://owasp.org/projects/)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 [![Official site](https://img.shields.io/badge/official_publication-genai.owasp.org-032CFA.svg)](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
-<!-- TODO(doi): after the first Zenodo publish, uncomment this badge and replace XXXXXXX with the concept DOI. See documentation/ZENODO.md
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
--->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22109014.svg)](https://doi.org/10.5281/zenodo.22109014)
 
 This is the official source repository for the **OWASP Top 10 for Large Language Model Applications**, maintained as a core initiative of the [OWASP GenAI Security Project](https://genai.owasp.org/).
 
@@ -65,6 +63,20 @@ Post-release corrections and improvements are welcome. Use the [2026 release err
 We have a working group channel on [OWASP Slack](https://owasp.org/slack/invite): `#team-genai-top-10-llm`.
 
 For the broader project contribution process, visit [genai.owasp.org/contribute](https://genai.owasp.org/contribute/).
+
+## Citing this work
+
+The 2026 edition is archived on Zenodo. Cite the concept DOI, which always
+resolves to the newest edition:
+
+> OWASP GenAI Security Project. (2026). *OWASP Top 10 for Large Language Model
+> Applications* (Version 2026). OWASP Foundation.
+> <https://doi.org/10.5281/zenodo.22109014>
+
+To cite the 2026 edition specifically rather than the newest, use its version
+DOI, [10.5281/zenodo.22109015](https://doi.org/10.5281/zenodo.22109015).
+[`CITATION.cff`](./CITATION.cff) carries the same metadata in machine-readable
+form, and GitHub renders it under "Cite this repository".
 
 ## License
 
