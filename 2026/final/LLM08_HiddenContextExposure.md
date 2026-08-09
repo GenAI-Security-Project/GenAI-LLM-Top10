@@ -6,11 +6,16 @@ Hidden Context Exposure is the unauthorized extraction, inference, or reconstruc
 
 In an LLM application, hidden context typically includes the system prompt, developer instructions, retrieved policy text (from RAG knowledge bases, configuration stores, or user-profile services), the schemas of tools and functions the application exposes to the model, and other rules, directives, and materials the application assembles into the model's context window. The common thread is that this hidden context is not intended to be visible to end users but is accessible to the model.
 
-Practitioners should design under the assumption that hidden context is discoverable and that any contents of the context should not be considered a secret. Application developers should ensure that its full disclosure would have no or minimal direct security impact. Sensitive data such as credentials, connection strings, and tokens should not be embedded in it, nor should hidden context be solely relied upon as a security boundary for authorization, privilege separation, policy enforcement, or content filtering.
+Practitioners should design under the assumption that hidden context is discoverable and that any contents of the context should not be considered a secret. Application developers should ensure that disclosure of hidden context has little or no direct security impact. Sensitive data such as credentials, connection strings, and tokens should not be embedded in it, nor should hidden context be solely relied upon as a security boundary for authorization, privilege separation, policy enforcement, or content filtering.
 
 Severity tracks what is placed in hidden context and how the application relies on it. Findings range from **informational** (no secrets, no security-relevant logic, no reliance on confidentiality) through **medium** (internal rules, filtering criteria, role descriptions, or workflow logic that meaningfully aids an attacker but does not gate critical decisions) to **high** (embedded credentials or tokens, or reliance on hidden-context secrecy for authorization or content policy) and **critical** (where disclosure chains to remote code execution, broad data exfiltration, or privilege escalation in a connected system).
 
-While Hidden Context Exposure introduces risks on its own, it also frequently amplifies risks in adjacent categories: disclosed rules or logic enable more targeted prompt injection (LLM01); embedded credentials constitute sensitive information disclosure (LLM02); revealed tool permissions and schemas expand the surface for excessive agency (LLM03); leaked output-formatting rules can facilitate improper output handling (LLM10).
+While Hidden Context Exposure introduces risks on its own, it also frequently amplifies risks in adjacent categories:
+
+* Disclosed rules or logic enable more targeted prompt injection (LLM01:2026).
+* Embedded credentials constitute sensitive information disclosure (LLM02:2026).
+* Revealed tool permissions and schemas expand the surface for excessive agency (LLM03:2026).
+* Leaked output-formatting rules can facilitate improper output handling (LLM10:2026).
 
 In summary, LLM08 covers the foundational risk that hidden LLM control context is exposed, inferred, or reconstructed in a way that materially increases attacker capability. LLM08 does not cover:
 
@@ -34,7 +39,7 @@ System prompts can define the conditions under which a model should refuse or fi
 
 #### 4. Disclosure of Permissions and User Roles
 
-Instruction context could include directives or information related to authorization and permissions. For example, a tool description provided through an internal-facing MCP server may indicate that a user must have the developer role in order to use it, or that a user with a certain role can access a list of documents to search with RAG. The disclosure of such information could invite other types of probing through directed conversation and prompt injection (LLM01) and could potentially reveal additional sensitive information (LLM02).
+Instruction context could include directives or information related to authorization and permissions. For example, a tool description provided through an internal-facing MCP server may indicate that a user must have the developer role in order to use it, or that a user with a certain role can access a list of documents to search with RAG. The disclosure of such information could invite other types of probing through directed conversation and prompt injection (LLM01:2026) and could potentially reveal additional sensitive information (LLM02:2026).
 
 #### 5. Exposure of Output Structure and Formatting Rules
 
@@ -44,52 +49,26 @@ System prompts frequently define how responses should be structured, including r
 
 #### 1. Do Not Put Sensitive Data in Hidden Context
 
-Do not embed any sensitive information (e.g., API keys, auth keys, database names, user roles, permission structure of the application) directly in the system prompts or hidden context. Assume all context available to the LLM could also be available to users. Instead, externalize such information to the systems that the model does not directly access and avoid letting the model handle sensitive data itself.
+Do not embed credentials, secrets, or security-critical configuration directly in the system prompts or hidden context. Assume all context available to the LLM could also be available to users. Instead, externalize such information to the systems that the model does not directly access and avoid letting the model handle sensitive data itself.
 
 #### 2. Use Deterministic Methods and Guardrails for Validation and Behavior Control
 
-Because LLMs can be vulnerable to attacks such as prompt injection, hidden context should not be relied on as the primary mechanism for controlling model behavior. Specialized fine tuning or further training of a model may decrease the risk of disclosure, but it is not a consistent guarantee and may have other unintended consequences. Instead, enforce critical behaviors through independent and deterministic systems outside the model. For example, harmful content detection and prevention should be handled by external safeguards rather than by instructions embedded in hidden context.
+Because LLMs can be vulnerable to attacks such as prompt injection, hidden context should not be relied on as the primary mechanism for controlling model behavior. Specialized fine-tuning or further training of a model may decrease the risk of disclosure, though it provides no consistent guarantee and may have other unintended consequences. Enforce critical behaviors through independent and deterministic systems outside the model. For example, harmful content detection and prevention should be handled by external safeguards rather than by instructions embedded in hidden context.
 
 #### 3. Enforce Authorization and Access Control Independently from the LLM
 
-Critical controls such as privilege separation, authorization bounds checks, and similar must not be delegated to the LLM, whether through the system prompt or another mechanism. These controls should be enforced in a deterministic and auditable manner, which LLMs are not well suited to provide. In cases where an agent is performing tasks, if those tasks require different levels of access, then multiple agents should be used, each configured with the least privileges needed to perform the desired tasks.
-
-#### 4. Adopt Context Obfuscation
-
-For context the application must process, avoid relying on common system prompt templates, section names, or predictable instruction structures. Varying how instructions are named, written and structured so that they are less directly identifiable or reusable could provide an additional layer of complexity for attackers. Mitigations such as these should only be used as a minor supporting measure, not a primary defense. The best defense is to avoid extraneous and sensitive context and assume all context is discoverable.
+Critical controls such as privilege separation, authorization bounds checks, and similar must not be delegated to the LLM, whether through the system prompt or another mechanism. These controls should be enforced in a deterministic and auditable manner, which LLMs are not well suited to provide. Where tasks require different levels of access, separate them by authorization context and grant each only the privileges it requires.
 
 ### Example Attack Scenarios
 
-#### Scenario #1
+#### Scenario #1: Credential Leakage via System Prompt
 
 An LLM has a system prompt that contains a set of credentials used for a tool that it has been given access to. The system prompt is leaked to an attacker, who is then able to use these credentials for other purposes.
 
-#### Scenario #2
+#### Scenario #2: Tool Schema via Context Extraction
 
 An attacker extracts the hidden context that contains the tool list and parameter schemas through conversational probing and uses the information to craft inputs that steer the application toward specific tool calls. No credential is disclosed and no policy is overtly bypassed, but the attacker now has concrete targets for subsequent prompt injection attempts and reconnaissance for downstream action chaining.
 
-#### Scenario #3
+#### Scenario #3 Bypassing Restrictions via Guardrail Disclosures
 
-An LLM has a system prompt prohibiting the generation of offensive content, external links, and code execution. An attacker extracts this system prompt and then uses a prompt injection attack to bypass these instructions, facilitating a remote code execution attack.
-
-### Reference Links
-
-1. [System Prompt Poisoning: Persistent Attacks on Large Language Models Beyond User Injection](https://arxiv.org/abs/2505.06493): Li, Guo, & Cai, **arXiv:2505.06493** (2025).
-2. [You Can't Steal Nothing: Mitigating Prompt Leakages in LLMs via System Vectors](https://arxiv.org/abs/2509.21884): Cao, Li, Cao, Ge, Wang, & Chen, **arXiv:2509.21884**.
-3. [PLeak: Prompt Leaking Attacks against Large Language Model Applications](https://arxiv.org/abs/2405.06823): Hui, Yuan, Gong, Burlina, & Cao, **arXiv:2405.06823** (2025).
-4. [LeakAgent: RL-based Red-teaming Agent for LLM Privacy Leakage](https://arxiv.org/abs/2412.05734): Nie, Wang, Yu, Wu, Zhao, Guo, & Song, **arXiv:2412.05734** (2025).
-5. [Proof of Concept: Dangers of System Prompt Leakage](https://resk.fr/pdf/resk-enterprise-ai-security-guide.pdf): Jeremy Goffin, **Resk.fr**, July 2025.
-6. [Just Ask: Curious Code Agents Reveal System Prompts in Frontier LLMs](https://doi.org/10.48550/arXiv.2601.21233): Zheng, Wu, Huang, Li, Ma, Li, Jiang, & Wang, **arXiv:2601.21233** (2026).
-7. [System Prompt Extraction Attacks and Defenses in Large Language Models](https://arxiv.org/abs/2505.23817): Das, Amini, & Wu, **arXiv:2505.23817** (2025).
-8. [Leaked System Prompts (GitHub repository)](https://github.com/jujumilk3/leaked-system-prompts): **jujumilk3** (2025).
-9. [LeakHub](https://leakhub.ai/): **LeakHub**.
-
-### Related Frameworks and Taxonomies
-
-| Framework | Reference | Relevance |
-|---|---|---|
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI06 — Memory & Context Poisoning | LLM08's scope explicitly defers "the agentic amplifications of this risk, e.g., persistent memory, inter-agent channels, tool configuration persistence, and multi-step agent compromise" to the OWASP Top 10 for Agentic Applications; ASI06 is the pointer for persistent-memory poisoning building on exposed hidden context, not an equivalent risk. |
-| **OWASP Top 10 for Agentic Applications (ASI)** | ASI07 — Insecure Inter-Agent Communication | Same scope carve-out names "inter-agent channels" as an out-of-scope amplification; ASI07 is the pointer for hidden-context material propagating across agent-to-agent messaging, not an equivalent risk. |
-| **MITRE ATLAS** | [AML.T0051.000 — LLM Prompt Injection: Direct (Meta Prompt Extraction)](https://atlas.mitre.org/techniques/AML.T0051.000) | Direct prompt-injection technique used to extract hidden system-prompt content. |
-| **MITRE ATLAS** | [AML.T0057 — LLM Data Leakage](https://atlas.mitre.org/techniques/AML.T0057) | Technique covering disclosure of hidden context and other model-accessible sensitive data. |
-| **OWASP GenAI Data Security 2026 (v1.0)** | DSGAI02 — Agent Identity & Credential Exposure | Narrow overlap only: DSGAI02's secret-hygiene mitigation ("no secrets... embedded in prompts, memory contexts, or logs") addresses the same credentials-in-hidden-context failure as LLM08's Common Example #1 and Scenario #1; DSGAI02's primary scope (multi-agent OAuth/NHI sprawl) is not equivalent to LLM08. |
+An LLM has a system prompt prohibiting the generation of offensive content, external links, and code execution. An attacker extracts this system prompt and uses the disclosed restrictions to craft a prompt injection attack that bypasses them.

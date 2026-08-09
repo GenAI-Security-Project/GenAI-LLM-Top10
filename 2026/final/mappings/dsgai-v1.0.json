@@ -1,0 +1,96 @@
+{
+  "framework": "OWASP GenAI Data Security 2026 (DSGAI)",
+  "version": "v1.0 (2026-03-17)",
+  "source_url": "https://genai.owasp.org/resource/owasp-genai-data-security-risks-mitigations-2026/",
+  "accessed": "2026-07-11",
+  "element_type": "risk-category",
+  "coarse_level": "risk-categories",
+  "elements": [
+    {
+      "id": "DSGAI01",
+      "title": "Sensitive Data Leakage"
+    },
+    {
+      "id": "DSGAI02",
+      "title": "Agent Identity & Credential Exposure"
+    },
+    {
+      "id": "DSGAI03",
+      "title": "Shadow AI & Unsanctioned Data Flows"
+    },
+    {
+      "id": "DSGAI04",
+      "title": "Data, Model & Artifact Poisoning"
+    },
+    {
+      "id": "DSGAI05",
+      "title": "Data Integrity & Validation Failures"
+    },
+    {
+      "id": "DSGAI06",
+      "title": "Tool, Plugin & Agent Data Exchange Risks"
+    },
+    {
+      "id": "DSGAI07",
+      "title": "Data Governance, Lifecycle & Classification for AI Systems"
+    },
+    {
+      "id": "DSGAI08",
+      "title": "Non-Compliance & Regulatory Violations"
+    },
+    {
+      "id": "DSGAI09",
+      "title": "Multimodal Capture & Cross-Channel Data Leakage"
+    },
+    {
+      "id": "DSGAI10",
+      "title": "Synthetic Data, Anonymization & Transformation Pitfalls"
+    },
+    {
+      "id": "DSGAI11",
+      "title": "Cross-Context & Multi-User Conversation Bleed"
+    },
+    {
+      "id": "DSGAI12",
+      "title": "Unsafe Natural-Language Data Gateways (LLM-to-SQL/Graph)"
+    },
+    {
+      "id": "DSGAI13",
+      "title": "Vector Store Platform Data Security"
+    },
+    {
+      "id": "DSGAI14",
+      "title": "Excessive Telemetry & Monitoring Leakage"
+    },
+    {
+      "id": "DSGAI15",
+      "title": "Over-Broad Context Windows & Prompt Over-Sharing"
+    },
+    {
+      "id": "DSGAI16",
+      "title": "Endpoint & Browser Assistant Overreach"
+    },
+    {
+      "id": "DSGAI17",
+      "title": "Data Availability & Resilience Failures in AI Pipelines"
+    },
+    {
+      "id": "DSGAI18",
+      "title": "Inference & Data Reconstruction"
+    },
+    {
+      "id": "DSGAI19",
+      "title": "Human-in-the-Loop & Labeler Overexposure"
+    },
+    {
+      "id": "DSGAI20",
+      "title": "Model Exfiltration & IP Replication"
+    },
+    {
+      "id": "DSGAI21",
+      "title": "Disinformation & Integrity Attacks via Data Poisoning"
+    }
+  ],
+  "verification": "all-verified",
+  "notes": "All 21 IDs and titles confirmed directly against the authoritative PDF (\"OWASP GenAI Data Security Risks & Mitigations 2026,\" Version 1.0 / March 2026) retrieved from the pinned source URL's download endpoint (https://genai.owasp.org/download/53429/, 103 pages). Titles taken verbatim from the PDF Table of Contents and per-entry section headings (em-dash \"—\" separator in source; the em-dash and ID prefix are stripped here, ampersands preserved). Three ToC lines wrapped and were resolved from the body headings: DSGAI07 \"...for AI Systems\", DSGAI10 \"...Transformation Pitfalls\", DSGAI12 \"...(LLM-to-SQL/Graph)\".\n\nCross-check passed on numeric ID against two OWASP-affiliated crosswalk sources, both carrying DSGAI01-DSGAI21 entry JSONs: the official OWASP org repo GenAI-Security-Project/GenAI-Data-Security-Initiative (crosswalk/data/entries/, source_list \"DSGAI-2026\") and the contributor repo emmanuelgjr/GenAI-Security-Crosswalk (data/entries/). Both map 1:1 to the PDF on numeric ID. Their machine-readable \"name\" fields use normalized wording (ampersand rendered as \"and\", parentheticals dropped, and British \"Anonymisation\" in the emmanuelgjr repo) and should NOT be treated as canonical titles; map on the numeric ID as instructed. The official org repo README reproduces the fuller canonical titles matching the PDF exactly.\n\nCaveat / source inconsistency to carry downstream: the PDF's root-cause narrative prose (not the ToC or headings) contains stray references to a wider numbering — \"DSGAI01–DSGAI25\", \"DSGAI19, DSGAI21, DSGAI25\", and \"DSGAI26 (Disinformation & Integrity Attacks via Data Poisoning)\" — an apparent leftover from an expanded draft numbering. The authoritative enumeration is unambiguously 21 entries (DSGAI01-DSGAI21) per the ToC and section headings; disinformation is canonically DSGAI21, not DSGAI26. Ignore the stray DSGAI22-DSGAI26 prose tokens when mapping."
+}

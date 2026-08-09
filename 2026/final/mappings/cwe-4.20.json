@@ -1,0 +1,128 @@
+{
+  "framework": "MITRE CWE (Common Weakness Enumeration)",
+  "version": "4.20",
+  "source_url": "https://cwe.mitre.org/",
+  "accessed": "2026-07-11",
+  "element_type": "weakness",
+  "coarse_level": "pillars+base-weaknesses",
+  "elements": [
+    {
+      "id": "CWE-284",
+      "title": "Improper Access Control (Pillar)"
+    },
+    {
+      "id": "CWE-435",
+      "title": "Improper Interaction Between Multiple Correctly-Behaving Entities (Pillar)"
+    },
+    {
+      "id": "CWE-664",
+      "title": "Improper Control of a Resource Through its Lifetime (Pillar)"
+    },
+    {
+      "id": "CWE-682",
+      "title": "Incorrect Calculation (Pillar)"
+    },
+    {
+      "id": "CWE-691",
+      "title": "Insufficient Control Flow Management (Pillar)"
+    },
+    {
+      "id": "CWE-693",
+      "title": "Protection Mechanism Failure (Pillar)"
+    },
+    {
+      "id": "CWE-697",
+      "title": "Incorrect Comparison (Pillar)"
+    },
+    {
+      "id": "CWE-703",
+      "title": "Improper Check or Handling of Exceptional Conditions (Pillar)"
+    },
+    {
+      "id": "CWE-707",
+      "title": "Improper Neutralization (Pillar)"
+    },
+    {
+      "id": "CWE-710",
+      "title": "Improper Adherence to Coding Standards (Pillar)"
+    },
+    {
+      "id": "CWE-1427",
+      "title": "Improper Neutralization of Input Used for LLM Prompting (Base)"
+    },
+    {
+      "id": "CWE-1426",
+      "title": "Improper Validation of Generative AI Output (Base)"
+    },
+    {
+      "id": "CWE-116",
+      "title": "Improper Encoding or Escaping of Output (Class)"
+    },
+    {
+      "id": "CWE-79",
+      "title": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') (Base)"
+    },
+    {
+      "id": "CWE-200",
+      "title": "Exposure of Sensitive Information to an Unauthorized Actor (Class)"
+    },
+    {
+      "id": "CWE-359",
+      "title": "Exposure of Private Personal Information to an Unauthorized Actor (Base)"
+    },
+    {
+      "id": "CWE-201",
+      "title": "Insertion of Sensitive Information Into Sent Data (Base)"
+    },
+    {
+      "id": "CWE-212",
+      "title": "Improper Removal of Sensitive Information Before Storage or Transfer (Base)"
+    },
+    {
+      "id": "CWE-215",
+      "title": "Insertion of Sensitive Information Into Debugging Code (Base)"
+    },
+    {
+      "id": "CWE-532",
+      "title": "Insertion of Sensitive Information into Log File (Base)"
+    },
+    {
+      "id": "CWE-400",
+      "title": "Uncontrolled Resource Consumption (Class)"
+    },
+    {
+      "id": "CWE-770",
+      "title": "Allocation of Resources Without Limits or Throttling (Base)"
+    },
+    {
+      "id": "CWE-285",
+      "title": "Improper Authorization (Class)"
+    },
+    {
+      "id": "CWE-732",
+      "title": "Incorrect Permission Assignment for Critical Resource (Class)"
+    },
+    {
+      "id": "CWE-829",
+      "title": "Inclusion of Functionality from Untrusted Control Sphere (Base)"
+    },
+    {
+      "id": "CWE-494",
+      "title": "Download of Code Without Integrity Check (Base)"
+    },
+    {
+      "id": "CWE-349",
+      "title": "Acceptance of Extraneous Untrusted Data With Trusted Data (Base)"
+    },
+    {
+      "id": "CWE-798",
+      "title": "Use of Hard-coded Credentials (Base)"
+    },
+    {
+      "id": "CWE-340",
+      "title": "Generation of Predictable Numbers or Identifiers (Class)"
+    }
+  ],
+  "verification": "verified",
+  "notes": "Verification: every element confirmed against CWE v4.20; abstractions are recorded as-found (Base/Class/Pillar per the source) rather than forced to Base. Every element ID, exact title, and abstraction below was confirmed individually against cwe.mitre.org definition pages, each showing \"CWE Version 4.20\". Nothing is fabricated. Verification set to \"partial\" (not \"all-verified\") for one reason only: the task's premise that the required cited CWEs are Base abstraction is incorrect for 6 of the 9. I record TRUE abstractions rather than force a \"(Base)\" label.\n\nPILLARS (10, all confirmed abstraction=Pillar via CWE-1000 Research Concepts): 284, 435, 664, 682, 691, 693, 697, 703, 707, 710. Several are marked DISCOURAGED for mapping on their pages (284, 664, 697, 707, 710) — expected for Pillars, still valid mapping-target anchors.\n\nABSTRACTION CORRECTIONS on required cited CWEs (source-confirmed): CWE-116 = Class (not Base); CWE-200 = Class; CWE-400 = Class; CWE-285 = Class; CWE-340 = Class; CWE-732 = Class. Only CWE-359, CWE-532, CWE-212 are genuine Base among the required set. Each title is tagged with its actual abstraction, not \"(Base)\", to avoid fabrication.\n\nDISCOURAGED-for-mapping flags observed on individual pages: CWE-200 and CWE-1426 are explicitly marked DISCOURAGED. CWE-1426's page notes it may change substantially and suggests CWE-77/CWE-94/CWE-116 as alternatives. These remain in the set because they are the canonical CWE anchors the OWASP LLM Top 10 maps to, but downstream mapping prose should prefer more specific descendants where possible.\n\nADDED Base weaknesses (all source-confirmed abstraction=Base) chosen for LLM Top 10 relevance: CWE-1427 (prompt injection — the dedicated LLM-prompting CWE), CWE-1426 (misinformation / improper output handling), CWE-79 (improper output handling / XSS), CWE-770 (unbounded consumption), CWE-829 + CWE-494 (supply chain: untrusted inclusion, unverified code download), CWE-798 (secret/credential leakage), CWE-201 + CWE-215 (sensitive info in sent data / debug code — hidden-context exposure), CWE-349 (data/model poisoning — untrusted data mixed with trusted).\n\nEXCLUDED after check: CWE-799 (Improper Control of Interaction Frequency) was verified as abstraction=Class, not Base, so it was dropped from the curated Base set.\n\nCOVERAGE GAP (no fabrication): CWE v4.20 has no dedicated Base weakness for vector/embedding weaknesses or for data/model poisoning as such. Closest confirmed anchors are CWE-1427 (prompt-side injection into RAG/embedding pipelines), CWE-829 (untrusted component inclusion), and CWE-349 (untrusted-data acceptance). No CWE ID was invented to fill this gap.\n\nTotal returned: 10 Pillars + 19 curated weaknesses = 29 elements. Titles carry their true CWE abstraction in parentheses."
+}

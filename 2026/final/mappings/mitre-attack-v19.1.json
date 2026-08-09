@@ -1,0 +1,72 @@
+{
+  "framework": "MITRE ATT&CK",
+  "version": "v19.1",
+  "source_url": "https://attack.mitre.org/versions/v19/tactics/enterprise/",
+  "accessed": "2026-07-11",
+  "element_type": "attack-technique",
+  "coarse_level": "tactics",
+  "elements": [
+    {
+      "id": "TA0043",
+      "title": "Reconnaissance"
+    },
+    {
+      "id": "TA0042",
+      "title": "Resource Development"
+    },
+    {
+      "id": "TA0001",
+      "title": "Initial Access"
+    },
+    {
+      "id": "TA0002",
+      "title": "Execution"
+    },
+    {
+      "id": "TA0003",
+      "title": "Persistence"
+    },
+    {
+      "id": "TA0004",
+      "title": "Privilege Escalation"
+    },
+    {
+      "id": "TA0005",
+      "title": "Stealth"
+    },
+    {
+      "id": "TA0112",
+      "title": "Defense Impairment"
+    },
+    {
+      "id": "TA0006",
+      "title": "Credential Access"
+    },
+    {
+      "id": "TA0007",
+      "title": "Discovery"
+    },
+    {
+      "id": "TA0008",
+      "title": "Lateral Movement"
+    },
+    {
+      "id": "TA0009",
+      "title": "Collection"
+    },
+    {
+      "id": "TA0011",
+      "title": "Command and Control"
+    },
+    {
+      "id": "TA0010",
+      "title": "Exfiltration"
+    },
+    {
+      "id": "TA0040",
+      "title": "Impact"
+    }
+  ],
+  "verification": "all-verified",
+  "notes": "All 15 Enterprise tactics confirmed from the authoritative source at v19.1. Cross-checked two independent pages that agreed exactly: the version-pinned page (https://attack.mitre.org/versions/v19/tactics/enterprise/) and the live tactics list (https://attack.mitre.org/tactics/enterprise/), both of which report \"ATT&CK v19.1\" as the current version. The v19 split of the former Defense Evasion is present and verified: TA0005 is now \"Stealth\" (renamed from Defense Evasion) and TA0112 \"Defense Impairment\" is the newly separated tactic. Both split tactics were additionally confirmed on their individual pages (https://attack.mitre.org/tactics/TA0005/ -> Stealth; https://attack.mitre.org/tactics/TA0112/ -> Defense Impairment). IDs are non-sequential by design (TA numbers reflect historical assignment order, not matrix column order); the ordering above follows the Enterprise matrix column order. No fabrication or unconfirmed elements."
+}

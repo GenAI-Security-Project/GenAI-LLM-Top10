@@ -1,0 +1,60 @@
+{
+  "framework": "NIST AI 600-1 (Generative AI Profile)",
+  "version": "v1.0 (July 2024)",
+  "source_url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+  "accessed": "2026-07-11",
+  "element_type": "risk-category",
+  "coarse_level": "risk-categories",
+  "elements": [
+    {
+      "id": "CBRN Information or Capabilities",
+      "title": "CBRN Information or Capabilities"
+    },
+    {
+      "id": "Confabulation",
+      "title": "Confabulation"
+    },
+    {
+      "id": "Dangerous, Violent, or Hateful Content",
+      "title": "Dangerous, Violent, or Hateful Content"
+    },
+    {
+      "id": "Data Privacy",
+      "title": "Data Privacy"
+    },
+    {
+      "id": "Environmental Impacts",
+      "title": "Environmental Impacts"
+    },
+    {
+      "id": "Harmful Bias or Homogenization",
+      "title": "Harmful Bias or Homogenization"
+    },
+    {
+      "id": "Human-AI Configuration",
+      "title": "Human-AI Configuration"
+    },
+    {
+      "id": "Information Integrity",
+      "title": "Information Integrity"
+    },
+    {
+      "id": "Information Security",
+      "title": "Information Security"
+    },
+    {
+      "id": "Intellectual Property",
+      "title": "Intellectual Property"
+    },
+    {
+      "id": "Obscene, Degrading, and/or Abusive Content",
+      "title": "Obscene, Degrading, and/or Abusive Content"
+    },
+    {
+      "id": "Value Chain and Component Integration",
+      "title": "Value Chain and Component Integration"
+    }
+  ],
+  "verification": "all-verified",
+  "notes": "Fetched the PDF from the pinned URL, confirmed identity (\"NIST AI 600-1, Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile, July 2024\"), converted to text with pdftotext, and confirmed all 12 category names against the canonical enumerated definitional list in Section 2 (items 1-12, PDF text lines 216-274) and the Section-2 subsection headings 2.1-2.12. IDs: NIST AI 600-1 assigns NO alphanumeric IDs to these categories; per instructions the exact category name is used as both id and title. Section numbers (2.1-2.12) exist but are not stable element IDs and were not used. One internal inconsistency in the source: the Section 2.6 subsection heading reads \"Harmful Bias and Homogenization\" (with \"and\"), while the enumerated 12-item list, the item definitions, and the document's own summary use \"Harmful Bias or Homogenization\" (with \"or\"). The \"or\" form was chosen as it is the version used in the primary enumerated list and matches the requested wording. Category 7 renders in the PDF with an \"fi\" ligature (\"Conﬁguration\"); the correct plain text is \"Human-AI Configuration\". Version label \"v1.0\" is the pinned-request designation; the document masthead states only \"NIST AI 600-1 / July 2024\" without an explicit \"v1.0\" string."
+}

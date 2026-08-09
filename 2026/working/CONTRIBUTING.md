@@ -1,5 +1,8 @@
 # Contributing to the 2026 Cycle
 
+> [!WARNING]
+> **The 2026 release cycle is complete.** This guide is retained as a historical record and should not be used to start new 2026-cycle work. [Get the published release](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/), [read the canonical source](../final/), or use the repository's post-release issue forms to report corrections and feedback.
+
 Thank you for helping build the **OWASP Top 10 for Large Language Model Applications — 2026** release. This document is the step-by-step guide for contributing to this folder (`2026/`). It covers two distinct tracks:
 
 1. **[Track A — Propose a new entry](#track-a--propose-a-new-entry)** — community members who want to write up a vulnerability or risk that is not currently in the list.
