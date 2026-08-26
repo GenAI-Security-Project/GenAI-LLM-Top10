@@ -34,19 +34,29 @@ class FakeResponse:
         return self._payload
 
 
-def draft_payload(deposit_id: int = 111, files: list | None = None) -> dict:
+def draft_payload(
+    deposit_id: int = 111,
+    files: list | None = None,
+    bucket_base: str = "https://zenodo.org/api",
+) -> dict:
+    # Zenodo returns the bucket on its own host. `bucket_base` lets a test hand
+    # back a foreign host instead, which the script must refuse to upload to.
     return {
         "id": deposit_id,
         "files": files or [],
         "links": {
-            "bucket": f"https://example.invalid/api/files/bucket-{deposit_id}",
+            "bucket": f"{bucket_base}/files/bucket-{deposit_id}",
             "html": f"https://example.invalid/deposit/{deposit_id}",
             "latest_draft": f"https://example.invalid/api/deposit/depositions/{deposit_id}",
         },
     }
 
 
-def install_fake_requests(concept_exists: bool, inherited: list | None = None) -> None:
+def install_fake_requests(
+    concept_exists: bool,
+    inherited: list | None = None,
+    bucket_base: str = "https://zenodo.org/api",
+) -> None:
     """Swap in a `requests` module that records calls and returns canned data."""
 
     def record(method):
@@ -55,9 +65,9 @@ def install_fake_requests(concept_exists: bool, inherited: list | None = None) -
             if method == "GET" and "/records/" in url:
                 return FakeResponse({"id": 999})
             if method == "GET" and "/deposit/depositions/" in url:
-                return FakeResponse(draft_payload(111, inherited))
+                return FakeResponse(draft_payload(111, inherited, bucket_base))
             if method == "POST" and url.endswith("/actions/newversion"):
-                return FakeResponse(draft_payload(111, inherited))
+                return FakeResponse(draft_payload(111, inherited, bucket_base))
             if method == "POST" and url.endswith("/actions/publish"):
                 return FakeResponse(
                     {
@@ -67,10 +77,10 @@ def install_fake_requests(concept_exists: bool, inherited: list | None = None) -
                     }
                 )
             if method == "POST" and url.endswith("/deposit/depositions"):
-                return FakeResponse(draft_payload(111))
+                return FakeResponse(draft_payload(111, None, bucket_base))
             if method == "DELETE":
                 return FakeResponse({})
-            return FakeResponse(draft_payload(111, inherited))
+            return FakeResponse(draft_payload(111, inherited, bucket_base))
 
         return call
 
@@ -92,10 +102,17 @@ def sequence() -> list[tuple[str, str]]:
     return [(m, u.split("/api", 1)[-1] if "/api" in u else u) for m, u, _ in CALLS]
 
 
-def run(name: str, *, concept: str | None, publish: bool, sandbox: bool, inherited=None):
-    global CALLS
-    CALLS = []
-    install_fake_requests(bool(concept), inherited)
+def build_inputs():
+    """Bundle and metadata, rebuilt from the repository each time."""
+    config = z.load_config()
+    cff = z.load_citation()
+    spec = config["deposits"]["top10"]
+    files = z.collect_files(spec, "2026")
+    bundle = z.write_bundle(files, Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp") / "t.zip")
+    return bundle, z.build_metadata(cff, spec, "2026", "2026-06-15")
+
+
+def set_env(concept: str | None) -> None:
     import os
 
     os.environ["ZENODO_TOKEN"] = "fake-token"
@@ -104,12 +121,23 @@ def run(name: str, *, concept: str | None, publish: bool, sandbox: bool, inherit
     else:
         os.environ.pop("TEST_CONCEPT", None)
 
-    config = z.load_config()
-    cff = z.load_citation()
-    spec = config["deposits"]["top10"]
-    files = z.collect_files(spec, "2026")
-    bundle = z.write_bundle(files, Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp") / "t.zip")
-    metadata = z.build_metadata(cff, spec, "2026", "2026-06-15")
+
+def run(
+    name: str,
+    *,
+    concept: str | None,
+    publish: bool,
+    sandbox: bool,
+    inherited=None,
+    bucket_base: str | None = None,
+):
+    global CALLS
+    CALLS = []
+    base = "https://sandbox.zenodo.org/api" if sandbox else "https://zenodo.org/api"
+    install_fake_requests(bool(concept), inherited, bucket_base or base)
+    set_env(concept)
+
+    bundle, metadata = build_inputs()
     print(f"\n{name}")
     z.deposit(bundle, metadata, concept_env="TEST_CONCEPT", sandbox=sandbox, publish=publish)
     return metadata
@@ -140,7 +168,19 @@ people = [a for a in z.load_citation()["authors"] if "name" not in a]
 check("every author is deposited", len(sent["creators"]) == len(people), str(len(sent["creators"])))
 check("author order survives", sent["creators"][-1]["name"] == "Klondike, Gavin")
 check("contributor type is valid", sent["contributors"][0]["type"] == "HostingInstitution")
-check("token passed as access_token", all(k.get("params", {}).get("access_token") == "fake-token" for _, _, k in CALLS))
+# The token belongs in a header. Query strings reach access logs, egress proxies
+# and Referer headers, all of which outlive the request.
+check(
+    "token sent as an Authorization Bearer header",
+    all((k.get("headers") or {}).get("Authorization") == "Bearer fake-token" for _, _, k in CALLS),
+)
+check(
+    "token never reaches a query string",
+    not any(
+        "access_token" in u or "access_token" in (k.get("params") or {})
+        for _, u, k in CALLS
+    ),
+)
 
 run(
     "new version with inherited files, sandbox, draft only",
@@ -158,6 +198,22 @@ check("does NOT publish in draft mode", not any(u.endswith("/actions/publish") f
 ours = [u for _, u, _ in CALLS if "zenodo.org" in u]
 check("uses the sandbox API base", ours and all(u.startswith("https://sandbox.zenodo.org/api") for u in ours))
 check("never touches production", not any(u.startswith("https://zenodo.org/api") for u in ours))
+
+# The bucket URL arrives in Zenodo's response. Attaching the token to whatever
+# host it names would hand the credential to anyone who can shape that response.
+CALLS = []
+install_fake_requests(False, None, "https://evil.invalid/api")
+set_env(None)
+bundle, metadata = build_inputs()
+print("\nbucket URL on a host the script did not verify")
+try:
+    z.deposit(bundle, metadata, concept_env="TEST_CONCEPT", sandbox=False, publish=True)
+    refused = False
+except SystemExit:
+    refused = True
+check("refuses to upload", refused)
+check("sends nothing to the foreign host", not any("evil.invalid" in u for _, u, _ in CALLS))
+check("does not publish", not any(u.endswith("/actions/publish") for _, u, _ in CALLS))
 
 print()
 if FAILURES:
