@@ -1,0 +1,147 @@
+# Machine-readable citation metadata. GitHub shows it as "Cite this repository",
+# and the release workflow builds the Zenodo record from it.
+# Spec: https://citation-file-format.github.io
+#
+# TODO(orcid): several authors still have no `orcid:`. Adding one lets indexers
+#   tell apart authors with common names, and it carries through to Zenodo.
+#   The author list and its order follow the Acknowledgements page of the
+#   published 2026 PDF: project leads, then entry leads LLM01 to LLM10.
+
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "OWASP Top 10 for Large Language Model Applications"
+abstract: >-
+  OWASP Top 10 for LLM Applications 2026 is the latest community-driven guide to
+  the most critical security risks facing applications powered by large language
+  models. Developed by hundreds of AI security experts, this edition introduces
+  updated rankings, expanded threat coverage, and new research grounded in
+  thousands of real-world AI security incidents. The guide provides practical
+  explanations, attack scenarios, and actionable mitigations for developers,
+  architects, security teams, and CISOs, while mapping risks to leading industry
+  frameworks including NIST, MITRE ATLAS, CWE, and the OWASP Top 10 for Agentic
+  Applications, making it an essential resource for building and securing modern
+  AI.
+type: dataset
+version: "2026"
+date-released: 2026-08-04
+license: CC-BY-SA-4.0
+url: "https://genai.owasp.org/llm-top-10/"
+repository-code: "https://github.com/GenAI-Security-Project/GenAI-LLM-Top10"
+# Concept DOI: always resolves to the newest edition. Cite this one.
+doi: 10.5281/zenodo.22109014
+keywords:
+  - OWASP
+  - LLM security
+  - generative AI
+  - AI security
+  - application security
+  - prompt injection
+  - threat modeling
+authors:
+  - given-names: Steve
+    family-names: Wilson
+  - given-names: Rock
+    family-names: Lambros
+    orcid: "https://orcid.org/0009-0000-7853-4836"
+  - given-names: Rachel
+    family-names: James
+  - given-names: Emmanuel
+    family-names: Guilherme
+  - given-names: Ken
+    family-names: Huang
+    orcid: "https://orcid.org/0009-0004-6502-3673"
+  - given-names: Andy
+    family-names: Smith
+  - given-names: John
+    family-names: Sotiropoulos
+  - given-names: Stefano
+    family-names: Amorelli
+    orcid: "https://orcid.org/0009-0004-4917-0999"
+  - given-names: Sumeet
+    family-names: Jeswani
+    orcid: "https://orcid.org/0009-0007-2477-9302"
+  - given-names: Mark
+    family-names: Roxberry
+  - given-names: Anitha
+    family-names: Dakamarri
+  - given-names: Sahil
+    family-names: Mehta
+  - given-names: Venkata Sai Kishore
+    family-names: Modalavalasa
+  - given-names: Alex
+    family-names: Leung
+  - given-names: Vinnie
+    family-names: Giarrusso
+  - given-names: Sonu
+    family-names: Kumar
+  - given-names: Savio
+    family-names: Dsouza
+  - given-names: Arshi
+    family-names: Chadha
+    orcid: "https://orcid.org/0009-0009-6479-5811"
+  - given-names: Rico
+    family-names: Komenda
+  - given-names: Gavin
+    family-names: Klondike
+  - name: "OWASP GenAI Security Project"
+    website: "https://genai.owasp.org"
+
+preferred-citation:
+  type: report
+  title: "OWASP Top 10 for Large Language Model Applications"
+  institution:
+    name: "OWASP Foundation"
+    website: "https://owasp.org"
+  version: "2026"
+  year: 2026
+  month: 8
+  license: CC-BY-SA-4.0
+  url: "https://genai.owasp.org/llm-top-10/"
+  # Concept DOI: always resolves to the newest edition. Cite this one.
+  doi: 10.5281/zenodo.22109014
+  authors:
+    - given-names: Steve
+      family-names: Wilson
+    - given-names: Rock
+      family-names: Lambros
+      orcid: "https://orcid.org/0009-0000-7853-4836"
+    - given-names: Rachel
+      family-names: James
+    - given-names: Emmanuel
+      family-names: Guilherme
+    - given-names: Ken
+      family-names: Huang
+      orcid: "https://orcid.org/0009-0004-6502-3673"
+    - given-names: Andy
+      family-names: Smith
+    - given-names: John
+      family-names: Sotiropoulos
+    - given-names: Stefano
+      family-names: Amorelli
+      orcid: "https://orcid.org/0009-0004-4917-0999"
+    - given-names: Sumeet
+      family-names: Jeswani
+      orcid: "https://orcid.org/0009-0007-2477-9302"
+    - given-names: Mark
+      family-names: Roxberry
+    - given-names: Anitha
+      family-names: Dakamarri
+    - given-names: Sahil
+      family-names: Mehta
+    - given-names: Venkata Sai Kishore
+      family-names: Modalavalasa
+    - given-names: Alex
+      family-names: Leung
+    - given-names: Vinnie
+      family-names: Giarrusso
+    - given-names: Sonu
+      family-names: Kumar
+    - given-names: Savio
+      family-names: Dsouza
+    - given-names: Arshi
+      family-names: Chadha
+      orcid: "https://orcid.org/0009-0009-6479-5811"
+    - given-names: Rico
+      family-names: Komenda
+    - given-names: Gavin
+      family-names: Klondike
