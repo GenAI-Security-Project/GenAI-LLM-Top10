@@ -258,6 +258,30 @@ def api_call(response, what: str) -> dict:
     return response.json() if response.content else {}
 
 
+def upload_url(draft: dict, base: str, filename: str) -> str:
+    """The upload target for the bundle, once its host has been checked.
+
+    Zenodo names the bucket in its own response. The token is about to be
+    attached to that URL, so anything able to shape the response could otherwise
+    redirect a `deposit:write` credential to a host of its choosing, or downgrade
+    it to cleartext. Fail closed unless the bucket sits on the API host the
+    script chose and arrives over https.
+
+    Scheme and host exit separately. ZENODO.md documents the error text an
+    operator has to act on, and the two failure modes call for different action.
+    """
+    bucket = (draft.get("links") or {}).get("bucket")
+    if not bucket:
+        sys.exit("error: Zenodo returned no bucket link for the draft")
+    if urlparse(bucket).scheme != "https":
+        sys.exit(f"error: bucket URL is not https: {bucket!r}")
+    expected = urlparse(base).netloc
+    found = urlparse(bucket).netloc
+    if found != expected:
+        sys.exit(f"error: bucket host {found!r} does not match the API host {expected!r}")
+    return f"{bucket}/{filename}"
+
+
 def deposit(
     bundle: Path,
     metadata: dict,
@@ -271,19 +295,21 @@ def deposit(
     if not token:
         sys.exit("error: ZENODO_TOKEN is not set")
     base = "https://sandbox.zenodo.org/api" if sandbox else "https://zenodo.org/api"
-    params = {"access_token": token}
+    # A header rather than an `access_token` query parameter: query strings are
+    # recorded by access logs, egress proxies and Referer headers.
+    headers = {"Authorization": f"Bearer {token}"}
     concept = os.environ.get(concept_env)
 
     if concept:
         print(f"creating a new version of concept record {concept}")
         latest = api_call(
-            requests.get(f"{base}/records/{concept}", params=params, timeout=TIMEOUT),
+            requests.get(f"{base}/records/{concept}", headers=headers, timeout=TIMEOUT),
             "resolving concept record",
         )
         versioned = api_call(
             requests.post(
                 f"{base}/deposit/depositions/{latest['id']}/actions/newversion",
-                params=params,
+                headers=headers,
                 timeout=TIMEOUT,
             ),
             "creating new version",
@@ -291,7 +317,7 @@ def deposit(
         draft_id = urlparse(versioned["links"]["latest_draft"]).path.rstrip("/").rsplit("/", 1)[-1]
         draft = api_call(
             requests.get(
-                f"{base}/deposit/depositions/{draft_id}", params=params, timeout=TIMEOUT
+                f"{base}/deposit/depositions/{draft_id}", headers=headers, timeout=TIMEOUT
             ),
             "fetching draft",
         )
@@ -300,7 +326,7 @@ def deposit(
             api_call(
                 requests.delete(
                     f"{base}/deposit/depositions/{draft['id']}/files/{stale['id']}",
-                    params=params,
+                    headers=headers,
                     timeout=TIMEOUT,
                 ),
                 f"removing inherited file {stale.get('filename')}",
@@ -309,19 +335,17 @@ def deposit(
         print(f"{concept_env} is unset, creating the first deposition")
         draft = api_call(
             requests.post(
-                f"{base}/deposit/depositions", params=params, json={}, timeout=TIMEOUT
+                f"{base}/deposit/depositions", headers=headers, json={}, timeout=TIMEOUT
             ),
             "creating deposition",
         )
 
+    # Resolved before the file is opened, so a rejected host stops the run
+    # without the token ever leaving the process.
+    target = upload_url(draft, base, bundle.name)
     with bundle.open("rb") as handle:
         api_call(
-            requests.put(
-                f"{draft['links']['bucket']}/{bundle.name}",
-                data=handle,
-                params=params,
-                timeout=TIMEOUT,
-            ),
+            requests.put(target, data=handle, headers=headers, timeout=TIMEOUT),
             f"uploading {bundle.name}",
         )
     print(f"uploaded {bundle.name} ({bundle.stat().st_size} bytes)")
@@ -329,7 +353,7 @@ def deposit(
     draft = api_call(
         requests.put(
             f"{base}/deposit/depositions/{draft['id']}",
-            params=params,
+            headers=headers,
             json={"metadata": metadata},
             timeout=TIMEOUT,
         ),
@@ -343,7 +367,7 @@ def deposit(
     published = api_call(
         requests.post(
             f"{base}/deposit/depositions/{draft['id']}/actions/publish",
-            params=params,
+            headers=headers,
             timeout=TIMEOUT,
         ),
         "publishing",
