@@ -263,12 +263,18 @@ def upload_url(draft: dict, base: str, filename: str) -> str:
 
     Zenodo names the bucket in its own response. The token is about to be
     attached to that URL, so anything able to shape the response could otherwise
-    redirect a `deposit:write` credential to a host of its choosing. Fail closed
-    when the bucket does not sit on the API host the script chose.
+    redirect a `deposit:write` credential to a host of its choosing, or downgrade
+    it to cleartext. Fail closed unless the bucket sits on the API host the
+    script chose and arrives over https.
+
+    Scheme and host exit separately. ZENODO.md documents the error text an
+    operator has to act on, and the two failure modes call for different action.
     """
     bucket = (draft.get("links") or {}).get("bucket")
     if not bucket:
         sys.exit("error: Zenodo returned no bucket link for the draft")
+    if urlparse(bucket).scheme != "https":
+        sys.exit(f"error: bucket URL is not https: {bucket!r}")
     expected = urlparse(base).netloc
     found = urlparse(bucket).netloc
     if found != expected:

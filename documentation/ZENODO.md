@@ -103,8 +103,10 @@ parameter. URLs carrying a credential get copied into access logs, egress
 proxies and `Referer` headers, all of which outlive the request.
 
 Zenodo names the upload bucket in its own response, and the script checks that
-the bucket sits on the same host as the API before attaching the token. If
-Zenodo ever moves file storage to a different host, the deposit stops with:
+bucket before attaching the token. Two things have to hold: the bucket sits on
+the same host as the API, and it arrives over https.
+
+If Zenodo ever moves file storage to a different host, the deposit stops with:
 
 ```text
 error: bucket host 'files.example.org' does not match the API host 'zenodo.org'
@@ -114,6 +116,16 @@ That is the check doing its job, not a broken bundle. Confirm the new host is
 really Zenodo's, then widen the comparison in `upload_url()`. Failing closed is
 deliberate: the alternative sends a `deposit:write` token wherever the response
 points.
+
+A bucket URL on the right host but the wrong scheme stops with:
+
+```text
+error: bucket URL is not https: 'http://zenodo.org/api/files/bucket-1'
+```
+
+Treat that one as a problem to report, not a comparison to widen. Uploading
+would put the token on the wire in cleartext, so there is no version of this
+worth allowing.
 
 ## Releasing
 
