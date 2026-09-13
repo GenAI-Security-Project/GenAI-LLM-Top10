@@ -1,0 +1,73 @@
+{
+  "framework": "GSPC (Global Safety & Performance Criteria)",
+  "version": "2026-09-13",
+  "publisher": "Council of AI (CSOAI Ltd, UK 16939677)",
+  "url": "https://councilof.ai/api/gspc",
+  "license": "CC-BY-4.0",
+  "description": "Independent behavioural measurement framework. 16 publicly measured axes, Ed25519-signed, merkle-anchored, Bitcoin-confirmed. Measurement, not certification.",
+  "axes_measured": 16,
+  "models_measured": 64,
+  "signed_cards": 257,
+  "mappings": {
+    "LLM01": {
+      "risk": "Prompt Injection",
+      "gspc_axes": ["jail", "safety", "art5-safeguard"],
+      "relevance": "●",
+      "note": "GSPC jail axis measures prompt injection resistance via standardized adversarial prompts. Art5-safeguard measures EU AI Act Art 5 prohibited-practices compliance."
+    },
+    "LLM02": {
+      "risk": "Sensitive Information Disclosure",
+      "gspc_axes": ["care", "governance"],
+      "relevance": "●",
+      "note": "GSPC care axis measures privacy-preserving behaviour. Governance axis measures data handling policies."
+    },
+    "LLM03": {
+      "risk": "Excessive Agency",
+      "gspc_axes": ["governance", "openness"],
+      "relevance": "●",
+      "note": "GSPC governance axis measures tool-use boundaries and permission scope. Openness measures transparency of capabilities."
+    },
+    "LLM04": {
+      "risk": "Supply Chain",
+      "gspc_axes": ["provenance", "conformance"],
+      "relevance": "●",
+      "note": "GSPC provenance tracks model lineage and data sources. Conformance measures adherence to declared capabilities."
+    },
+    "LLM05": {
+      "risk": "Data and Model Poisoning",
+      "gspc_axes": ["provenance", "continuity"],
+      "relevance": "●",
+      "note": "GSPC provenance tracks training data integrity. Continuity measures behavioural stability over time (drift detection)."
+    },
+    "LLM06": {
+      "risk": "Unbounded Consumption",
+      "gspc_axes": ["governance", "conformance"],
+      "relevance": "○",
+      "note": "GSPC governance measures resource limits and rate controls. Conformance measures adherence to declared usage boundaries."
+    },
+    "LLM07": {
+      "risk": "Misinformation",
+      "gspc_axes": ["safety", "openness", "continuity"],
+      "relevance": "●",
+      "note": "GSPC safety measures factual accuracy. Openness measures source attribution. Continuity measures consistency over time."
+    },
+    "LLM08": {
+      "risk": "Hidden Context Exposure",
+      "gspc_axes": ["care", "jail"],
+      "relevance": "●",
+      "note": "GSPC jail axis measures resistance to system prompt extraction. Care axis measures information boundary enforcement."
+    },
+    "LLM09": {
+      "risk": "Vector and Embedding Weaknesses",
+      "gspc_axes": ["provenance", "conformance"],
+      "relevance": "○",
+      "note": "GSPC provenance tracks retrieval source integrity. Conformance measures RAG pipeline adherence."
+    },
+    "LLM10": {
+      "risk": "Improper Output Handling",
+      "gspc_axes": ["safety", "conformance"],
+      "relevance": "●",
+      "note": "GSPC safety measures output safety. Conformance measures adherence to declared output formats."
+    }
+  }
+}
