@@ -2,6 +2,7 @@
   "framework": "MITRE ATLAS",
   "version": "content v2026.06 (format-version 6.0.0)",
   "source_url": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/v6/ATLAS-2026.06.yaml",
+  "source_sha": "sha256:b771de8b1489564b2838a709c7429849a9575dbd94073928817fe1a21661e70a",
   "accessed": "2026-07-11",
   "element_type": "attack-technique",
   "coarse_level": "tactics",

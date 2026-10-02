@@ -1,0 +1,35 @@
+name: Mapping integrity
+
+on:
+  pull_request:
+    paths:
+      - "2026/final/mappings/**"
+      - ".github/scripts/validate_mappings.py"
+      - ".github/scripts/test_validate_mappings.py"
+      - ".github/workflows/mapping-integrity.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "2026/final/mappings/**"
+      - ".github/scripts/validate_mappings.py"
+      - ".github/scripts/test_validate_mappings.py"
+      - ".github/workflows/mapping-integrity.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run offline negative tests
+        run: python .github/scripts/test_validate_mappings.py
+
+      - name: Validate mapping catalogs
+        run: python .github/scripts/validate_mappings.py --download

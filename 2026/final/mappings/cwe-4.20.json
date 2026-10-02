@@ -1,7 +1,8 @@
 {
   "framework": "MITRE CWE (Common Weakness Enumeration)",
   "version": "4.20",
-  "source_url": "https://cwe.mitre.org/",
+  "source_url": "https://cwe.mitre.org/data/xml/cwec_v4.20.xml.zip",
+  "source_sha": "sha256:3976f599e5e5200219a3108bb896d06e2a88fbb293369e1883cb423a5e9d7d50",
   "accessed": "2026-07-11",
   "element_type": "weakness",
   "coarse_level": "pillars+base-weaknesses",
