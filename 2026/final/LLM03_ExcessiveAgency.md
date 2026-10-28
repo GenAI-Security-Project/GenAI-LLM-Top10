@@ -67,11 +67,11 @@ The following actions can prevent Excessive Agency:
 
 #### 5. Execute tools in user's context
 
-  Track user authorization and security scope to ensure actions taken on behalf of a user are executed on downstream systems in the context of that specific user, and with the minimum privileges necessary. For example, an LLM tool that reads a user's code repo should require the user to authenticate via OAuth and with the minimum scope required. In delegated or multi-agent workflows, preserve the original user context and authorization scope across chained tool or agent calls, rather than relying only on the permissions of the calling agent or service identity.
+  Track user authorization and security scope to ensure actions taken on behalf of a user are executed on downstream systems in the context of that specific user, and with the minimum privileges necessary. For example, an LLM tool that reads a user's code repo should require the user to authenticate via OAuth and with the minimum scope required. In delegated or multi-agent workflows, preserve the original user context and enforce monotonic scope attenuation across chained tool or agent calls (`child_scope <= parent_scope` for permitted tools, resources, and validity window) so a downstream hop cannot widen privileges or restore a capability dropped by an upstream hop.
 
 #### 6. Require user approval
 
-  Use human-in-the-loop control to require a human to approve high-impact actions before they are taken. This may be implemented in a downstream system (outside the scope of the LLM application) or within the LLM tool itself. For example, an LLM-based app that creates and posts social media content on behalf of a user should include a user approval routine within the tool that implements the 'post' operation.
+  Use human-in-the-loop control to require a human to approve high-impact actions before they are taken. This may be implemented in a downstream system (outside the scope of the LLM application) or within the LLM tool itself. For example, an LLM-based app that creates and posts social media content on behalf of a user should include a user approval routine within the tool that implements the 'post' operation. For external or irreversible actions, approvals should be single-use and bound at the commit point to the exact tool, target resource or recipient, canonical argument digest, and active policy or state epoch, preventing post-approval argument mutation or replay.
 
 #### 7. Complete mediation
 
