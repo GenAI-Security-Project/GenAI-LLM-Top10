@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import sys
+import tempfile
 import types
 from pathlib import Path
 
@@ -108,10 +109,12 @@ def run(name: str, *, concept: str | None, publish: bool, sandbox: bool, inherit
     cff = z.load_citation()
     spec = config["deposits"]["top10"]
     files = z.collect_files(spec, "2026")
-    bundle = z.write_bundle(files, Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp") / "t.zip")
-    metadata = z.build_metadata(cff, spec, "2026", "2026-06-15")
-    print(f"\n{name}")
-    z.deposit(bundle, metadata, concept_env="TEST_CONCEPT", sandbox=sandbox, publish=publish)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        base_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tmp_dir)
+        bundle = z.write_bundle(files, base_dir / "t.zip")
+        metadata = z.build_metadata(cff, spec, "2026", "2026-06-15")
+        print(f"\n{name}")
+        z.deposit(bundle, metadata, concept_env="TEST_CONCEPT", sandbox=sandbox, publish=publish)
     return metadata
 
 

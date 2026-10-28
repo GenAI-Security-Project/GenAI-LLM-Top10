@@ -73,7 +73,7 @@ def resolve_edition(requested: str | None) -> str:
 def load_config() -> dict:
     if not CONFIG_PATH.is_file():
         sys.exit(f"error: missing {CONFIG_PATH.relative_to(REPO_ROOT)}")
-    config = json.loads(CONFIG_PATH.read_text())
+    config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     if not config.get("deposits"):
         sys.exit("error: config has no `deposits`")
     return config
@@ -96,7 +96,7 @@ def load_citation() -> dict:
         sys.exit("error: PyYAML is required (pip install pyyaml)")
     if not CITATION_PATH.is_file():
         sys.exit("error: missing CITATION.cff")
-    return yaml.safe_load(CITATION_PATH.read_text())
+    return yaml.safe_load(CITATION_PATH.read_text(encoding="utf-8"))
 
 
 # --------------------------------------------------------------------------- #

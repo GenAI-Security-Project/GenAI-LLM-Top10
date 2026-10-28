@@ -87,7 +87,7 @@ The **coverage matrix** shows, at a glance, which frameworks map to each risk. T
 | **LLM05** Data and Model Poisoning | ● DSGAI04 — Data, Model & Artifact Poisoning | The direct peer covering poisoning across pre-training, fine-tuning, embeddings, RAG, transfer learning, and distributed non-weight artifacts. |
 |  | ○ DSGAI05 — Data Integrity & Validation Failures | Strict, continuous validation of training and retraining inputs is the front-line defense against injected poison. |
 |  | ○ DSGAI21 — Disinformation & Integrity Attacks via Data Poisoning | Poisoning a knowledge base surfaces adversary-controlled content as authoritative output, an integrity attack driven by corrupted data. |
-|  | ○ DSGAI07 — Data Governance, Lifecycle & Classification | Dataset and model lineage tracked through an SBOM or ML-BOM plus version history enables rollback and forensics after a poisoning event. |
+|  | ○ DSGAI07 — Data Governance, Lifecycle & Classification for AI Systems | Dataset and model lineage tracked through an SBOM or ML-BOM plus version history enables rollback and forensics after a poisoning event. |
 | **LLM06** Unbounded Consumption | ● DSGAI20 — Model Exfiltration & IP Replication | Functional model cloning and extraction through high-volume querying steal the model's intellectual property. |
 |  | ● DSGAI17 — Data Availability & Resilience Failures in AI Pipelines | Resource-exhausting requests and output-explosion attacks render the service unresponsive, the availability failure that resilience controls target. |
 |  | ○ DSGAI04 — Data, Model & Artifact Poisoning | A single poisoned fine-tuning sample can break end-of-sequence behavior and drive runaway output generation as a denial-of-service vector. |
