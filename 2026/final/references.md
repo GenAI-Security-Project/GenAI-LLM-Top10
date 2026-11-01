@@ -178,6 +178,7 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 ## LLM10: Improper Output Handling
 
 - diskordia. (2025, July 24). *Inside CVE-2025-32711 (EchoLeak): Prompt injection meets AI exfiltration*. Hack The Box. https://www.hackthebox.com/blog/cve-2025-32711-echoleak-copilot-vulnerability
+- Kearney, J. (2026). *The evaluator trust boundary: A defect class in AI evaluation infrastructure, its prevalence across 36 organizations, and its removal by training* [Preprint]. Zenodo. https://doi.org/10.5281/zenodo.21633620
 - Klondike, G. (2023, June 6). *Threat modeling LLM applications*. AI Village. https://aivillage.org/blog/threat-modeling-llm/
 - The MITRE Corporation. (2026). *CWE-116: Improper encoding or escaping of output* (Common Weakness Enumeration List Version 4.20). https://cwe.mitre.org/data/definitions/116.html
 - OWASP. (2026). *C7: Model behavior, output control and safety assurance* (AI Security Verification Standard Version 1.0). https://github.com/OWASP/AISVS/blob/main/1.0/en/0x10-C07-Model-Behavior.md

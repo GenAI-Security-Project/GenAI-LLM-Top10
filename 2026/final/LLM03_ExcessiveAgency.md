@@ -87,6 +87,10 @@ The following options will not prevent Excessive Agency but can limit the level 
 
   Establish thresholds around the invocation of tools and implement circuit breakers that halt, rate-limit or escalate for human review if those thresholds are exceeded. Simple thresholds could be based on the number of invocations, whereas context-aware thresholds could be based on the cumulative value of an input parameter to a tool.
 
+#### 10. Fail closed when verification is unavailable
+
+  When policy requires an out-of-band check before a high-impact action, keep the action blocked until that check completes against an established channel and an approver the policy already names. Unavailability is not approval. Do not substitute a phone number, account, approver, or payment instruction that arrived in the request. Do not let the model appoint an alternate approver, or treat urgency in the request as a change in authorization state. If policy already names an alternate channel or approver, use only that alternate. Otherwise leave the change blocked. Bind a completed approval to the exact action and the exact values. A later change to either requires the applicable checks again. A callback is not a universal identity guarantee: the verification channel itself may be compromised, and that risk is handled by the same independent authorization logic as any other check, not by the model.
+
 ### Example Attack Scenarios
 
 #### Scenario #1: Hijacked Email Assistant
@@ -98,3 +102,15 @@ An LLM-based personal assistant app is granted access to an individual's mailbox
 * eliminating excessive autonomy by requiring the user to manually review and hit 'send' on every mail drafted by the LLM tool.
 
 Alternatively, the damage caused could be reduced by implementing rate limiting on the mail-sending interface.
+
+#### Scenario #2: Payment-instruction change when verification is unavailable
+
+This is a teaching walkthrough, not an observed incident, a model evaluation, or a tested mitigation. An assistant reads an untrusted request to change premium-finance payment instructions and prepares a draft for staff. Policy requires verification through an established contact channel and a separate authorized approver before any change is applied or instructions are sent. The independent enforcement point is the system that applies the change, not the model that drafted it.
+
+* A request that supplies new payment details is a draft. It is not evidence of approval.
+* If the established contact cannot be reached, verification is incomplete. The change stays blocked. A number supplied in the request is not a substitute channel.
+* If the normal approver is unavailable, the system uses only an alternate the policy already authorizes, or it leaves the change blocked. The model cannot appoint an approver.
+* Urgency in the request does not change the authorization state.
+* When verification and approval are both complete, the approval is bound to the exact action and the exact values. A later edit requires the checks again.
+
+The record that matters is the one that distinguishes a prepared draft from an executed change. Reviewers should also ask whether the verification channel itself may be compromised.
