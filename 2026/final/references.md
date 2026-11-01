@@ -118,6 +118,9 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 
 - Akkus, A. (2024, December 27). *You wouldn't download an AI: Extracting AI models from mobile apps*. Altay's Blog. https://altayakkus.substack.com/p/you-wouldnt-download-an-ai
 - Anthropic. (n.d.). *Vision* [Build with Claude documentation]. Retrieved July 11, 2026, from https://docs.anthropic.com/en/docs/build-with-claude/vision
+- Arsentev, E. (2026a). *The context economy of agentic LLM sessions: Where the money actually goes* [Technical report]. Zenodo. https://doi.org/10.5281/zenodo.22688706
+- Arsentev, E. (2026b). *Clear every third task: A measured U-curve in the context economy of coding agents* [Technical report]. Zenodo. https://doi.org/10.5281/zenodo.22699668
+- Arsentev, E. (2026c). *contextburn: A run-efficiency meter for language-model coding agents* [Software]. Zenodo. https://doi.org/10.5281/zenodo.22712985
 - Awan, A. A. (2023, March 24). *How watermarking can help mitigate the potential risks of LLMs?* KDnuggets. https://www.kdnuggets.com/2023/03/watermarking-help-mitigate-potential-risks-llms.html
 - Carlini, N., Paleka, D., Dvijotham, K. D., Steinke, T., Hayase, J., Cooper, A. F., Lee, K., Jagielski, M., Nasr, M., Conmy, A., Yona, I., Wallace, E., Rolnick, D., & Tramèr, F. (2024). *Stealing part of a production language model* (arXiv:2403.06634). arXiv. https://arxiv.org/abs/2403.06634  `[also cited in LLM02]`
 - DeepLearning.AI. (2023, March 15). *Runaway LLaMA: How Meta's LLaMA NLP model leaked*. The Batch. https://www.deeplearning.ai/the-batch/how-metas-llama-nlp-model-leaked/
@@ -128,6 +131,8 @@ References for the OWASP Top 10 for LLM Applications (2026), grouped by risk ent
 - Li, Y., Wang, J., Zhu, H., Lin, J., Chang, S., & Guo, M. (2025). *ThinkTrap: Denial-of-service attacks against black-box LLM services via infinite thinking* (arXiv:2512.07086). arXiv. https://arxiv.org/abs/2512.07086
 - moohax, & monoxgas. (2023, March 31). *Proof Pudding (CVE-2019-20634)* (AVID-2023-V009). AI Vulnerability Database. https://avidml.org/database/avid-2023-v009/
 - Nevo, S., Lahav, D., Karpur, A., Bar-On, Y., Bradley, H. A., & Alstott, J. (2024). *Securing AI model weights: Preventing theft and misuse of frontier models* (RR-A2849-1). RAND Corporation. https://www.rand.org/content/dam/rand/pubs/research_reports/RRA2800/RRA2849-1/RAND_RRA2849-1.pdf
+- Pandey, K. (2026a). *Token-economics for agentic AI: A cost model and tiered routing reference* [Technical report]. Zenodo. https://doi.org/10.5281/zenodo.23195511
+- Pandey, K. (2026b). *Cost per correct: Benchmark tasks for cost-per-correct-answer evaluation of LLM agents* [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.23439614
 - Radosevich, B., & Halloran, J. (2025). *MCP safety audit: LLMs with the Model Context Protocol allow major security exploits* (arXiv:2504.03767). arXiv. https://arxiv.org/abs/2504.03767
 - Sev, C. (2023, August 30). *Security update: Incident involving unauthorized admin access*. Sourcegraph. https://about.sourcegraph.com/blog/security-update-august-2023
 - Shumailov, I., Zhao, Y., Bates, D., Papernot, N., Mullins, R., & Anderson, R. (2020). *Sponge examples: Energy-latency attacks on neural networks* (arXiv:2006.03463). arXiv. https://arxiv.org/abs/2006.03463

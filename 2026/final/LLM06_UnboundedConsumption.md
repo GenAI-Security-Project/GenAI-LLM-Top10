@@ -6,7 +6,7 @@ Unbounded Consumption occurs when an LLM application allows excessive and uncont
 
 The high computational demands of LLMs, particularly in cloud and pay-per-token environments, make them inherently susceptible to resource exploitation and unauthorized usage. A defining characteristic of this threat is cost asymmetry. Attackers can trigger disproportionately expensive computation at negligible cost to themselves, whether through crafted prompts, stolen credentials, or manipulated workflows.
 
-This risk is compounded by the growing adoption of extended-thinking and reasoning models with large or insufficiently constrained output budgets, multimodal models that substantially increase per-request compute costs, agentic architectures and tool-use protocols (such as MCP) that amplify a single request into cascading downstream operations, and shared inference infrastructure that introduces new supply-chain attack surfaces. Traditional request-rate limiting alone is no longer sufficient. Effective defense demands token-aware cost controls, hard spending caps, agent-level circuit breakers, and continuous cost-attribution monitoring.
+This risk is compounded by the growing adoption of extended-thinking and reasoning models with large or insufficiently constrained output budgets, multimodal models that substantially increase per-request compute costs, agentic architectures and tool-use protocols (such as MCP) that amplify a single request into cascading downstream operations, and shared inference infrastructure that introduces new supply-chain attack surfaces. Traditional request-rate limiting alone is no longer sufficient. Effective defense demands token-aware cost controls, currency-denominated spending caps enforced at the model-invocation boundary, session-level ceilings on accumulated context, agent-level circuit breakers, and continuous cost-attribution monitoring.
 
 ### Common Examples of Risk
 
@@ -54,7 +54,9 @@ Apply rate limiting and user quotas to restrict the number of requests a single 
 
 #### 2. Hard Spending Caps
 
-Set non-overridable budget ceilings per API key, user, team, and cloud account. These must be enforcement mechanisms that halt inference when exceeded, rather than alerting thresholds that fast-accumulating workloads can outpace. Spending caps should also account for cost differences between modalities and tool protocols.
+Set non-overridable budget ceilings per API key, user, team, cloud account, run, and session. Denominate the ceiling in currency, not only in tokens. The same token budget does not cost the same amount on every model. A measured comparison of current models on identical agent workloads reported a per-task dollar spread of about 28 times between the cheapest and most expensive model, while framework overhead changed cost by at most about 3.9 times (Pandey, 2026a). A token ceiling that is safe on a small model therefore permits roughly an order of magnitude more spend on a frontier model. Keep token limits as a secondary, model-agnostic control.
+
+Caps must halt inference when exceeded. After-the-fact accounting, such as callbacks and billing monitors, cannot stop an agent loop that continues while the ledger catches up. Enforce the currency cap inside the model-invocation path, and refuse the call that would exceed the budget. That in-path halt is also what stops the runs this entry already describes: infinite-thinking loops (Li et al., 2025) and tool-chain token exhaustion (Dong et al., 2026) both burn budget inside the run. When setting the number, prefer cost per successful task over cost per call. A failing cheap model that retries can out-consume a reliable frontier model (Pandey, 2026b). Spending caps should also account for cost differences between modalities and tool protocols.
 
 #### 3. Resource Allocation Management
 
@@ -82,7 +84,9 @@ Monitor agent-tool interactions to identify if a particular session appears to b
 
 #### 9. Agentic Circuit Breakers
 
-Enforce step limits, recursion depth limits, time limits, and per-run cost ceilings on all agent executions. Use state hashing to detect recursive loops.
+Enforce step limits, recursion depth limits, time limits, and per-run cost ceilings on all agent executions. Use state hashing to detect recursive loops. Also track accumulated input tokens and model calls per session, and enforce a ceiling on both. Per-request token limits do not see session growth: each request can stay inside its own limit while the session re-sends an ever-larger context. Alert on sessions whose input-to-output token ratio or call count is far above the baseline.
+
+Measured coding-agent sessions show why the session is the right unit. Across 722 sessions and 150,902 model calls, context processing was 83.5% of modelled cost and generation was 16.5%. On that set, 3.3% of sessions produced 80% of cost, and sessions longer than 200 model calls were 8% of sessions but 92.2% of cost (Arsentev, 2026a). On a separate set of 168 sessions, 94.4% of billed tokens were re-reads of context already sent earlier in the same session (Arsentev, 2026c). Resetting context is not free. In a controlled comparison of session-length policies (36 runs, 4,086 tests, 0 failures), clearing after every task cost 25.3% more than clearing every third task (p = 0.0022), and never clearing cost 15.6% more (p = 0.0108) (Arsentev, 2026b). Choose the reset interval by measuring the workload, not by clearing as often as possible. These figures are technical reports on benign coding-agent workloads, not attacker behavior. They support the benign half of Scenario #8.
 
 #### 10. Inference Infrastructure Hardening
 
@@ -120,4 +124,4 @@ The attacker can publish a malicious tool (e.g. via a Claude Skill on an open-so
 
 #### Scenario #8: Growing LLM Context in Agentic Sessions
 
-An attacker or a benign user maintains an open agentic session, gradually injecting content so that each inference re-processes the full accumulated context. Per-turn cost climbs as the context grows, from roughly $0.001 on the first turn to about $0.50 by turn 100. No single request triggers rate limits because each stays individually within budget, yet the aggregate across many concurrent or long-lived sessions reaches hundreds of dollars.
+An attacker or a benign user maintains an open agentic session, gradually injecting content so that each inference re-processes the full accumulated context. Per-turn cost climbs as the context grows, from roughly $0.001 on the first turn to about $0.50 by turn 100. No single request triggers rate limits because each stays individually within budget, yet the aggregate across many concurrent or long-lived sessions reaches hundreds of dollars. Those dollar figures are illustrative. Measured sessions support the shape: cost is driven by accumulated context, not by the new turn, and a small fraction of long sessions produces most of the spend (Arsentev, 2026a). A session ceiling on accumulated input tokens and model calls, priced in currency and enforced at the model-invocation boundary, stops the climb before any single request exceeds a per-request limit.
