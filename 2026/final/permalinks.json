@@ -1,0 +1,152 @@
+{
+  "scheme": "https://genai.owasp.org/llmrisk/{slug}/",
+  "year": "2026",
+  "host": "https://genai.owasp.org",
+  "post_type": "llmrisk",
+  "llm01_decision": "normalize-year-infix",
+  "llm01_decision_note": "The published 2025 LLM01 page is /llmrisk/llm01-prompt-injection/, with no year infix. Every other 2025 page uses /llmrisk/llmXX2025-<slug>/. The 2026 set does not carry the LLM01 exception forward. All ten 2026 entries, including LLM01, use /llmrisk/llmXX2026-<slug>/, derived by lowercasing and hyphenating the H1 title.",
+  "entries": [
+    {
+      "id": "LLM01",
+      "year": "2026",
+      "title": "Prompt Injection",
+      "source": "2026/final/LLM01_PromptInjection.md",
+      "slug": "llm012026-prompt-injection",
+      "url": "https://genai.owasp.org/llmrisk/llm012026-prompt-injection/"
+    },
+    {
+      "id": "LLM02",
+      "year": "2026",
+      "title": "Sensitive Information Disclosure",
+      "source": "2026/final/LLM02_SensitiveInformationDisclosure.md",
+      "slug": "llm022026-sensitive-information-disclosure",
+      "url": "https://genai.owasp.org/llmrisk/llm022026-sensitive-information-disclosure/"
+    },
+    {
+      "id": "LLM03",
+      "year": "2026",
+      "title": "Excessive Agency",
+      "source": "2026/final/LLM03_ExcessiveAgency.md",
+      "slug": "llm032026-excessive-agency",
+      "url": "https://genai.owasp.org/llmrisk/llm032026-excessive-agency/"
+    },
+    {
+      "id": "LLM04",
+      "year": "2026",
+      "title": "Supply Chain",
+      "source": "2026/final/LLM04_SupplyChain.md",
+      "slug": "llm042026-supply-chain",
+      "url": "https://genai.owasp.org/llmrisk/llm042026-supply-chain/"
+    },
+    {
+      "id": "LLM05",
+      "year": "2026",
+      "title": "Data and Model Poisoning",
+      "source": "2026/final/LLM05_DataModelPoisoning.md",
+      "slug": "llm052026-data-and-model-poisoning",
+      "url": "https://genai.owasp.org/llmrisk/llm052026-data-and-model-poisoning/"
+    },
+    {
+      "id": "LLM06",
+      "year": "2026",
+      "title": "Unbounded Consumption",
+      "source": "2026/final/LLM06_UnboundedConsumption.md",
+      "slug": "llm062026-unbounded-consumption",
+      "url": "https://genai.owasp.org/llmrisk/llm062026-unbounded-consumption/"
+    },
+    {
+      "id": "LLM07",
+      "year": "2026",
+      "title": "Misinformation",
+      "source": "2026/final/LLM07_Misinformation.md",
+      "slug": "llm072026-misinformation",
+      "url": "https://genai.owasp.org/llmrisk/llm072026-misinformation/"
+    },
+    {
+      "id": "LLM08",
+      "year": "2026",
+      "title": "Hidden Context Exposure",
+      "source": "2026/final/LLM08_HiddenContextExposure.md",
+      "slug": "llm082026-hidden-context-exposure",
+      "url": "https://genai.owasp.org/llmrisk/llm082026-hidden-context-exposure/"
+    },
+    {
+      "id": "LLM09",
+      "year": "2026",
+      "title": "Vector and Embedding Weaknesses",
+      "source": "2026/final/LLM09_VectorAndEmbeddingWeaknesses.md",
+      "slug": "llm092026-vector-and-embedding-weaknesses",
+      "url": "https://genai.owasp.org/llmrisk/llm092026-vector-and-embedding-weaknesses/"
+    },
+    {
+      "id": "LLM10",
+      "year": "2026",
+      "title": "Improper Output Handling",
+      "source": "2026/final/LLM10_ImproperOutputHandling.md",
+      "slug": "llm102026-improper-output-handling",
+      "url": "https://genai.owasp.org/llmrisk/llm102026-improper-output-handling/"
+    }
+  ],
+  "historical_2025": [
+    {
+      "id": "LLM01",
+      "slug": "llm01-prompt-injection",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+      "note": "2025 exception. No year infix. Do not generate 2026 links from this shape."
+    },
+    {
+      "id": "LLM02",
+      "slug": "llm022025-sensitive-information-disclosure",
+      "url": "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/",
+      "note": "2025 page. Not a 2026 permalink."
+    },
+    {
+      "id": "LLM03",
+      "slug": "llm032025-supply-chain",
+      "url": "https://genai.owasp.org/llmrisk/llm032025-supply-chain/",
+      "note": "2025 numbering. 2026 Supply Chain is LLM04."
+    },
+    {
+      "id": "LLM04",
+      "slug": "llm042025-data-and-model-poisoning",
+      "url": "https://genai.owasp.org/llmrisk/llm042025-data-and-model-poisoning/",
+      "note": "2025 numbering. 2026 Data and Model Poisoning is LLM05."
+    },
+    {
+      "id": "LLM05",
+      "slug": "llm052025-improper-output-handling",
+      "url": "https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/",
+      "note": "2025 numbering. 2026 Improper Output Handling is LLM10."
+    },
+    {
+      "id": "LLM06",
+      "slug": "llm062025-excessive-agency",
+      "url": "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/",
+      "note": "2025 numbering. 2026 Excessive Agency is LLM03."
+    },
+    {
+      "id": "LLM07",
+      "slug": "llm072025-system-prompt-leakage",
+      "url": "https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/",
+      "note": "2025 name. 2026 broadens this risk to Hidden Context Exposure (LLM08)."
+    },
+    {
+      "id": "LLM08",
+      "slug": "llm082025-vector-and-embedding-weaknesses",
+      "url": "https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/",
+      "note": "2025 numbering. 2026 Vector and Embedding Weaknesses is LLM09."
+    },
+    {
+      "id": "LLM09",
+      "slug": "llm092025-misinformation",
+      "url": "https://genai.owasp.org/llmrisk/llm092025-misinformation/",
+      "note": "2025 numbering. 2026 Misinformation is LLM07."
+    },
+    {
+      "id": "LLM10",
+      "slug": "llm102025-unbounded-consumption",
+      "url": "https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/",
+      "note": "2025 numbering. 2026 Unbounded Consumption is LLM06."
+    }
+  ]
+}
