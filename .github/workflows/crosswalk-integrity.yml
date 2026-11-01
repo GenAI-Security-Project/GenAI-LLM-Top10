@@ -1,0 +1,17 @@
+name: mapping crosswalk
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate Appendix A joins to mappings
+        run: python .github/scripts/test_validate_mapping_crosswalk.py

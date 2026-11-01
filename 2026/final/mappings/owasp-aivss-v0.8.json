@@ -8,45 +8,55 @@
   "elements": [
     {
       "id": "1",
-      "title": "Agentic AI Tool Misuse"
+      "title": "Agentic AI Tool Misuse",
+      "display_id": "AIVSS-1"
     },
     {
       "id": "2",
-      "title": "Agent Access Control Violation"
+      "title": "Agent Access Control Violation",
+      "display_id": "AIVSS-2"
     },
     {
       "id": "3",
-      "title": "Agent Cascading Failures"
+      "title": "Agent Cascading Failures",
+      "display_id": "AIVSS-3"
     },
     {
       "id": "4",
-      "title": "Agent Orchestration and Multi-Agent Exploitation"
+      "title": "Agent Orchestration and Multi-Agent Exploitation",
+      "display_id": "AIVSS-4"
     },
     {
       "id": "5",
-      "title": "Agent Identity Impersonation"
+      "title": "Agent Identity Impersonation",
+      "display_id": "AIVSS-5"
     },
     {
       "id": "6",
-      "title": "Agent Memory and Context Manipulation"
+      "title": "Agent Memory and Context Manipulation",
+      "display_id": "AIVSS-6"
     },
     {
       "id": "7",
-      "title": "Insecure Agent Critical Systems Interaction"
+      "title": "Insecure Agent Critical Systems Interaction",
+      "display_id": "AIVSS-7"
     },
     {
       "id": "8",
-      "title": "Agent Supply Chain and Dependency Risk"
+      "title": "Agent Supply Chain and Dependency Risk",
+      "display_id": "AIVSS-8"
     },
     {
       "id": "9",
-      "title": "Agent Untraceability"
+      "title": "Agent Untraceability",
+      "display_id": "AIVSS-9"
     },
     {
       "id": "10",
-      "title": "Agent Goal and Instruction Manipulation"
+      "title": "Agent Goal and Instruction Manipulation",
+      "display_id": "AIVSS-10"
     }
   ],
   "verification": "all-verified",
-  "notes": "All 10 names confirmed against the v0.8 PDF (downloaded from the authoritative source, 4.4MB, PDF metadata title \"AIVSS Scoring System For OWASP Agentic AI Core Security Risks v0.8\"; document body line 3239 states \"This document represents version 0.8\"). Each risk name was cross-checked in three independent places in the extracted text: the summary table of contents (p.contents), the detailed section 3.6.1-3.6.10 contents, and the numbered body section headers. AIVSS has NO alphanumeric element IDs; the ordinal 1-10 is used as id per the extraction spec. WORDING CAVEAT: item 4's authoritative title spells the conjunction as \"and\" -> \"Agent Orchestration and Multi-Agent Exploitation\". The task brief supplied it with an ampersand (\"&\"); the source wording (\"and\") is used here. All other titles match the task-supplied list verbatim. The homepage (https://aivss.owasp.org/) confirms v0.8 as current but does not enumerate the risks; the enumerated list lives only in the linked PDF, which is the recorded source_url."
+  "notes": "All 10 names confirmed against the v0.8 PDF (downloaded from the authoritative source, 4.4MB, PDF metadata title \"AIVSS Scoring System For OWASP Agentic AI Core Security Risks v0.8\"; document body line 3239 states \"This document represents version 0.8\"). Each risk name was cross-checked in three independent places in the extracted text: the summary table of contents (p.contents), the detailed section 3.6.1-3.6.10 contents, and the numbered body section headers. AIVSS has NO alphanumeric element IDs; the ordinal 1-10 is used as id per the extraction spec. WORDING CAVEAT: item 4's authoritative title spells the conjunction as \"and\" -> \"Agent Orchestration and Multi-Agent Exploitation\". The task brief supplied it with an ampersand (\"&\"); the source wording (\"and\") is used here. All other titles match the task-supplied list verbatim. The homepage (https://aivss.owasp.org/) confirms v0.8 as current but does not enumerate the risks; the enumerated list lives only in the linked PDF, which is the recorded source_url. The display_id field is the label Appendix A uses (AIVSS-1 through AIVSS-10). It is not an identifier assigned by AIVSS. The stored id remains the source ordinal."
 }
