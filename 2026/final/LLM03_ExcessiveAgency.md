@@ -77,17 +77,17 @@ The following actions can prevent Excessive Agency:
 
   Implement authorization in logic rather than relying on an LLM to decide if an action is allowed or not. Enforce the complete mediation principle so that all requests made to downstream systems are validated against security policies by the tool, by an independent pre-execution policy decision point between the tool and the downstream system, or by the downstream system itself. Such policies can help manage cases where an agent's nominally-permitted action is contextually unsafe. A graduated enforcement policy (audit, warn, block, escalate) permits low-consequence or easily reversible actions to auto-approve, while high-consequence or irreversible ones route to human review. For example, a customer service chatbot can auto-process a refund as store credit (which is recoverable), while an irreversible action such as an external payout routes to human approval.
 
-#### 8. Shift-left automated scanning
-
-  Utilize open-source static analysis and CI/CD scanning tools designed specifically for agentic workflows, such as [Neural Sentinel](https://github.com/hama-tech/neural-sentinel-action), to automatically detect excessive agency (CWE-306), unconstrained execution surfaces, and missing human-in-the-loop guardrails in framework configurations (e.g., CrewAI, LangGraph, AutoGen) before deployment.
-
 The following options will not prevent Excessive Agency but can limit the level of damage caused:
+
+#### 8. Shift-left automated configuration scanning
+
+  Integrate static analysis tools into CI/CD pipelines to automatically detect unbounded tool permissions, missing human-in-the-loop approval gates, and overly broad scopes in agent framework configurations before deployment. This is a pre-deployment, detective control that flags configuration risks early; it complements, but does not substitute for, runtime enforcement boundaries or complete mediation.
 
 #### 9. Monitor tool use
 
   Log and monitor the activity of LLM tools and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
 
-#### 9. Rate limiting
+#### 10. Rate limiting
 
   Establish thresholds around the invocation of tools and implement circuit breakers that halt, rate-limit or escalate for human review if those thresholds are exceeded. Simple thresholds could be based on the number of invocations, whereas context-aware thresholds could be based on the cumulative value of an input parameter to a tool.
 
