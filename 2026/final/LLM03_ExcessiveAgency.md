@@ -79,11 +79,15 @@ The following actions can prevent Excessive Agency:
 
 The following options will not prevent Excessive Agency but can limit the level of damage caused:
 
-#### 8. Monitor tool use
+#### 8. Shift-left automated configuration scanning
+
+  Integrate static analysis tools into CI/CD pipelines to automatically detect unbounded tool permissions, missing human-in-the-loop approval gates, and overly broad scopes in agent framework configurations before deployment. This is a pre-deployment, detective control that flags configuration risks early; it complements, but does not substitute for, runtime enforcement boundaries or complete mediation. Specifically, a configuration scan cannot verify that every outbound action passes through the mediation point, that authorization is evaluated in the requesting user's context, or that untrusted content is isolated from the authority-bearing context.
+
+#### 9. Monitor tool use
 
   Log and monitor the activity of LLM tools and downstream systems to identify where undesirable actions are taking place, and respond accordingly.
 
-#### 9. Rate limiting
+#### 10. Rate limiting
 
   Establish thresholds around the invocation of tools and implement circuit breakers that halt, rate-limit or escalate for human review if those thresholds are exceeded. Simple thresholds could be based on the number of invocations, whereas context-aware thresholds could be based on the cumulative value of an input parameter to a tool.
 
