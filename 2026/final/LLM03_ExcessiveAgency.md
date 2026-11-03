@@ -81,7 +81,7 @@ The following options will not prevent Excessive Agency but can limit the level 
 
 #### 8. Shift-left automated configuration scanning
 
-  Integrate static analysis tools into CI/CD pipelines to automatically detect unbounded tool permissions, missing human-in-the-loop approval gates, and overly broad scopes in agent framework configurations before deployment. This is a pre-deployment, detective control that flags configuration risks early; it complements, but does not substitute for, runtime enforcement boundaries or complete mediation.
+  Integrate static analysis tools into CI/CD pipelines to automatically detect unbounded tool permissions, missing human-in-the-loop approval gates, and overly broad scopes in agent framework configurations before deployment. This is a pre-deployment, detective control that flags configuration risks early; it complements, but does not substitute for, runtime enforcement boundaries or complete mediation. Specifically, a configuration scan cannot verify that every outbound action passes through the mediation point, that authorization is evaluated in the requesting user's context, or that untrusted content is isolated from the authority-bearing context.
 
 #### 9. Monitor tool use
 
