@@ -92,6 +92,7 @@ API_BASE = "https://api.github.com"
 RAW_BASE = "https://raw.githubusercontent.com"
 TIMEOUT_SEC = 30
 RATE_PAUSE_SEC = 1.0
+EXIT_API_ERROR = 2
 
 ISSUES_PATH = SCRIPT_DIR / "issues.json"
 
@@ -495,6 +496,7 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
         "created": [],
         "skipped_unchanged": [],
         "missing_after_rename": [],
+        "failed": [],
     }
 
     if not dry_run:
@@ -526,10 +528,12 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
                 print(f"    [dry-run] would update #{issue_num}:")
                 print(f"        title: {issue.get('title','?')!r}")
                 print(f"            -> {new_title!r}")
+            elif patch_issue(issue_num, new_title, new_body, token):
+                print(f"    ~ updated #{issue_num}: {new_title}")
+                time.sleep(RATE_PAUSE_SEC)
             else:
-                if patch_issue(issue_num, new_title, new_body, token):
-                    print(f"    ~ updated #{issue_num}: {new_title}")
-                    time.sleep(RATE_PAUSE_SEC)
+                summary["failed"].append(new["id"])
+                continue
             summary["updated"].append(new["id"])
 
     # ---- Phase 2: CREATE issues for entries with no coverage ----
@@ -547,15 +551,17 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
         issue_num = issue["number"]
         if dry_run:
             print(f"    [dry-run] would force-rebuild #{issue_num}: {new_title}")
+        elif patch_issue(issue_num, new_title, new_body, token):
+            print(f"    ~ force-rebuilt #{issue_num}: {new_title}")
+            time.sleep(RATE_PAUSE_SEC)
         else:
-            if patch_issue(issue_num, new_title, new_body, token):
-                print(f"    ~ force-rebuilt #{issue_num}: {new_title}")
-                time.sleep(RATE_PAUSE_SEC)
+            summary["failed"].append(entry["id"])
+            return
         summary["updated"].append(entry["id"])
 
     for entry in config["track_b"]:
         if entry["id"] in covered:
-            if entry["id"] in summary["updated"]:
+            if entry["id"] in summary["updated"] or entry["id"] in summary["failed"]:
                 continue
             if force_rebuild:
                 force_patch(entry, create_issues.render_track_b)
@@ -567,13 +573,18 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
         if dry_run:
             print(f"    [dry-run] would create: {title}")
         else:
-            create_issues.post_issue(title, body, labels, token, dry_run=False)
+            try:
+                create_issues.post_issue(title, body, labels, token, dry_run=False)
+            except create_issues.IssueCreateError:
+                summary["failed"].append(entry["id"])
+                time.sleep(RATE_PAUSE_SEC)
+                continue
             time.sleep(RATE_PAUSE_SEC)
         summary["created"].append(entry["id"])
 
     for entry in config["track_a"]:
         if entry["id"] in covered:
-            if entry["id"] in summary["updated"]:
+            if entry["id"] in summary["updated"] or entry["id"] in summary["failed"]:
                 continue
             if force_rebuild:
                 force_patch(entry, create_issues.render_track_a)
@@ -585,7 +596,12 @@ def sync_github_issues(config: dict, diff: dict, form_url: str, token: str,
         if dry_run:
             print(f"    [dry-run] would create: {title}")
         else:
-            create_issues.post_issue(title, body, labels, token, dry_run=False)
+            try:
+                create_issues.post_issue(title, body, labels, token, dry_run=False)
+            except create_issues.IssueCreateError:
+                summary["failed"].append(entry["id"])
+                time.sleep(RATE_PAUSE_SEC)
+                continue
             time.sleep(RATE_PAUSE_SEC)
         summary["created"].append(entry["id"])
 
@@ -705,11 +721,22 @@ def main() -> int:
     print(f"  Updated existing issues: {len(summary['updated'])} {summary['updated']}")
     print(f"  Created new issues:      {len(summary['created'])} {summary['created']}")
     print(f"  Unchanged (skipped):     {len(summary['skipped_unchanged'])}")
+    if summary["failed"]:
+        print(f"  FAILED (GitHub API error):  {len(summary['failed'])} {summary['failed']}")
     if summary["missing_after_rename"]:
         print(f"  WARNING — IDs marked as changed but no existing issue: "
               f"{summary['missing_after_rename']}")
         print(f"  These were re-created above (look for '[create]' lines).")
     print()
+
+    if summary["failed"]:
+        print(f"ERROR: {len(summary['failed'])} GitHub operation(s) failed: {summary['failed']}",
+              file=sys.stderr)
+        if has_changes and not args.dry_run and not args.no_write:
+            print("WARNING: issues.json was already updated, but the failed entries have no "
+                  "matching GitHub issue state. Fix the cause and re-run before committing it.",
+                  file=sys.stderr)
+        return EXIT_API_ERROR
 
     if not args.dry_run and (has_changes or summary["created"] or summary["updated"]):
         print("NEXT STEPS:")
