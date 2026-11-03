@@ -63,6 +63,7 @@ from typing import Any
 REPO = "GenAI-Security-Project/GenAI-LLM-Top10"
 API_BASE = "https://api.github.com"
 RATE_PAUSE_SEC = 1.0  # between issue creates
+EXIT_API_ERROR = 2
 TIMEOUT_SEC = 30
 SCRIPT_DIR = Path(__file__).resolve().parent
 ISSUES_PATH = SCRIPT_DIR / "issues.json"
@@ -239,7 +240,22 @@ def render_track_a(entry: dict, form_url: str) -> tuple[str, str]:
     )
     return title, body
 
+class IssueCreateError(Exception):
+    """GitHub rejected an issue creation request."""
+
+    def __init__(self, title: str, status: int, response: Any):
+        super().__init__(f"failed to create {title!r}: status {status}")
+        self.title = title
+        self.status = status
+        self.response = response
+
+
 def post_issue(title: str, body: str, labels: list[str], token: str, dry_run: bool) -> int | None:
+    """Create an issue. Returns the issue number, or None for a dry run.
+
+    Raises IssueCreateError when GitHub does not answer 201, so a failure can
+    never be mistaken for a dry run.
+    """
     if dry_run:
         print(f"  [dry-run] would create issue: {title}")
         print(f"             labels: {labels}")
@@ -254,7 +270,7 @@ def post_issue(title: str, body: str, labels: list[str], token: str, dry_run: bo
         print(f"     {url}")
         return num
     print(f"  ! failed to create {title!r}: status {status} body {response}")
-    return None
+    raise IssueCreateError(title, status, response)
 
 # ---------- Main ----------
 
@@ -314,23 +330,31 @@ def main() -> int:
     if not args.skip_labels:
         ensure_labels(config["labels"], token or "", args.dry_run)
 
-    if track_b:
-        print("[track-b] creating issues")
-        for entry in track_b:
-            title, body = render_track_b(entry, args.form_url)
-            post_issue(title, body, ["sprint-2", "track-b", "feedback", entry["id"]],
-                       token or "", args.dry_run)
+    created: list[str] = []
+    failed: list[str] = []
+
+    for track, entries, render, track_labels in (
+        ("track-b", track_b, render_track_b, ["sprint-2", "track-b", "feedback"]),
+        ("track-a", track_a, render_track_a, ["sprint-2", "track-a", "feedback"]),
+    ):
+        if not entries:
+            continue
+        print(f"[{track}] creating issues")
+        for entry in entries:
+            title, body = render(entry, args.form_url)
+            try:
+                post_issue(title, body, track_labels + [entry["id"]], token or "", args.dry_run)
+                created.append(entry["id"])
+            except IssueCreateError:
+                failed.append(entry["id"])
             if not args.dry_run:
                 time.sleep(RATE_PAUSE_SEC)
 
-    if track_a:
-        print("[track-a] creating issues")
-        for entry in track_a:
-            title, body = render_track_a(entry, args.form_url)
-            post_issue(title, body, ["sprint-2", "track-a", "feedback", entry["id"]],
-                       token or "", args.dry_run)
-            if not args.dry_run:
-                time.sleep(RATE_PAUSE_SEC)
+    if failed:
+        print(f"ERROR: {len(failed)} issue(s) failed: {failed}", file=sys.stderr)
+        if created:
+            print(f"  succeeded before/around the failure: {created}", file=sys.stderr)
+        return EXIT_API_ERROR
 
     print("done.")
     return 0
