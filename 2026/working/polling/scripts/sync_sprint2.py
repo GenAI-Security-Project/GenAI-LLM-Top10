@@ -95,7 +95,7 @@ RATE_PAUSE_SEC = 1.0
 
 ISSUES_PATH = SCRIPT_DIR / "issues.json"
 
-EXISTING_DIR_PATH = "2026"
+EXISTING_DIR_PATH = "2026/working"
 CANDIDATE_DIR_PATH = "2026/working/new_entry_candidates"
 REGISTRY_REPO_PATH = "2026/working/polling/scripts/issues.json"
 
@@ -448,10 +448,25 @@ def print_diff(diff: dict, warnings: list[str]) -> bool:
 
 # ---------- Apply changes ----------
 
-def build_updated_config(local_b: list[dict], local_a: list[dict], config: dict) -> dict:
-    """Build a new config dict with updated track_b and track_a, plus any new labels."""
+def build_updated_config(local_b: list[dict], local_a: list[dict], config: dict,
+                          allow_track_b_removal: bool = False) -> dict:
+    """Build a new config dict with updated track_b and track_a, plus any new labels.
+
+    print_diff() tells the operator that Track B removals are "NOT
+    auto-applied. Verify manually." so, unless allow_track_b_removal is
+    explicitly set, any existing track_b entry whose ID is missing from
+    local_b (i.e. its file was not found on the remote this run) is kept
+    in the rewritten registry instead of being silently dropped. This
+    also guards against a transient discovery failure (wrong directory,
+    an empty/partial API response) wiping the registry's Track B half.
+    """
     new_config = dict(config)
-    new_config["track_b"] = local_b
+    if allow_track_b_removal:
+        new_config["track_b"] = local_b
+    else:
+        local_b_ids = {e["id"] for e in local_b}
+        preserved = [e for e in config.get("track_b", []) if e["id"] not in local_b_ids]
+        new_config["track_b"] = sorted(local_b + preserved, key=lambda e: e["id"])
     new_config["track_a"] = local_a
 
     # Ensure each entry ID has a corresponding label entry
@@ -607,6 +622,13 @@ def main() -> int:
                              "even when the registry says the entry is unchanged. Use after "
                              "a structural change (e.g., label-scheme rename) where issue "
                              "content is stale relative to current templates.")
+    parser.add_argument("--allow-track-b-removal", action="store_true",
+                        help="Actually drop Track B registry entries whose file is no "
+                             "longer found on remote, instead of preserving them. Off by "
+                             "default: print_diff() already warns that Track B removals "
+                             "are not auto-applied, so build_updated_config() keeps any "
+                             "entry missing from this run's discovery unless this flag "
+                             "is passed explicitly.")
     parser.add_argument("--branch", default="main",
                         help="Read from a branch other than main (default: main).")
     parser.add_argument("--form-url", default=None,
@@ -646,6 +668,17 @@ def main() -> int:
     local_b = load_existing_from_remote(args.branch, token)
     print(f"         found {len(local_b)} entries in {EXISTING_DIR_PATH}/")
 
+    if not local_b and config.get("track_b"):
+        print(f"\nERROR: discovered 0 entries in {EXISTING_DIR_PATH}/ but the registry "
+              f"already has {len(config['track_b'])} Track B entries. Refusing to "
+              f"continue: this almost always means EXISTING_DIR_PATH is wrong or the "
+              f"remote listing failed silently, not that every entry was actually "
+              f"removed. Re-run with --no-write --no-fire to inspect, or pass "
+              f"--allow-track-b-removal once you have confirmed the removal is real.",
+              file=sys.stderr)
+        if not args.allow_track_b_removal:
+            return 1
+
     print("[remote] listing candidates...")
     known_ids = {e["file"]: e["id"] for e in config.get("track_a", [])}
     local_a, warnings = load_candidates_from_remote(args.branch, token, known_ids)
@@ -656,7 +689,8 @@ def main() -> int:
     has_changes = print_diff(diff, warnings)
 
     # Phase 3: build updated config
-    new_config = build_updated_config(local_b, local_a, config)
+    new_config = build_updated_config(local_b, local_a, config,
+                                       allow_track_b_removal=args.allow_track_b_removal)
 
     # Phase 4: write registry
     if not has_changes:
