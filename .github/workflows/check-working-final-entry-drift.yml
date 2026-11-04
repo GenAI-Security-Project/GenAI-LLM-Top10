@@ -1,0 +1,35 @@
+name: Check working/final entry drift
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "2026/working/**"
+      - "2026/final/**"
+      - ".github/scripts/check_working_final_entry_drift.py"
+      - ".github/scripts/test_check_working_final_entry_drift.py"
+  pull_request:
+    paths:
+      - "2026/working/**"
+      - "2026/final/**"
+      - ".github/scripts/check_working_final_entry_drift.py"
+      - ".github/scripts/test_check_working_final_entry_drift.py"
+  workflow_dispatch: {}
+
+jobs:
+  check-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run validator self-tests
+        working-directory: .github/scripts
+        run: python -B -m unittest discover -v -p "test_check_working_final_entry_drift.py"
+
+      - name: Check 2026/working/ vs 2026/final/ entry-ID drift
+        working-directory: .github/scripts
+        run: python -B check_working_final_entry_drift.py
