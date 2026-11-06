@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import fnmatch
+import html
 import json
 import os
 import re
@@ -118,6 +119,68 @@ def as_zenodo_person(entry: dict) -> dict:
     return person
 
 
+def require_https_url(url: object) -> str:
+    """Accept only an https URL with a host and no markup or userinfo."""
+    if not isinstance(url, str) or not url or any(ch in url for ch in (' ', '\t', '\r', '\n', '"', "'", '<', '>')):
+        sys.exit(f"error: citation url must be an https URL with a host, got {url!r}")
+    parsed = urlparse(url)
+    host = parsed.hostname
+    if (
+        parsed.scheme != "https"
+        or not host
+        or parsed.username
+        or parsed.password
+        or host.lower() in {"localhost", "localhost."}
+    ):
+        sys.exit(f"error: citation url must be an https URL with a host, got {url!r}")
+    return url
+
+
+def publishable_relative(path: Path) -> str:
+    """Repo-relative posix path, or exit if the path must not be published.
+
+    Symlinks are refused even when their target is inside the repo. ZipFile.write
+    stores the target's bytes, so a link inside an include directory would
+    publish whatever the link points at under an in-repo name.
+    """
+    if path.is_symlink():
+        sys.exit(f"error: refusing to publish symlink: {path}")
+    root = REPO_ROOT.resolve()
+    try:
+        resolved = path.resolve()
+    except OSError as exc:
+        sys.exit(f"error: cannot resolve {path}: {exc}")
+    try:
+        rel = resolved.relative_to(root)
+    except ValueError:
+        sys.exit(f"error: refusing to publish path outside the repository: {path}")
+    if not rel.parts or any(part in {"", ".", ".."} for part in rel.parts):
+        sys.exit(f"error: refusing to publish unsafe relative path: {path}")
+    return rel.as_posix()
+
+
+def iter_publishable_files(target: Path) -> list[Path]:
+    """Files under target, without following directory symlinks."""
+    if target.is_symlink():
+        sys.exit(f"error: refusing to publish symlink: {target}")
+    if target.is_file():
+        return [target]
+    if not target.is_dir():
+        sys.exit(f"error: include path not found: {target}")
+    found: list[Path] = []
+    for dirpath, dirnames, filenames in os.walk(target, followlinks=False):
+        kept_dirs = []
+        for name in dirnames:
+            child = Path(dirpath) / name
+            if child.is_symlink():
+                sys.exit(f"error: refusing to publish symlink: {child}")
+            kept_dirs.append(name)
+        dirnames[:] = kept_dirs
+        for name in filenames:
+            found.append(Path(dirpath) / name)
+    return sorted(found)
+
+
 def build_metadata(cff: dict, deposit: dict, edition: str, publication_date: str | None) -> dict:
     # `$`-prefixed keys are comments for maintainers, not Zenodo fields.
     configured = {
@@ -127,14 +190,19 @@ def build_metadata(cff: dict, deposit: dict, edition: str, publication_date: str
     creators = [as_zenodo_person(a) for a in people if "name" not in a]
     entities = [as_zenodo_person(a) for a in people if "name" in a]
 
-    abstract = " ".join(cff.get("abstract", cff["title"]).split())
+    abstract = html.escape(" ".join(str(cff.get("abstract", cff["title"])).split()), quote=True)
     url = cff.get("url")
+    safe_url = require_https_url(url) if url else None
 
     metadata: dict = {
         **configured,
         "title": cff["title"],
         "description": f"<p>{abstract}</p>"
-        + (f'<p>Project site: <a href="{url}">{url}</a></p>' if url else ""),
+        + (
+            f'<p>Project site: <a href="{html.escape(safe_url, quote=True)}">{html.escape(safe_url, quote=True)}</a></p>'
+            if safe_url
+            else ""
+        ),
         "version": edition,
         "creators": creators,
         "keywords": cff.get("keywords", []),
@@ -151,9 +219,9 @@ def build_metadata(cff: dict, deposit: dict, edition: str, publication_date: str
     contributors += [{**e, "type": "HostingInstitution"} for e in entities]
     if contributors:
         metadata["contributors"] = contributors
-    if url:
+    if safe_url:
         metadata.setdefault("related_identifiers", []).append(
-            {"identifier": url, "relation": "isSupplementTo", "scheme": "url"}
+            {"identifier": safe_url, "relation": "isSupplementTo", "scheme": "url"}
         )
     return metadata
 
@@ -169,17 +237,19 @@ def collect_files(deposit: dict, edition: str) -> list[Path]:
 
     selected: list[Path] = []
     for entry in includes:
-        target = REPO_ROOT / entry
-        if target.is_file():
-            selected.append(target)
-        elif target.is_dir():
-            selected.extend(sorted(p for p in target.rglob("*") if p.is_file()))
-        else:
+        target = Path(entry)
+        if not target.is_absolute():
+            target = REPO_ROOT / entry
+        # Confine before listing. An absolute include, a `..` segment, or a
+        # symlink exits here instead of being copied into the public bundle.
+        publishable_relative(target)
+        if not target.is_file() and not target.is_dir():
             sys.exit(f"error: include path not found: {entry}")
+        selected.extend(iter_publishable_files(target))
 
     kept = []
     for path in selected:
-        rel = path.relative_to(REPO_ROOT).as_posix()
+        rel = publishable_relative(path)
         if any(fnmatch.fnmatch(rel, pattern) for pattern in excludes):
             continue
         kept.append(path)
@@ -192,7 +262,7 @@ def write_bundle(files: list[Path], destination: Path) -> Path:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in files:
-            archive.write(path, path.relative_to(REPO_ROOT).as_posix())
+            archive.write(path, publishable_relative(path))
     return destination
 
 
