@@ -159,6 +159,76 @@ ours = [u for _, u, _ in CALLS if "zenodo.org" in u]
 check("uses the sandbox API base", ours and all(u.startswith("https://sandbox.zenodo.org/api") for u in ours))
 check("never touches production", not any(u.startswith("https://zenodo.org/api") for u in ours))
 
+def test_description_escapes_markup() -> None:
+    print("\nhtml confinement")
+    meta = z.build_metadata(
+        {
+            "title": "T",
+            "authors": [{"family-names": "Doe", "given-names": "Ada"}],
+            "abstract": "Safe text </p><script>alert(1)</script><p>",
+            "url": "https://example.com/docs",
+            "license": "CC-BY-SA-4.0",
+        },
+        {"metadata": {}},
+        "2026",
+        None,
+    )
+    description = meta["description"]
+    check("script tag is escaped", "<script>" not in description and "&lt;script&gt;" in description)
+    check("href stays on https", 'href="https://example.com/docs"' in description)
+    check("related identifier is the https url", meta["related_identifiers"][0]["identifier"] == "https://example.com/docs")
+
+
+def test_javascript_url_is_refused() -> None:
+    try:
+        z.build_metadata(
+            {
+                "title": "T",
+                "authors": [{"family-names": "Doe", "given-names": "Ada"}],
+                "abstract": "Safe",
+                "url": "javascript:alert(document.domain)",
+                "license": "CC-BY-SA-4.0",
+            },
+            {"metadata": {}},
+            "2026",
+            None,
+        )
+    except SystemExit as exc:
+        check("javascript url refused", "https" in str(exc).lower())
+    else:
+        check("javascript url refused", False, "build_metadata returned")
+
+
+def test_outside_include_is_refused() -> None:
+    outside = z.REPO_ROOT.parent / "seat4-zenodo-outside-probe.txt"
+    outside.write_text("PRIVATE-KEY-MATERIAL", encoding="utf-8")
+    try:
+        try:
+            z.collect_files(
+                {"bundle": {"include": [str(outside)], "exclude": []}},
+                "2026",
+            )
+        except SystemExit as exc:
+            check("outside include refused", "outside the repository" in str(exc))
+        else:
+            check("outside include refused", False, "collect_files returned")
+    finally:
+        outside.unlink(missing_ok=True)
+
+
+def test_real_citation_stays_publishable() -> None:
+    meta = z.build_metadata(z.load_citation(), {"metadata": {}}, "2026", None)
+    description = meta["description"]
+    check("real description has no raw script", "<script" not in description.lower())
+    identifier = meta["related_identifiers"][0]["identifier"]
+    check("real citation url is https", identifier.startswith("https://") and " " not in identifier)
+
+
+test_description_escapes_markup()
+test_javascript_url_is_refused()
+test_outside_include_is_refused()
+test_real_citation_stays_publishable()
+
 print()
 if FAILURES:
     print(f"{len(FAILURES)} failed: {', '.join(FAILURES)}")
