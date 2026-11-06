@@ -1,0 +1,22 @@
+name: Validate 2026 entry contract
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Contract unit tests
+        run: python -B .github/scripts/test_validate_entry_contract.py
+      - name: Published LLM01-LLM10 contract
+        run: python -B .github/scripts/validate_entry_contract.py
