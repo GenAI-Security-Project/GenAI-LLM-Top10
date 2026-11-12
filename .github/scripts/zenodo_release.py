@@ -27,6 +27,7 @@ import fnmatch
 import json
 import os
 import re
+import shutil
 import sys
 import zipfile
 from pathlib import Path
@@ -191,8 +192,13 @@ def collect_files(deposit: dict, edition: str) -> list[Path]:
 def write_bundle(files: list[Path], destination: Path) -> Path:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED) as archive:
-        for path in files:
-            archive.write(path, path.relative_to(REPO_ROOT).as_posix())
+        for path in sorted(files, key=lambda p: p.relative_to(REPO_ROOT).as_posix()):
+            info = zipfile.ZipInfo(path.relative_to(REPO_ROOT).as_posix(), (1980, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.create_system = 3
+            info.external_attr = 0o100644 << 16
+            with path.open("rb") as source, archive.open(info, "w") as target:
+                shutil.copyfileobj(source, target)
     return destination
 
 

@@ -52,11 +52,16 @@ pip install pyyaml requests
 python .github/scripts/zenodo_release.py --check      # validate config and CITATION.cff
 python .github/scripts/zenodo_release.py --dry-run    # list what would be deposited
 python .github/scripts/test_zenodo_release.py         # deposit flow against a stubbed API
+python -m unittest discover -s .github/scripts -p test_zenodo_bundle.py -v
 ```
 
 The tests stub the Zenodo API, so they check the request sequence and payloads
 but not whether Zenodo accepts the metadata. A sandbox run is the only thing
 that proves that.
+
+Bundles use sorted paths and normalized ZIP timestamps and file permissions,
+so the same files produce identical bytes with the same Python/zlib versions
+regardless of checkout timestamps or permissions.
 
 ## The 2026 record
 
